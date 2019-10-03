@@ -115,7 +115,8 @@
             'id'=>'new',
             'value'=>set_value('password[new]', '', true)
         ]);
-        echo get_form_error('password[new]')
+        echo get_form_error('password[new]');
+        getFieldInfo('8 caractères minimum');
         ?>
     </div>
     <div class="form-group">
