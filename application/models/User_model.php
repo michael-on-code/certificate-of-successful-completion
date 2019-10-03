@@ -199,7 +199,7 @@ class User_model extends CI_Model
     }
 
 
-    public function update($user_id, $data, $groupArray)
+    public function update($user_id, $data, $groupArray=[])
     {
         $metas = $this->get_metas_group();
         $meta_datas = [];
@@ -211,8 +211,10 @@ class User_model extends CI_Model
                 }
             }
         }
-        $this->ion_auth->remove_from_group(NULL, $user_id);
-        $this->ion_auth->add_to_group($groupArray, $user_id);
+        if(!empty($groupArray)){
+            $this->ion_auth->remove_from_group(NULL, $user_id);
+            $this->ion_auth->add_to_group($groupArray, $user_id);
+        }
         $this->ion_auth->update($user_id, $data);
         if (!empty($meta_datas)) {
             foreach ($meta_datas as $key => $meta_data) {

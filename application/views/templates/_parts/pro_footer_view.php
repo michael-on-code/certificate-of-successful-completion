@@ -16,6 +16,7 @@ pos-fixed b-0
 <script src="<?= $assetsUrl ?>lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= $assetsUrl ?>lib/feather-icons/feather.min.js"></script>
 <script src="<?= $assetsUrl ?>lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="<?= $assetsUrl ?>lib/prismjs/prism.js"></script>
 <?php if (isset($footerJs) && !empty($footerJs)) {
     foreach ($footerJs as $js) {
         ?>

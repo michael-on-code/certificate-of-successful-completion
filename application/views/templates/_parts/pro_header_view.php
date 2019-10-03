@@ -32,7 +32,8 @@
     } ?>
     <link href="<?= $assetsUrl ?>lib/%40fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="<?= $assetsUrl ?>lib/ionicons/css/ionicons.min.css" rel="stylesheet">
-
+    <link href="<?= $assetsUrl ?>lib/typicons.font/typicons.css" rel="stylesheet">
+    <link href="<?= $assetsUrl ?>lib/prismjs/themes/prism-vs.css" rel="stylesheet">
     <!-- DashForge CSS -->
     <link rel="stylesheet" href="<?= $assetsUrl ?>css/dashforge.css">
     <link rel="stylesheet" href="<?= $assetsUrl ?>css/dashforge.demo.css">
@@ -118,8 +119,8 @@
     ?>
 
 </div><!-- sidebar -->
-<div class="content content-components">
-    <div class="container">
+<div class="content content-components mg-r-0-f">
+    <div class="container-fluid">
         <ol class="breadcrumb df-breadcrumbs mg-b-10">
             <li class="breadcrumb-item"><a href="#"><?= maybe_null_or_empty($options, 'siteName') ?></a></li>
             <li class="breadcrumb-item active" aria-current="page"><?= $pageTitle ?></li>

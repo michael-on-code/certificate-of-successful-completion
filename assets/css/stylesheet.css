@@ -16,3 +16,15 @@
 .toast-container{
     z-index: 9999;
 }
+span.select2-dropdown.select2-dropdown--above li[aria-selected=true] {
+    display: none!important;
+    /* background-color: #5897fb; */
+    /* color: white; */
+}
+table thead th, table tbody td, table tbody th{
+    vertical-align: middle!important;
+}
+td button, td a{
+    margin-bottom: 5px;
+    padding: 2px 6px!important;
+}

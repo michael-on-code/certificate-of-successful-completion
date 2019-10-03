@@ -102,17 +102,17 @@ function get_menu_by_group($group)
                     'icon'=>'log-out'
                 ),array(
                     'title' => 'Attestations',
-                    'url' => site_url('abe'),
+                    'url' => site_url('certificate'),
                     'order' => 2,
                     'icon'=>'layers',
                     'submenus'=>[
                         [
                             'title'=>'Liste',
-                            'url'=>site_url('abe')
+                            'url'=>site_url('certificate')
                         ],
                         [
                             'title'=>'Ajouter',
-                            'url'=>site_url('abe/add')
+                            'url'=>site_url('certificate/add')
                         ],
                     ]
                 ),
