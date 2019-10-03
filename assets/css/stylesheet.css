@@ -1,0 +1,18 @@
+.form-group .form-error {
+    color: #FFF;
+    background-color: #f33155;
+    padding: 5px 5px 5px 13px;
+}
+.toast-header small{
+    margin-left: 10px;
+}
+.dropdown-profile .dropdown-item.active{
+    background-color: transparent!important;
+    color: #0168fa!important;
+}
+.form-text.text-muted{
+    font-size: 12px
+}
+.toast-container{
+    z-index: 9999;
+}
