@@ -36,11 +36,13 @@ class Login extends Login_Controller{
             if($this->form_validation->run()){
                 $successRecaptchaResult = true;
                 if(ENVIRONMENT=='production'){
+                    //Recaptcha verification working properly
                     $recaptChaResult= json_decode(googleRecaptchaCurl1([
                         'secret'=>maybe_null_or_empty($this->data['options'], 'googleRecaptchaSecretKey'),
                         'response'=>$recaptchaToken,
                         'remoteip'=>$this->input->ip_address()
                     ]));
+                    //var_dump($recaptChaResult);exit;
                     $successRecaptchaResult = maybe_null_or_empty($recaptChaResult, 'success', true);
                 }
                 if($successRecaptchaResult){
