@@ -28,3 +28,15 @@ td button, td a{
     margin-bottom: 5px;
     padding: 2px 6px!important;
 }
+.select2.select2-container{
+    width: 100% !important;
+}
+.select2-selection__placeholder{
+    color:#c0ccda!important;
+}
+.currency-dropdown{
+    min-width: 5rem!important;
+}
+.select2-dropdown.select2-dropdown--below, .ui-autocomplete{
+    z-index: 9999!important;
+}

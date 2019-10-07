@@ -32,6 +32,17 @@ class Certificate extends Pro_Controller{
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/select2/js/select2.min.js';
         $this->data['footerJs'][] = '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js';
         $this->data['headerCss'][] = '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css';
+        //Number formatting
+        $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/cleave.js/cleave.min.js';
+        $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/cleave.js/addons/cleave-phone.us.js';
+        //SummerNote Text Editor
+        $this->data['footerJs'][]='//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js';
+        $this->data['headerCss'][]='//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css';
+        $this->data['footerJs'][]='//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/lang/summernote-fr-FR.js';
+        //Dropify File Upload
+        $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/dropify/dist/js/dropify.min.js';
+        $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/dropify/dist/css/dropify.min.css';
+
         $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/select2/css/select2.min.css';
         $this->render('certificate/add');
     }

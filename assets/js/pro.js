@@ -114,8 +114,68 @@ $(function () {
             source: availableTags1
         })
     }
+    function getDate( element ) {
+        var date;
+        try {
+            date = $.datepicker.parseDate( dateFormat, element.value );
+        } catch( error ) {
+            date = null;
+        }
+
+        return date;
+    }
+    $.datepicker.setDefaults( $.datepicker.regional[ "fr" ] );
+    if($('.dateRanger').length){
+        var dateFormat = 'mm/dd/yy',
+            from = $('#dateFrom')
+                .datepicker({
+                    defaultDate: '+1w',
+                    numberOfMonths: 2
+                })
+                .on('change', function() {
+                    to.datepicker('option','minDate', getDate( this ) );
+                }),
+            to = $('#dateTo').datepicker({
+                defaultDate: '+1w',
+                numberOfMonths: 2
+            })
+                .on('change', function() {
+                    from.datepicker('option','maxDate', getDate( this ) );
+                });
+    }
     if($('.datepicker').length){
         $('.datepicker').datepicker();
+    }
+    if($('.currencyInput').length){
+        $('.currencyInput').each(function(){
+            new Cleave(this, {
+                numeral: true,
+                delimiter: ' ',
+                numeralThousandsGroupStyle: 'thousand'
+            });
+        })
+    }
+    if($('.number-input').length){
+        $('.number-input').each(function(){
+            new Cleave(this, {
+                numeral: true,
+            });
+        })
+    }
+    if ($('.my-summernote')) {
+        $('.my-summernote').summernote({
+            lang: 'fr-FR',
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph', 'style']],
+                ['height', ['height']],
+                ['insert', ['link']],
+            ],
+            height: 130
+        });
     }
 
 
