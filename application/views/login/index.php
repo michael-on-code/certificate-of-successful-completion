@@ -91,7 +91,7 @@ get_flashdata();
                                 ]);
                                 ?>
                             </div>
-                            <a href="#" class="tx-13">Mot de passe oublié ?</a>
+                            <a href="<?= site_url('password-forgotten') ?>" class="tx-13">Mot de passe oublié ?</a>
                         </div>
 
                     </div>

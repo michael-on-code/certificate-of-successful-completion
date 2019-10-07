@@ -16,7 +16,7 @@
     <link href="<?= $assetsUrl ?>lib/ionicons/css/ionicons.min.css" rel="stylesheet">
 
     <!-- DashForge CSS -->
-    <link rel="stylesheet" href="<?= $assetsUrl ?>css/dashforge.css">
+    <link rel="stylesheet" href="<?= $assetsUrl ?>css/dashforge.css?v=1.0">
     <link rel="stylesheet" href="<?= $assetsUrl ?>css/dashforge.auth.css">
     <link rel="stylesheet" href="<?= $assetsUrl ?>css/stylesheet.css">
     <script type="text/javascript">

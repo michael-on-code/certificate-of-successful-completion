@@ -29,6 +29,8 @@ class Certificate extends Pro_Controller{
 
     public function add(){
         $this->data['pageTitle']='Ajouter une ABE';
+
+
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/select2/js/select2.min.js';
         $this->data['footerJs'][] = '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js';
         $this->data['headerCss'][] = '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css';

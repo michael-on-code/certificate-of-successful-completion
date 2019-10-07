@@ -15,7 +15,7 @@
             <p class="tx-color-03 mg-b-30">Cliquer sur ce bouton pour vous retourner à l'accueil</p>
             <div class="d-flex mg-b-40">
 <!--                <input type="text" class="form-control wd-200 wd-sm-250" placeholder="Search">-->
-                <a href="<?= site_url('login') ?>" class="btn btn-brand-02 bd-0 mg-l-5 pd-sm-x-25">Retour à l'accueil</a>
+                <a href="<?= site_url('/') ?>" class="btn btn-brand-02 bd-0 mg-l-5 pd-sm-x-25">Retour à l'accueil</a>
             </div>
 
         </div>
