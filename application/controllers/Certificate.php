@@ -12,6 +12,7 @@ class Certificate extends Pro_Controller{
     {
         parent::__construct();
         $this->load->helper('certificate');
+        $this->load->model('certificate_model');
     }
 
     public function index(){
@@ -31,7 +32,9 @@ class Certificate extends Pro_Controller{
     public function add(){
         $this->data['pageTitle']='Ajouter une ABE';
         $this->data['countries']=getCountries();
-
+        $this->data['activityAreas']= $this->certificate_model->getActivityAreasForSelect2();
+        $this->data['affiliateCompanies']= $this->certificate_model->getAffiliateCompaniesForSelect2();
+        $this->data['currencies']= ['FCFA', '€', '$'];
 
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/select2/js/select2.min.js';
         $this->data['footerJs'][] = '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js';

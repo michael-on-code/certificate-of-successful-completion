@@ -5,5 +5,5 @@
  * Date: 03/10/2019
  * Time: 15:21
  */
-get_add_edit_certificate_html_form(false, [], [], $countries);
+get_add_edit_certificate_html_form(false, [], $activityAreas, $countries, $affiliateCompanies, $currencies, $uploadPath);
 
