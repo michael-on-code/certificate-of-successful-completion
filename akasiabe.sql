@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 08 Octobre 2019 à 07:34
+-- Généré le :  Mar 08 Octobre 2019 à 08:46
 -- Version du serveur :  5.7.14
 -- Version de PHP :  7.0.10
 
@@ -79,6 +79,14 @@ CREATE TABLE `activity_area` (
   `image` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Contenu de la table `activity_area`
+--
+
+INSERT INTO `activity_area` (`id`, `name`, `description`, `image`) VALUES
+(1, 'BTP', 'Batiment Travaux Public', NULL),
+(2, 'Numérique', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -88,10 +96,16 @@ CREATE TABLE `activity_area` (
 CREATE TABLE `affiliate_companies` (
   `id` tinyint(3) UNSIGNED NOT NULL,
   `name` varchar(50) NOT NULL,
-  `country` varchar(50) DEFAULT NULL,
-  `city` varchar(50) DEFAULT NULL,
   `adress` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `affiliate_companies`
+--
+
+INSERT INTO `affiliate_companies` (`id`, `name`, `adress`) VALUES
+(1, 'AKASI Togo', NULL),
+(2, 'AKASI Bénin', NULL);
 
 -- --------------------------------------------------------
 
@@ -183,7 +197,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2y$08$ccoSXDT.UGkAe55B5eUifu9Tv8b32SloAIlNCTaW6Qj3t7EYhw9z.', '', 'admin@admin.com', '', NULL, NULL, 'dgGF/X9f9yCjd5HytqB6ke', 1268889823, 1570518775, 1, 'Michael', 'ANIMASHAUN', 'ADMIN', '0');
+(1, '127.0.0.1', 'administrator', '$2y$08$XU.b7o6fOb7VXft0pBxESO7vi0wXJCBn8.ccTKBrprh79nI/DiO12', '', 'admin@admin.com', '', NULL, NULL, '4oHv.FfojMyRDXvSjab30O', 1268889823, 1570522635, 1, 'Michael', 'ANIMASHAUN', 'ADMIN', '0');
 
 -- --------------------------------------------------------
 
@@ -315,12 +329,12 @@ ALTER TABLE `abe_meta`
 -- AUTO_INCREMENT pour la table `activity_area`
 --
 ALTER TABLE `activity_area`
-  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `affiliate_companies`
 --
 ALTER TABLE `affiliate_companies`
-  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `groups`
 --
