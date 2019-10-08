@@ -11,6 +11,7 @@ class Certificate extends Pro_Controller{
     public function __construct()
     {
         parent::__construct();
+        $this->load->helper('certificate');
     }
 
     public function index(){
@@ -29,6 +30,7 @@ class Certificate extends Pro_Controller{
 
     public function add(){
         $this->data['pageTitle']='Ajouter une ABE';
+        $this->data['countries']=getCountries();
 
 
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/select2/js/select2.min.js';

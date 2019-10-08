@@ -6,7 +6,7 @@
  * Time: 15:42
  */
 
-function get_add_edit_html_form($edit=false, $certifcate=[], $activity_areas=[], $countries=[]){
+function get_add_edit_certificate_html_form($edit=false, $certifcate=[], $activity_areas=[], $countries=[]){
      echo form_open() ?>
     <div class="form-group">
         <?php echo form_label('Désignation', 'title', [
@@ -153,21 +153,19 @@ function get_add_edit_html_form($edit=false, $certifcate=[], $activity_areas=[],
                 'class' => 'd-block'
             ]);
             ?>
-            <div class="form-group col-md-6">
-                <?php
-                echo form_input([
-                    'name'=>'certificate[customer_name]',
-                    'class'=>'form-control my-autocomplete',
-                    'required'=>'',
-                    'placeholder'=>"Autorité contractante",
-                    'id'=>'customer_name',
-                    'data-target'=>'customer_names',
-                    'value'=>set_value('certificate[customer_name]', maybe_null_or_empty($certifcate, 'customer_name'), true)
-                ]);
-                echo get_form_error('certificate[customer_name]');
-                getFieldInfo('Autocomplétion disponible');
-                ?>
-            </div>
+            <?php
+            echo form_input([
+                'name'=>'certificate[customer_name]',
+                'class'=>'form-control my-autocomplete',
+                'required'=>'',
+                'placeholder'=>"Autorité contractante",
+                'id'=>'customer_name',
+                'data-target'=>'customer_names',
+                'value'=>set_value('certificate[customer_name]', maybe_null_or_empty($certifcate, 'customer_name'), true)
+            ]);
+            echo get_form_error('certificate[customer_name]');
+            getFieldInfo('Autocomplétion disponible');
+            ?>
         </div>
         <div class="form-group col-md-3">
             <?php
