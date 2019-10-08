@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 02 Octobre 2019 à 15:24
+-- Généré le :  Mar 08 Octobre 2019 à 07:34
 -- Version du serveur :  5.7.14
 -- Version de PHP :  7.0.10
 
@@ -31,7 +31,7 @@ CREATE TABLE `abe` (
   `title` varchar(100) NOT NULL,
   `slug` varchar(25) NOT NULL,
   `activity_area_id` tinyint(3) UNSIGNED NOT NULL,
-  `sub_activity_area_id` int(10) UNSIGNED NOT NULL,
+  `sub_activity_area` varchar(35) NOT NULL,
   `signature_date` date NOT NULL,
   `customer_name` varchar(100) NOT NULL,
   `currency` varchar(5) NOT NULL,
@@ -126,16 +126,6 @@ CREATE TABLE `login_attempts` (
   `time` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `login_attempts`
---
-
-INSERT INTO `login_attempts` (`id`, `ip_address`, `login`, `time`) VALUES
-(2, '::1', 'micae@ksjd.com', 1569939825),
-(3, '::1', 'hskdjs@ksdk.com', 1569942742),
-(4, '::1', 'hskdjs@ksdk.com', 1569942794),
-(5, '::1', 'sdkjsd@skdjs.com', 1569943524);
-
 -- --------------------------------------------------------
 
 --
@@ -154,27 +144,13 @@ CREATE TABLE `options` (
 
 INSERT INTO `options` (`id`, `key`, `value`) VALUES
 (1, 'siteName', 'Akasi ABE'),
-(2, 'siteFooterDescription', '<span>&copy; 2019 AKASI ABE | </span>\r\n        <span>Powered by <a target="_blank" href="http://akasigroup.com/">AKASI Group</a></span>'),
+(2, 'siteFooterDescription', '<span>&copy; 2019 AKASI ABE | </span>\r\n        <span>Propulsé par <a target="_blank" href="http://akasigroup.com/">AKASI Group</a></span>'),
 (3, 'googleRecaptchaPublicKey', '6Lc6F7sUAAAAAN6_3HU4Fz8SWPNaQ0QtBRU01-zE'),
 (4, 'googleRecaptchaSecretKey', '6Lc6F7sUAAAAAJsg5R8L5cs8k1BlF4u1Fg7-ywA1'),
 (5, 'siteDescription', 'Plateforme propulsée par AKASI Group pour la Gestion de ses Attestations de Bonne Fin d\'Exécution'),
 (6, 'notificationEmails', 'phoudagba@akasigroup.com,akasi-admin@akasigroup.com'),
 (7, 'siteFavicon', 'ec28843842a1211f0fc91eef0a60014d.png'),
 (8, 'siteDefaultAvatar', '5e14291bc0a98a7143bdade351a306dc.png');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `sub_activity_area`
---
-
-CREATE TABLE `sub_activity_area` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `activity_area_id` tinyint(3) UNSIGNED NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `description` varchar(200) DEFAULT NULL,
-  `image` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -207,7 +183,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, 'vPcru/PEr8vOUzyg.xtGhu', 1268889823, 1570025201, 1, 'Admin', 'istrator', 'ADMIN', '0');
+(1, '127.0.0.1', 'administrator', '$2y$08$ccoSXDT.UGkAe55B5eUifu9Tv8b32SloAIlNCTaW6Qj3t7EYhw9z.', '', 'admin@admin.com', '', NULL, NULL, 'dgGF/X9f9yCjd5HytqB6ke', 1268889823, 1570518775, 1, 'Michael', 'ANIMASHAUN', 'ADMIN', '0');
 
 -- --------------------------------------------------------
 
@@ -243,6 +219,13 @@ CREATE TABLE `user_meta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
+-- Contenu de la table `user_meta`
+--
+
+INSERT INTO `user_meta` (`id`, `user_id`, `key`, `value`) VALUES
+(1, 1, 'user_photo', '1532207fc1fbadd8eb77044c4ed8872b.jpg');
+
+--
 -- Index pour les tables exportées
 --
 
@@ -252,7 +235,6 @@ CREATE TABLE `user_meta` (
 ALTER TABLE `abe`
   ADD PRIMARY KEY (`id`),
   ADD KEY `activity_area_id` (`activity_area_id`),
-  ADD KEY `sub_activity_area_id` (`sub_activity_area_id`),
   ADD KEY `affiliate_company_id` (`affiliate_company_id`),
   ADD KEY `user_id` (`user_id`);
 
@@ -292,13 +274,6 @@ ALTER TABLE `login_attempts`
 --
 ALTER TABLE `options`
   ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `sub_activity_area`
---
-ALTER TABLE `sub_activity_area`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `activity_area_id` (`activity_area_id`);
 
 --
 -- Index pour la table `users`
@@ -350,22 +325,17 @@ ALTER TABLE `affiliate_companies`
 -- AUTO_INCREMENT pour la table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT pour la table `login_attempts`
 --
 ALTER TABLE `login_attempts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `options`
 --
 ALTER TABLE `options`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
---
--- AUTO_INCREMENT pour la table `sub_activity_area`
---
-ALTER TABLE `sub_activity_area`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `users`
 --
@@ -380,7 +350,7 @@ ALTER TABLE `users_groups`
 -- AUTO_INCREMENT pour la table `user_meta`
 --
 ALTER TABLE `user_meta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Contraintes pour les tables exportées
 --
