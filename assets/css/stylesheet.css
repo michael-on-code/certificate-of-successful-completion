@@ -40,3 +40,6 @@ td button, td a{
 .select2-dropdown.select2-dropdown--below, .ui-autocomplete{
     z-index: 9999!important;
 }
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year{
+    width: 50%!important;
+}

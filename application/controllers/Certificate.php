@@ -31,6 +31,9 @@ class Certificate extends Pro_Controller{
 
     public function add(){
         $this->data['pageTitle']='Ajouter une ABE';
+
+        getCertificationAddOrEditValidation();
+
         $this->data['countries']=getCountries();
         $this->data['activityAreas']= $this->certificate_model->getActivityAreasForSelect2();
         $this->data['affiliateCompanies']= $this->certificate_model->getAffiliateCompaniesForSelect2();
@@ -38,6 +41,7 @@ class Certificate extends Pro_Controller{
 
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/select2/js/select2.min.js';
         $this->data['footerJs'][] = '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js';
+        $this->data['footerJs'][] = '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/i18n/jquery.ui.datepicker-fr.min.js';
         $this->data['headerCss'][] = '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css';
         //Number formatting
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/cleave.js/cleave.min.js';

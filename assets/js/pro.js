@@ -130,21 +130,38 @@ $(function () {
             from = $('#dateFrom')
                 .datepicker({
                     defaultDate: '+1w',
-                    numberOfMonths: 2
+                    numberOfMonths: 2,
+                    dateFormat: "dd/mm/yy",
+                    regional : ['fr']
                 })
                 .on('change', function() {
-                    to.datepicker('option','minDate', getDate( this ) );
+                    to.datepicker({
+                        minDate : getDate( this ),
+                        dateFormat: "dd/mm/yy",
+                        regional : ['fr']
+                    });
                 }),
             to = $('#dateTo').datepicker({
                 defaultDate: '+1w',
-                numberOfMonths: 2
+                numberOfMonths: 2,
+                dateFormat: "dd/mm/yy",
+                regional : ['fr']
             })
                 .on('change', function() {
-                    from.datepicker('option','maxDate', getDate( this ) );
+                    from.datepicker({
+                        maxDate : getDate( this ),
+                        dateFormat: "dd/mm/yy",
+                        regional : ['fr']
+                    });
                 });
     }
     if($('.datepicker').length){
-        $('.datepicker').datepicker();
+        $('.datepicker').datepicker({
+            changeMonth : true,
+            changeYear : true,
+            dateFormat: "dd/mm/yy",
+            regional : ['fr']
+        });
     }
     if($('.currencyInput').length){
         $('.currencyInput').each(function(){

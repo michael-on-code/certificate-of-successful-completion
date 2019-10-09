@@ -59,8 +59,9 @@ function upload_data($args, $names, $resize = false)
                 }
             }
         }
-        return $data;
+
     }
+    return $data;
 }
 
 
@@ -119,8 +120,10 @@ function get_success_message($msg, $delay = '')
 
 function convert_date_to_english($date)
 {
-    if ($date && is_string($date) && strpos($date, '/'))
+    if ($date && is_string($date) && strpos($date, '/')){
         return DateTime::createFromFormat('d/m/Y', $date)->format('Y-m-d');
+    }
+    return date('Y-m-d');
 }
 
 function redirect_if_id_is_not_valid($id, $table_name = '', $redirect)
@@ -426,7 +429,7 @@ function control_unique_on_update($value, $db_field)
     $query = $ci->db->query("SELECT id FROM $table where $target_field='$value'")->row();
     if ($queryId = maybe_null_or_empty($query, 'id')) {
         if ($id_value != $queryId) {
-            $ci->form_validation->set_message('is_unique_on_update', "{field} " . lang('exist-for-another') . " {field} ");
+            $ci->form_validation->set_message('is_unique_on_update', "La valeur {field} existe dejà");
             return false;
         }
     }

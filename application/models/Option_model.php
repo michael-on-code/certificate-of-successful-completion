@@ -13,6 +13,23 @@ class Option_model extends CI_Model{
         parent::__construct();
     }
 
+    public function is_unique_on_update($field_value, $args)
+    {
+        return control_unique_on_update($field_value, $args);
+    }
+    public function removeSpacesAndConvertToInt(&$field_value)
+    {
+        $field_value = (int) getSlugifyString($field_value);
+        //var_dump($field_value);exit;
+        return true;
+    }
+
+    public function convertDateToEnglish(&$date){
+        $date = convert_date_to_english($date);
+        return true;
+    }
+
+
     private function get_option_groups()
     {
         return array(

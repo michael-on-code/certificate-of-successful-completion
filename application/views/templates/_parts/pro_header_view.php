@@ -36,8 +36,9 @@
     <link href="<?= $assetsUrl ?>lib/prismjs/themes/prism-vs.css" rel="stylesheet">
     <!-- DashForge CSS -->
     <link rel="stylesheet" href="<?= $assetsUrl ?>css/dashforge.css">
+    <link rel="stylesheet" href="<?= $assetsUrl ?>css/dashforge.dashboard.css">
     <link rel="stylesheet" href="<?= $assetsUrl ?>css/dashforge.demo.css">
-    <link rel="stylesheet" href="<?= $assetsUrl ?>css/stylesheet.css?v=1.10">
+    <link rel="stylesheet" href="<?= $assetsUrl ?>css/stylesheet.css?v=1.11">
 </head>
 <!-- end::Head -->
 
