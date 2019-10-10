@@ -153,4 +153,17 @@ join activity_area on activity_area.id = abe.activity_area_id join affiliate_com
         }
         return $temp;
     }
+
+    public function getAutoCompletes($field, $term){
+        $autoCompletes = $this->db->query("SELECT DISTINCT $field from abe where $field LIKE '%$term%' LIMIT 10")->result();
+        //var_dump($autoCompletes);exit;
+        $temp=[];
+        if(!empty($autoCompletes)){
+            foreach ($autoCompletes as $autoComplete){
+                $temp[]=$autoComplete->$field;
+            }
+        }
+        return $temp;
+
+    }
 }

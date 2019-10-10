@@ -46,7 +46,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
             echo form_input([
                 'name' => 'certificate[sub_activity_area]',
                 'class' => 'form-control my-autocomplete',
-                'data-target' => 'sub_activity_areas',
+                'data-target' => 'sub_activity_area',
                 'required' => '',
                 'placeholder' => "Sous Secteur d'activité",
                 'id' => 'sub_activity_area',
@@ -162,7 +162,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 'required' => '',
                 'placeholder' => "Autorité contractante",
                 'id' => 'customer_name',
-                'data-target' => 'customer_names',
+                'data-target' => 'customer_name',
                 'value' => set_value('certificate[customer_name]', maybe_null_or_empty($certificate, 'customer_name'), false)
             ]);
             echo get_form_error('certificate[customer_name]');
@@ -197,7 +197,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 'required' => '',
                 'placeholder' => "Ville",
                 'id' => 'city',
-                'data-target' => 'cities',
+                'data-target' => 'city',
                 'value' => set_value('certificate[city]', maybe_null_or_empty($certificate, 'city'), false)
             ]);
             echo get_form_error('certificate[city]');
@@ -280,7 +280,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 //'required' => '',
                 'placeholder' => "Source de financement",
                 'id' => 'funding_source',
-                'data-target' => 'funding_sources',
+                'data-target' => 'funding_source',
                 'value' => set_value('certificate[funding_source]', maybe_null_or_empty($certificate, 'funding_source'), false)
             ]);
             echo get_form_error('certificate[funding_source]');
@@ -341,7 +341,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 //'required' => '',
                 'placeholder' => "Partenaire ou associé",
                 'id' => 'project_partner',
-                'data-target' => 'project_partners',
+                'data-target' => 'project_partner',
                 'value' => set_value('certificate[project_partner]', maybe_null_or_empty($certificate, 'project_partner'), false)
             ]);
             echo get_form_error('certificate[project_partner]');

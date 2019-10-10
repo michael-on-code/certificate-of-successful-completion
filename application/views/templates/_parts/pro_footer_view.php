@@ -24,11 +24,17 @@ pos-fixed b-0
         <?php
     }
 }
-
+if (isset($clientData) && !empty($clientData)) {
+    ?>
+    <script>
+        var clientData = <?= json_encode($clientData) ?>
+    </script>
+    <?php
+}
 ?>
 <script src="<?= $assetsUrl ?>js/dashforge.js"></script>
 <script src="<?= $assetsUrl ?>js/public.js"></script>
-<script src="<?= $assetsUrl ?>js/pro.js?v=1.11"></script>
+<script src="<?= $assetsUrl ?>js/pro.js?v=1.12"></script>
 
 <!--end::Page Scripts -->
 </body>

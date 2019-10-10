@@ -128,9 +128,13 @@ $(function () {
         var availableTags1 = [
             "Groupe Electrogène", 'Développement web', 'Site web', 'Application mobile', 'Application web'
         ];
-        $('.my-autocomplete').autocomplete({
-            source: availableTags1
-        })
+        $('.my-autocomplete').each(function () {
+            //console.log(clientData.autocompleteUrl+($(this).attr('data-target')));
+            $(this).autocomplete({
+                source: ""+clientData.autocompleteUrl+($(this).attr('data-target'))
+                //source: availableTags1
+            })
+        });
     }
     function getDate( element ) {
         var date;

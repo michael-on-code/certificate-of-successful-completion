@@ -13,14 +13,15 @@ class Certificate extends Pro_Controller{
         parent::__construct();
         $this->load->helper('certificate');
         $this->load->model('certificate_model');
+        $this->data['clientData'] = [
+            'autocompleteUrl' => site_url('certificate/retrieveAutoCompletes/'),
+        ];
     }
 
     public function index(){
         $this->data['pageTitle']= 'Liste des ABE';
         $this->data['certificates'] = $this->certificate_model->getAll();
-        //var_dump($this->data['certificates']);exit;
 
-        //SweetAlert
         $this->data['headerCss'][] = $this->data['assetsUrl'] . 'lib/sweetalert/sweetalert.css';
         $this->data['footerJs'][] = $this->data['assetsUrl'] . 'lib/sweetalert/sweetalert.min.js';
 
@@ -33,6 +34,16 @@ class Certificate extends Pro_Controller{
         $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css';
         $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/select2/css/select2.min.css';
         $this->render('certificate/index');
+    }
+
+    public function retrieveAutoCompletes($fieldName){
+        if($fieldName && ($searchTerm = $this->input->get('term'))){
+            echo json_encode($this->certificate_model->getAutoCompletes($fieldName, $searchTerm));
+            exit;
+        }else{
+            echo json_encode(null);
+            exit;
+        }
     }
 
     public function add(){

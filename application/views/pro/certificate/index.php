@@ -6,8 +6,7 @@
  * Time: 10:27
  */
 ?>
-<p class="df-lead">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+<p class="df-lead">Liste des Attestation de Bonnes Fin d'Execution délivrées à AKASI Group
 </p>
 <div class="position-absolute" style="z-index: 9999">
     <a href="<?= site_url('certificate/add') ?>" class="btn btn-lg btn-primary btn-uppercase mg-l-5"><i data-feather="plus" class="wd-10 mg-r-5"></i> Ajouter ABE</a>
@@ -40,7 +39,9 @@
         foreach ($certificates as $key=> $certificate){
             ?>
             <tr>
-                <td><?= $certificate->internal_file_number ?></td>
+                <td><a href="<?= site_url("certificate/edit/$certificate->slug") ?>">
+                        <?= $certificate->internal_file_number ?>
+                    </a></td>
                 <td><?= $certificate->title ?></td>
                 <td><?= $certificate->activity_area_name ?></td>
                 <td><?= $certificate->sub_activity_area ?></td>

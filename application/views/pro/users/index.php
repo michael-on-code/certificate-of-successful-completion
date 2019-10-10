@@ -6,8 +6,7 @@
  * Time: 09:22
  */
 ?>
-<p class="df-lead">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+<p class="df-lead">Liste des utilisateurs administrant la plateforme
 </p>
 <div class="position-absolute" style="z-index: 9999">
     <a href="<?= site_url('users/add') ?>" class="btn btn-lg btn-primary btn-uppercase mg-l-5"><i data-feather="plus"

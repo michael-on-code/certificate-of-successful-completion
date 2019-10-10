@@ -6,7 +6,10 @@
  * Time: 15:18
  */
 ?>
-<p class="df-lead">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt</p>
+<p class="df-lead">
+    Bienvenue sur <?= maybe_null_or_empty($options, 'siteName') ?>. Gérer maintenant les Attestations de Bonnes fin d'Exécution
+    (ABE) délivrées à AKASI Group
+</p>
 <div class="row">
     <div class="col-lg-4 mg-b-15">
         <div class="card card-body">
@@ -43,7 +46,7 @@
             <div class="mg-b-25"><i data-feather="grid" class="wd-50 ht-50 tx-gray-500"></i></div>
             <h5 class="tx-inverse mg-b-20">Liste des ABE</h5>
             <p class="mg-b-20">Cliquer ici pour visualiser la liste complète des Attestations de Bonne Exécution</p>
-            <a href="<?= site_url('abe') ?>" class="tx-medium">Visualiser liste des ABE <i
+            <a href="<?= site_url('certificate') ?>" class="tx-medium">Visualiser liste des ABE <i
                         class="icon ion-md-arrow-forward mg-l-5"></i></a>
         </div>
     </div><!-- col-6 -->
@@ -52,7 +55,7 @@
             <div class="mg-b-25"><i data-feather="upload" class="wd-50 ht-50 tx-gray-500"></i></div>
             <h5 class="tx-inverse mg-b-20">Ajouter une ABE</h5>
             <p class="mg-b-20">Cliquer ici pour ajouter une  Attestations de Bonne Exécution</p>
-            <a href="<?= site_url('abe') ?>" class="tx-medium">Ajouter une ABE <i class="icon ion-md-arrow-forward mg-l-5"></i></a>
+            <a href="<?= site_url('certificate/add') ?>" class="tx-medium">Ajouter une ABE <i class="icon ion-md-arrow-forward mg-l-5"></i></a>
         </div>
     </div>
     <div class="col-sm-6">
@@ -60,7 +63,7 @@
             <div class="mg-b-25"><i data-feather="users" class="wd-50 ht-50 tx-gray-500"></i></div>
             <h5 class="tx-inverse mg-b-20">Liste des utilisateurs</h5>
             <p class="mg-b-20">Cliquer ici pour visualiser la liste des utilisateurs de la plateforme</p>
-            <a href="<?= site_url('abe') ?>" class="tx-medium">Visualiser liste des utilisateurs <i class="icon ion-md-arrow-forward mg-l-5"></i></a>
+            <a href="<?= site_url('users') ?>" class="tx-medium">Visualiser liste des utilisateurs <i class="icon ion-md-arrow-forward mg-l-5"></i></a>
         </div>
     </div><!-- col-6 -->
     <div class="col-sm-6">
@@ -68,7 +71,7 @@
             <div class="mg-b-25"><i data-feather="user-plus" class="wd-50 ht-50 tx-gray-500"></i></div>
             <h5 class="tx-inverse mg-b-20">Ajouter un utilisateur</h5>
             <p class="mg-b-20">Cliquer ici pour ajouter un nouvel utilisateur</p>
-            <a href="<?= site_url('abe') ?>" class="tx-medium">Ajouter un utilisateur <i class="icon ion-md-arrow-forward mg-l-5"></i></a>
+            <a href="<?= site_url('users/add') ?>" class="tx-medium">Ajouter un utilisateur <i class="icon ion-md-arrow-forward mg-l-5"></i></a>
         </div>
     </div>
     <div class="col-sm-6">
@@ -76,7 +79,7 @@
             <div class="mg-b-25"><i data-feather="user" class="wd-50 ht-50 tx-gray-500"></i></div>
             <h5 class="tx-inverse mg-b-20">Mon compte</h5>
             <p class="mg-b-20">Cliquer ici pour modifier vos informations ainsi que votre mot de passe</p>
-            <a href="<?= site_url('abe') ?>" class="tx-medium">Mon compte <i class="icon ion-md-arrow-forward mg-l-5"></i></a>
+            <a href="<?= site_url('account') ?>" class="tx-medium">Mon compte <i class="icon ion-md-arrow-forward mg-l-5"></i></a>
         </div>
     </div>
     <div class="col-sm-6">
@@ -84,7 +87,7 @@
             <div class="mg-b-25"><i data-feather="settings" class="wd-50 ht-50 tx-gray-500"></i></div>
             <h5 class="tx-inverse mg-b-20">Paramètres généraux</h5>
             <p class="mg-b-20">Cliquer ici pour modifier les paramètres généraux de la plateforme AKASI ABE</p>
-            <a href="<?= site_url('abe') ?>" class="tx-medium">Modifier paramètres généraux <i class="icon ion-md-arrow-forward mg-l-5"></i></a>
+            <a href="<?= site_url('settings') ?>" class="tx-medium">Modifier paramètres généraux <i class="icon ion-md-arrow-forward mg-l-5"></i></a>
         </div>
     </div>
 </div><!-- row -->
