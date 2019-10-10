@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 08 Octobre 2019 à 08:46
+-- Généré le :  Jeu 10 Octobre 2019 à 05:36
 -- Version du serveur :  5.7.14
 -- Version de PHP :  7.0.10
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `abe` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(100) NOT NULL,
-  `slug` varchar(25) NOT NULL,
+  `slug` varchar(50) NOT NULL,
   `activity_area_id` tinyint(3) UNSIGNED NOT NULL,
   `sub_activity_area` varchar(35) NOT NULL,
   `signature_date` date NOT NULL,
@@ -42,14 +42,14 @@ CREATE TABLE `abe` (
   `project_execution_end_date` date DEFAULT NULL,
   `country` varchar(4) NOT NULL,
   `city` varchar(35) NOT NULL,
-  `funding_source` varchar(35) NOT NULL,
+  `funding_source` varchar(35) DEFAULT NULL,
   `affiliate_company_id` tinyint(3) UNSIGNED NOT NULL,
   `project_awarded_date` date NOT NULL,
   `akasi_share` tinyint(3) UNSIGNED NOT NULL,
-  `project_partner` varchar(35) NOT NULL,
+  `project_partner` varchar(35) DEFAULT NULL,
   `active` tinyint(1) UNSIGNED NOT NULL,
-  `created_at` date NOT NULL,
-  `updated_ at` date DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
   `user_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -197,7 +197,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2y$08$XU.b7o6fOb7VXft0pBxESO7vi0wXJCBn8.ccTKBrprh79nI/DiO12', '', 'admin@admin.com', '', NULL, NULL, '4oHv.FfojMyRDXvSjab30O', 1268889823, 1570522635, 1, 'Michael', 'ANIMASHAUN', 'ADMIN', '0');
+(1, '127.0.0.1', 'administrator', '$2y$08$XU.b7o6fOb7VXft0pBxESO7vi0wXJCBn8.ccTKBrprh79nI/DiO12', '', 'admin@admin.com', '', NULL, NULL, 'QumxGle7rlks53wpwV5aG.', 1268889823, 1570679032, 1, 'Michael', 'ANIMASHAUN', 'ADMIN', '0');
 
 -- --------------------------------------------------------
 
@@ -237,7 +237,7 @@ CREATE TABLE `user_meta` (
 --
 
 INSERT INTO `user_meta` (`id`, `user_id`, `key`, `value`) VALUES
-(1, 1, 'user_photo', '1532207fc1fbadd8eb77044c4ed8872b.jpg');
+(1, 1, 'user_photo', 'fe50c1699bfdd8f5e8d9e4b94ce1299a.jpg');
 
 --
 -- Index pour les tables exportées
@@ -250,7 +250,8 @@ ALTER TABLE `abe`
   ADD PRIMARY KEY (`id`),
   ADD KEY `activity_area_id` (`activity_area_id`),
   ADD KEY `affiliate_company_id` (`affiliate_company_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `slug` (`slug`);
 
 --
 -- Index pour la table `abe_meta`
@@ -319,12 +320,12 @@ ALTER TABLE `user_meta`
 -- AUTO_INCREMENT pour la table `abe`
 --
 ALTER TABLE `abe`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT pour la table `abe_meta`
 --
 ALTER TABLE `abe_meta`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 --
 -- AUTO_INCREMENT pour la table `activity_area`
 --

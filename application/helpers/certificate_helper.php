@@ -8,7 +8,7 @@
 
 function get_add_edit_certificate_html_form($edit = false, $certificate = [], $activity_areas = [], $countries, $affiliateCompanies, $currencies, $uploadPath)
 {
-    echo form_open() ?>
+    echo form_open_multipart() ?>
     <div class="form-group">
         <?php echo form_label('Désignation', 'title', [
             'class' => 'd-block'
@@ -19,7 +19,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
             'class' => 'form-control',
             'required' => '',
             'id' => 'title',
-            'value' => set_value('certificate[title]', maybe_null_or_empty($certificate, 'title'), true)
+            'value' => set_value('certificate[title]', maybe_null_or_empty($certificate, 'title'), false)
         ]);
         echo get_form_error('certificate[title]')
         ?>
@@ -30,7 +30,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
             echo form_label("Secteur d'activité", 'activity_area_id', [
                 'class' => 'd-block'
             ]);
-            echo form_dropdown('certificate[activity_area_id]', $activity_areas, set_value('certificate[activity_area_id]', maybe_null_or_empty($certificate, 'activity_area_id'), true), [
+            echo form_dropdown('certificate[activity_area_id]', $activity_areas, set_value('certificate[activity_area_id]', maybe_null_or_empty($certificate, 'activity_area_id'), false), [
                 'class' => 'form-control select2',
                 'id' => 'activity_area_id',
                 'required' => '',
@@ -50,7 +50,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 'required' => '',
                 'placeholder' => "Sous Secteur d'activité",
                 'id' => 'sub_activity_area',
-                'value' => set_value('certificate[sub_activity_area]', maybe_null_or_empty($certificate, 'sub_activity_area'), true)
+                'value' => set_value('certificate[sub_activity_area]', maybe_null_or_empty($certificate, 'sub_activity_area'), false)
             ]);
             echo get_form_error('certificate[sub_activity_area]');
             getFieldInfo('Autocomplétion disponible');
@@ -67,7 +67,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 'required' => '',
                 'placeholder' => 'N° Interne du dossier',
                 'id' => 'internal_file_number',
-                'value' => set_value('certificate[internal_file_number]', maybe_null_or_empty($certificate, 'internal_file_id'), true)
+                'value' => set_value('certificate[internal_file_number]', maybe_null_or_empty($certificate, 'internal_file_number'), false)
             ]);
             echo get_form_error('certificate[internal_file_number]');
             ?>
@@ -87,7 +87,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 'required' => '',
                 'placeholder' => 'Date de signature',
                 'id' => 'signature_date',
-                'value' => set_value('certificate[signature_date]', maybe_null_or_empty($certificate, 'signature_date'), true)
+                'value' => set_value('certificate[signature_date]', convert_date_to_french(maybe_null_or_empty($certificate, 'signature_date')), false)
             ]);
             echo get_form_error('certificate[signature_date]');
             ?>
@@ -105,7 +105,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 'required' => '',
                 'placeholder' => "Date d'attribution",
                 'id' => 'project_awarded_date',
-                'value' => set_value('certificate[project_awarded_date]', maybe_null_or_empty($certificate, 'project_awarded_date'), true)
+                'value' => set_value('certificate[project_awarded_date]', convert_date_to_french(maybe_null_or_empty($certificate, 'project_awarded_date')), false)
             ]);
             echo get_form_error('certificate[project_awarded_date]');
             ?>
@@ -125,7 +125,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                         //'required' => '',
                         'placeholder' => "Début",
                         'id' => 'dateFrom',
-                        'value' => set_value('certificate[project_execution_start_date]', maybe_null_or_empty($certificate, 'project_execution_start_date'), true)
+                        'value' => set_value('certificate[project_execution_start_date]', convert_date_to_french(maybe_null_or_empty($certificate, 'project_execution_start_date')), false)
                     ]);
                     echo get_form_error('certificate[project_execution_start_date]');
                     getFieldInfo("Début période d'exécution");
@@ -139,7 +139,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                         //'required' => '',
                         'placeholder' => "Fin",
                         'id' => 'dateTo',
-                        'value' => set_value('certificate[project_execution_end_date]', maybe_null_or_empty($certificate, 'project_execution_end_date'), true)
+                        'value' => set_value('certificate[project_execution_end_date]', convert_date_to_french(maybe_null_or_empty($certificate, 'project_execution_end_date')), false)
                     ]);
                     echo get_form_error('certificate[project_execution_end_date]');
                     getFieldInfo("Fin période d'exécution");
@@ -163,7 +163,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 'placeholder' => "Autorité contractante",
                 'id' => 'customer_name',
                 'data-target' => 'customer_names',
-                'value' => set_value('certificate[customer_name]', maybe_null_or_empty($certificate, 'customer_name'), true)
+                'value' => set_value('certificate[customer_name]', maybe_null_or_empty($certificate, 'customer_name'), false)
             ]);
             echo get_form_error('certificate[customer_name]');
             getFieldInfo('Autocomplétion disponible');
@@ -176,7 +176,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
             ]);
             ?>
             <?php
-            echo form_dropdown('certificate[country]', $countries, set_value('certificate[country]', maybe_null_or_empty($certificate, 'country'), true), [
+            echo form_dropdown('certificate[country]', $countries, set_value('certificate[country]', maybe_null_or_empty($certificate, 'country'), false), [
                 'class' => 'form-control select2',
                 'id' => 'country',
                 'required' => '',
@@ -198,7 +198,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 'placeholder' => "Ville",
                 'id' => 'city',
                 'data-target' => 'cities',
-                'value' => set_value('certificate[city]', maybe_null_or_empty($certificate, 'city'), true)
+                'value' => set_value('certificate[city]', maybe_null_or_empty($certificate, 'city'), false)
             ]);
             echo get_form_error('certificate[city]');
             getFieldInfo('Autocomplétion disponible');
@@ -217,7 +217,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 'required' => '',
                 'placeholder' => "Adresse maître d'ouvrage",
                 'id' => 'customer_adress',
-                'value' => set_value('certificate[customer_adress]', maybe_null_or_empty($certificate, 'customer_adress'), true)
+                'value' => set_value('certificate[customer_adress]', maybe_null_or_empty($certificate, 'customer_adress'), false)
             ]);
             echo get_form_error('certificate[customer_adress]');
             ?>
@@ -239,7 +239,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                     'required' => '',
                     'placeholder' => "Montant de la prestation",
                     'id' => 'total_amount',
-                    'value' => set_value('certificate[total_amount]', maybe_null_or_empty($certificate, 'total_amount'), true)
+                    'value' => set_value('certificate[total_amount]', maybe_null_or_empty($certificate, 'total_amount'), false)
                 ]);
                 echo get_form_error('certificate[total_amount]');
                 ?>
@@ -260,7 +260,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                     'required' => '',
                     'placeholder' => "Montant payé à l'entreprise",
                     'id' => 'amount_received',
-                    'value' => set_value('certificate[amount_received]', maybe_null_or_empty($certificate, 'amount_received'), true)
+                    'value' => set_value('certificate[amount_received]', maybe_null_or_empty($certificate, 'amount_received'), false)
                 ]);
                 echo get_form_error('certificate[amount_received]');
                 ?>
@@ -281,7 +281,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 'placeholder' => "Source de financement",
                 'id' => 'funding_source',
                 'data-target' => 'funding_sources',
-                'value' => set_value('certificate[funding_source]', maybe_null_or_empty($certificate, 'funding_source'), true)
+                'value' => set_value('certificate[funding_source]', maybe_null_or_empty($certificate, 'funding_source'), false)
             ]);
             echo get_form_error('certificate[funding_source]');
             getFieldInfo('Autocomplétion disponible');
@@ -304,7 +304,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                     //'type' => 'number',
                     'placeholder' => "Part",
                     'id' => 'akasi_share',
-                    'value' => set_value('certificate[akasi_share]', maybe_null_or_empty($certificate, 'akasi_share'), true)
+                    'value' => set_value('certificate[akasi_share]', maybe_null_or_empty($certificate, 'akasi_share'), false)
                 ]);
                 echo get_form_error('certificate[akasi_share]');
                 ?>
@@ -320,7 +320,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
             ]);
             ?>
             <?php
-            echo form_dropdown('certificate[affiliate_company_id]', $affiliateCompanies, set_value('certificate[affiliate_company_id]', maybe_null_or_empty($certificate, 'affiliate_company_id'), true), [
+            echo form_dropdown('certificate[affiliate_company_id]', $affiliateCompanies, set_value('certificate[affiliate_company_id]', maybe_null_or_empty($certificate, 'affiliate_company_id'), false), [
                 'class' => 'form-control select2',
                 'id' => 'affiliate_company',
                 'required' => ''
@@ -342,7 +342,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 'placeholder' => "Partenaire ou associé",
                 'id' => 'project_partner',
                 'data-target' => 'project_partners',
-                'value' => set_value('certificate[project_partner]', maybe_null_or_empty($certificate, 'project_partner'), true)
+                'value' => set_value('certificate[project_partner]', maybe_null_or_empty($certificate, 'project_partner'), false)
             ]);
             echo get_form_error('certificate[project_partner]');
             getFieldInfo('Autocomplétion disponible');
@@ -388,7 +388,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 'name' => 'certificateFile',
                 'title' => 'Copie ABE',
             ];
-            if ($file = maybe_null_or_empty($certificate, 'certificateFile', true)) {
+            if ($file = maybe_null_or_empty($certificate, 'certificateFile', false)) {
                 $data['value'] = $uploadPath . $file;
             } else {
                 $data['value'] = set_value('certificateFile', '');
@@ -406,7 +406,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 'name' => 'minuteFile',
                 'title' => 'PV de réception',
             ];
-            if ($file = maybe_null_or_empty($certificate, 'minuteFile', true)) {
+            if ($file = maybe_null_or_empty($certificate, 'minuteFile', false)) {
                 $data['value'] = $uploadPath . $file;
             } else {
                 $data['value'] = set_value('minuteFile', '');
@@ -422,7 +422,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 'name' => 'contractFile',
                 'title' => 'Contrat',
             ];
-            if ($file = maybe_null_or_empty($certificate, 'contractFile', true)) {
+            if ($file = maybe_null_or_empty($certificate, 'contractFile', false)) {
                 $data['value'] = $uploadPath . $file;
             } else {
                 $data['value'] = set_value('contractFile', '');
@@ -434,7 +434,15 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
             ?>
         </div>
     </div>
-    <?php getFormSubmit($edit ? 'Modifier' : 'Ajouter') ?>
+    <?php getFormSubmit($edit ? 'Modifier' : 'Ajouter');
+    if($edit){
+        ?>
+        <div class="clearfix mg-t-15">
+            <a href="<?= site_url('certificate') ?>"><i data-feather="arrow-left"></i> Retour à la liste</a>
+        </div>
+        <?php
+    }
+    ?>
 
     <?php echo form_close() ?>
     <?php
@@ -447,7 +455,7 @@ function getCurrencyInputGroupHTML($currencies)
         <?php
         ?>
         <button class="btn btn-outline-light dropdown-toggle" type="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false"><?= $currencies[0] ?>
+                aria-haspopup="false" aria-expanded="false"><?= $currencies[0] ?>
         </button>
         <?php
         unset($currencies[0]);
@@ -489,7 +497,7 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
                 'name' => 'certificate[internal_file_number]',
                 'label' => "N° Interne du dossier",
                 'rules' => [
-                    'trim', 'required', /*[$ci->option_model, 'removeSpacesAndConvertToInt'],*/ 'max_length[25]', $edit ? [$ci->option_model, "is_unique_on_update[abe.internal_file_number.$certificateID]"] : 'is_unique[abe.internal_file_number]'
+                    'trim', 'required', /*[$ci->option_model, 'removeSpacesAndConvertToInt'],*/ 'max_length[25]', $edit ? "callback_is_unique_on_update[abe.internal_file_number.$certificateID]" : 'is_unique[abe.internal_file_number]'
                 ],
             ],[
                 'name' => 'certificate[signature_date]',
@@ -585,34 +593,11 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
                 'label' => "Détail des tâches exécutées",
                 'rules' => 'trim|required'
             ],
-            [
-                'name' => 'certificateFile',
-                'label' => "Copie ABE",
-                'rules' => 'required',
-                'custom_message' => [
-                    'required' => "Veuillez uploader une copie de l'ABE"
-                ]
-            ],
-            [
-                'name' => 'minuteFile',
-                'label' => "PV de réception",
-                'rules' => 'required',
-                'custom_message' => [
-                    'required' => "Veuillez uploader le PV de réception"
-                ]
-            ],
-            [
-                'name' => 'contractFile',
-                'label' => "PV de réception",
-                'rules' => 'required',
-                'custom_message' => [
-                    'required' => "Veuillez uploader le Contrat"
-                ]
-            ],
 
         ]);
         if ($ci->form_validation->run()) {
             $certificate = $ci->input->post('certificate');
+            //var_dump($certificate);exit;
             if(maybe_null_or_empty($certificate, 'signature_date', true)){
                 $certificate['signature_date']=convert_date_to_english($certificate['signature_date']);
             }
@@ -632,7 +617,7 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
             if ($data = upload_data(array(
                 'upload_path' => FCPATH . 'uploads',
                 'allowed_types' => 'jpg|png|jpeg|pdf|doc|docx',
-                'max_size' => 1024,
+                'max_size' => 1024*5,
             ), $uploadNames)) {
                 foreach ($uploadNames as $name) {
                     if (isset($data[$name]) && maybe_null_or_empty($data[$name], 'raw_name')) {
@@ -640,10 +625,90 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
                     }
                 }
             }
+
             //var_dump($data);exit;
-            $ci->certificate_model->insertOrUpdate($certificate);
+            $certificateID = $ci->certificate_model->insertOrUpdate($certificate, $certificateID);
+            if($certificateSlug == ''){
+                $certificateSlug = $ci->certificate_model->getCertificateFieldByID($certificateID, 'slug');
+            }
+            get_success_message($edit ? 'ABE modifiée avec succès' : 'ABE ajoutée avec succès');
+            redirect("certificate/edit/$certificateSlug");
         } else {
             get_error_message();
+        }
+    }
+}
+
+function downloadFiles(array $filesToBeDownloaded){
+    $zip = new ZipArchive();
+    $filename = "fichier-".uniqid().".zip";
+
+    if ($zip->open($filename, ZipArchive::CREATE)!==TRUE) {
+        exit("cannot open <$filename>\n");
+    }
+
+    $dir = 'uploads/';
+
+    // Create zip
+    createZip($zip,$dir, $filesToBeDownloaded);
+
+    $zip->close();
+
+    if (file_exists($filename)) {
+        header('Content-Type: application/zip');
+        header('Content-Disposition: attachment; filename="'.basename($filename).'"');
+        header('Content-Length: ' . filesize($filename));
+        flush();
+        readfile($filename);
+        unlink($filename);
+    }else{
+        get_error_message("Telechargement échoué <br> Une erreur s'est produite");
+        redirect('certificate');
+    }
+}
+
+// Create zip
+function createZip($zip,$dir, array $filesWithExtensions){
+    if (is_dir($dir) && !empty($filesWithExtensions)){
+
+        if ($dh = opendir($dir)){
+            foreach ($filesWithExtensions as $file) {
+                if (is_file($dir.$file)) {
+                    if($file != '' && $file != '.' && $file != '..'){
+
+                        $zip->addFile($dir.$file, $file);
+                    }
+                }
+            }
+
+            /*while (($file = readdir($dh)) !== false){
+
+                // If file
+                if (is_file($dir.$file)) {
+                    if($file != '' && $file != '.' && $file != '..'){
+
+                        $zip->addFile($dir.$file);
+                    }
+                }else{
+                    // If directory
+                    if(is_dir($dir.$file) ){
+
+                        if($file != '' && $file != '.' && $file != '..'){
+
+                            // Add empty directory
+                            $zip->addEmptyDir($dir.$file);
+
+                            $folder = $dir.$file.'/';
+
+                            // Read data of the folder
+                            createZip($zip,$folder);
+                        }
+                    }
+
+                }
+
+            }*/
+            closedir($dh);
         }
     }
 }

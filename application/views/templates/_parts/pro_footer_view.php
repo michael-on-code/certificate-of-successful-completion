@@ -28,7 +28,7 @@ pos-fixed b-0
 ?>
 <script src="<?= $assetsUrl ?>js/dashforge.js"></script>
 <script src="<?= $assetsUrl ?>js/public.js"></script>
-<script src="<?= $assetsUrl ?>js/pro.js?v=1.10"></script>
+<script src="<?= $assetsUrl ?>js/pro.js?v=1.11"></script>
 
 <!--end::Page Scripts -->
 </body>

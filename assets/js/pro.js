@@ -53,6 +53,24 @@ $(function () {
         })
     }
 
+    $(document).on('click', ".prompt", function (e) {
+        e.preventDefault();
+        var message = $(this).attr("data-confirm-message"), href = $(this).attr('data-href');
+        swal({
+            title: "Confirmation",
+            text: message,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: 'Oui',
+            cancelButtonText: 'Non',
+            closeOnConfirm: false,
+            html: false
+        }, function () {
+            window.location.href = href;
+        });
+
+    });
     if ($('#example1').length) {
         var table = $('#example1').DataTable({
             columnDefs: [{

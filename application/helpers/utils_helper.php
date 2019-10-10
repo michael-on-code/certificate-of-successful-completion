@@ -407,8 +407,10 @@ function get_meta($id, $key, $table_meta, $table_id_val)
 
 function convert_date_to_french($date)
 {
-    if ($date && is_string($date) && strpos($date, '-'))
+    if ($date && $date!='0000-00-00' && is_string($date) && strpos($date, '-') && strtotime($date)){
         return date('d/m/Y', strtotime($date));
+    }
+    return null;
 }
 
 function delete_in_table($table_name, $id, $redirect)
@@ -422,6 +424,7 @@ function delete_in_table($table_name, $id, $redirect)
 function control_unique_on_update($value, $db_field)
 {
     $ci = &get_instance();
+
     $db_field = explode('.', $db_field);
     $table = $db_field[0];
     $target_field = $db_field[1];
