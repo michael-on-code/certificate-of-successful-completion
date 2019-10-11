@@ -12,10 +12,12 @@ function get_current_user_id()
     $ci = &get_instance();
     return $ci->ion_auth->user()->row()->id;
 }
-function getUserPhotoUrl($picFileName=''){
-    if($picFileName==''){
+
+function getUserPhotoUrl($picFileName = '')
+{
+    if ($picFileName == '') {
         $CI = &get_instance();
-        return base_url("uploads/").maybe_null_or_empty($CI->data['options'], 'siteDefaultAvatar');
+        return base_url("uploads/") . maybe_null_or_empty($CI->data['options'], 'siteDefaultAvatar');
     }
     return base_url("uploads/$picFileName");
 }
@@ -46,11 +48,12 @@ function get_user_menu($user_groups)
     }
 }
 
-function getUserRolesInString(array $userRoles){
-    $temp=[];
-    if(!empty($userRoles)){
-        foreach ($userRoles as $role){
-            $temp[]=maybe_null_or_empty($role, 'description');
+function getUserRolesInString(array $userRoles)
+{
+    $temp = [];
+    if (!empty($userRoles)) {
+        foreach ($userRoles as $role) {
+            $temp[] = maybe_null_or_empty($role, 'description');
         }
     }
     return implode(', ', $temp);
@@ -59,7 +62,7 @@ function getUserRolesInString(array $userRoles){
 function get_menu_by_group($group)
 {
     //$ci = &get_instance();
-    $ci = & get_instance();
+    $ci = &get_instance();
     switch ($group) {
         case 'admin':
             return array(
@@ -67,21 +70,21 @@ function get_menu_by_group($group)
                     'title' => 'Paramètres',
                     'url' => site_url('settings'),
                     'order' => 4,
-                    'icon'=>'settings'
+                    'icon' => 'settings'
                 ),
                 array(
                     'url' => site_url('users'),
                     'title' => 'Utilisateurs',
                     'order' => 3,
-                    'icon'=>'users',
-                    'submenus'=>[
+                    'icon' => 'users',
+                    'submenus' => [
                         [
-                            'title'=>'Liste',
-                            'url'=>site_url('users')
+                            'title' => 'Liste',
+                            'url' => site_url('users')
                         ],
                         [
-                            'title'=>'Ajouter',
-                            'url'=>site_url('users/add')
+                            'title' => 'Ajouter',
+                            'url' => site_url('users/add')
                         ],
                     ]
                 ),
@@ -94,25 +97,25 @@ function get_menu_by_group($group)
                     'title' => 'Mon compte',
                     'url' => site_url('account'),
                     'order' => 5,
-                    'icon'=>'user'
-                ),array(
+                    'icon' => 'user'
+                ), array(
                     'title' => 'Déconnexion',
                     'url' => site_url('logout'),
                     'order' => 6,
-                    'icon'=>'log-out'
-                ),array(
+                    'icon' => 'log-out'
+                ), array(
                     'title' => 'Attestations',
                     'url' => site_url('certificate'),
                     'order' => 2,
-                    'icon'=>'layers',
-                    'submenus'=>[
+                    'icon' => 'layers',
+                    'submenus' => [
                         [
-                            'title'=>'Liste',
-                            'url'=>site_url('certificate')
+                            'title' => 'Liste',
+                            'url' => site_url('certificate')
                         ],
                         [
-                            'title'=>'Ajouter',
-                            'url'=>site_url('certificate/add')
+                            'title' => 'Ajouter',
+                            'url' => site_url('certificate/add')
                         ],
                     ]
                 ),
@@ -120,13 +123,13 @@ function get_menu_by_group($group)
                     'url' => site_url('dashboard'),
                     'title' => 'Tableau de bord',
                     'order' => 1,
-                    'icon'=>'layout'
+                    'icon' => 'layout'
                 ),
             );
     }
 }
 
-function redirect_if_not_logged_in($to='login')
+function redirect_if_not_logged_in($to = 'login')
 {
     $CI = &get_instance();
     if (!$CI->ion_auth->logged_in()) {
@@ -135,11 +138,13 @@ function redirect_if_not_logged_in($to='login')
     }
 
 }
-function redirect_if_is_banned($to='web-login/logout')
+
+function redirect_if_is_banned($to = '/')
 {
     $CI = &get_instance();
     //var_dump($CI->data['user']);exit;
-    if ($CI->data['user']->active ==2 || $CI->data['user']->active ==0) {
+    if ($CI->data['user']->active == 2 || $CI->data['user']->active == 0) {
+        $CI->ion_auth->logout();
         get_error_message("Vous avez été banni. <br> Veuillez contacter l'administrateur");
         redirect($to);
     }
@@ -147,7 +152,7 @@ function redirect_if_is_banned($to='web-login/logout')
 }
 
 
-function redirect_if_logged_in($to='dashboard')
+function redirect_if_logged_in($to = 'dashboard')
 {
     $CI = &get_instance();
     if ($CI->ion_auth->logged_in()) {
@@ -162,7 +167,6 @@ function redirect_if_user_cannot($group_name, $redirect = 'dashboard')
         redirect($redirect);
     }
 }
-
 
 
 function getCountries()
@@ -409,4 +413,208 @@ function getCountries()
         "ZM" => "Zambia",
         "ZW" => "Zimbabwe"
     );
+}
+
+function get_add_edit_user_html_form($edit = false, $user = [], $roles, $options, $uploadPath, $memberRoleID)
+{
+    ?>
+    <div class="row">
+        <div class="col-md-10">
+            <?php
+            echo form_open_multipart();
+            ?>
+            <form>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <?php
+                        echo form_label('Nom', 'last_name');
+                        echo form_input([
+                            'name' => "user[last_name]",
+                            'class' => 'form-control',
+                            'id' => 'last_name',
+                            'required' => '',
+                            'placeholder' => 'Nom',
+                            'value' => set_value('user[last_name]', maybe_null_or_empty($user, 'last_name'), true)
+                        ]);
+                        echo get_form_error("user[last_name]");
+                        //getFieldInfo('')
+                        ?>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <?php
+                        echo form_label('Prénom(s)', 'first_name');
+                        echo form_input([
+                            'name' => "user[first_name]",
+                            'class' => 'form-control',
+                            'id' => 'first_name',
+                            'rows' => 3, 'required' => '',
+                            'placeholder' => 'Prénom(s)',
+                            'value' => set_value('user[first_name]', maybe_null_or_empty($user, 'first_name'), false)
+                        ]);
+                        echo get_form_error("user[first_name]");
+                        //getFieldInfo('')
+                        ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <?php
+                        echo form_label('Adresse Email', 'email');
+                        echo form_input([
+                            'name' => "user[email]",
+                            'class' => 'form-control',
+                            'type' => 'email',
+                            'id' => 'email',
+                            'required' => '',
+                            'placeholder' => 'Adresse Email',
+                            'value' => set_value('user[email]', maybe_null_or_empty($user, 'email'), false)
+                        ]);
+                        echo get_form_error("user[email]");
+                        //getFieldInfo('')
+                        ?>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <?php
+                        echo form_label("Rôle(s) sur la plateforme", 'role');
+                        echo form_dropdown('user[roles][]', $roles, set_value('user[roles][]', $edit ? maybe_null_or_empty($user, 'roles') : $memberRoleID), [
+                            'class' => 'form-control select2',
+                            'id' => 'role',
+                            'required' => '',
+                            'multiple' => '',
+                        ]);
+                        getFieldInfo('Sélectionner les rôles du nouvel utilisateur. Par défaut, ce sera <strong>Modérateur</strong>');
+                        echo get_form_error("user[roles][]");
+                        //getFieldInfo('')
+                        ?>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <?php echo form_label('Avatar utilisateur');
+                    $data = [
+                        'name' => 'user_photo',
+                        'title' => 'Avatar utilisateur',
+                    ];
+                    if ($userPic = maybe_null_or_empty($options, 'siteDefaultAvatar', true)) {
+                        $data['value'] = $uploadPath . $userPic;
+                    }
+                    if ($edit) {
+                        if ($userPic = maybe_null_or_empty($user, 'user_photo', true)) {
+                            $data['value'] = $uploadPath . $userPic;
+                        }
+                    }
+                    get_form_upload($data, $extensions = 'png jpg jpeg', '1M', false);
+                    getFieldInfo('Format : PNG|JPG Taille Max : 1M');
+                    echo get_form_error('user_photo');
+                    ?>
+                </div>
+
+                <?php getFormSubmit($edit ? 'Modifier' : 'Ajouter');
+                if($edit){
+                    ?>
+                    <div class="clearfix mg-t-15">
+                        <a href="<?= site_url('users') ?>"><i data-feather="arrow-left"></i> Retour à la liste</a>
+                    </div>
+                    <?php
+                }
+                ?>
+                <?php echo form_close() ?>
+            </form>
+
+        </div>
+    </div>
+    <?php
+}
+
+function getUsersAddOrEditValidation($edit = false, $userID = '', $username = '', $memberRoleID)
+{
+    $ci =& get_instance();
+    if ($user = $ci->input->post('user')) {
+        setFormValidationRules([
+            [
+                'name' => 'user[last_name]',
+                'label' => 'Nom',
+                'rules' => 'trim|required|max_length[50]'
+            ],
+            [
+                'name' => 'user[first_name]',
+                'label' => 'Prénom(s)',
+                'rules' => 'trim|required|max_length[50]'
+            ],
+            [
+                'name' => 'user[email]',
+                'label' => 'Email',
+                'rules' => 'trim|required|max_length[100]' . $edit ? "callback_is_unique_on_update[users.email.$userID]" : 'is_unique[users.email]'
+            ],
+            [
+                'name' => 'user[roles][]',
+                'label' => "Role(s) du nouvel utilisateur",
+                'rules' => 'required',
+                [
+                    'checking_roles', [$ci->user_model, 'checkpoint_do_role_exist']
+                ]
+            ],
+        ]);
+        if ($ci->form_validation->run()) {
+            $uploadNames = [
+                'user_photo',
+            ];
+            if ($data = upload_data(array(
+                'upload_path' => FCPATH . 'uploads',
+                'allowed_types' => 'jpg|png|jpeg|ico',
+                'max_size' => 1024,
+            ), $uploadNames)) {
+                foreach ($uploadNames as $name) {
+                    if (isset($data[$name]) && maybe_null_or_empty($data[$name], 'raw_name')) {
+                        $user[$name] = $data[$name]['raw_name'] . $data[$name]['file_ext'];
+                    }
+                }
+            }
+            if (!in_array($memberRoleID, $user['roles'])) {
+                //add member role in case, member role not in array
+                $user['roles'][] = $memberRoleID;
+            }
+            $groupArray = $user['roles'];
+            unset($user['roles']);
+            if ($edit) {
+                //on update
+                $user['updated_by'] = get_current_user_id();
+                $ci->user_model->update($userID, $user, $groupArray);
+                get_success_message("Informations d'utilisateur mises à jour avec succès");
+                redirect("users/edit/$username");
+            } else {
+                $user['added_by'] = get_current_user_id();
+                if ($userData = $ci->user_model->insert($user, $groupArray)) {
+                    $userData = (object)$userData;
+                    $data = (object)$user;
+                    $siteName = $ci->data['options']['siteName'];
+                    //send user mail
+                    sendActivationMail($data, $userData, $siteName);
+                    sendNotificationMail("Bonjour cher administrateur, un utilisateur du nom de <strong> $data->first_name $data->last_name vient d'être ajouté à la plateforme.  </strong>");
+                    //TODO send mail to administrator
+                    get_success_message("L'utilisateur a été créé avec succès <br> Un mail de confirmation a été envoyé à $userData->email", 10000);
+                    redirect('users/edit/' . $ci->user_model->getUserFieldByID($userData->id, 'username'));
+                }else {
+                    get_error_message('Oops... Une erreur a été rencontrée');
+                }
+            }
+
+
+        } else {
+            get_error_message();
+        }
+    }
+}
+
+function sendActivationMail($data, $userData=[], $siteName){
+    if(empty($userData)){
+        $userData = $data;
+    }
+    $mail['title'] = "Finaliser inscription";
+    $mail['message'] = "Bonjour Mr/Mme $data->last_name $data->first_name. <br> Vous avez été désignés pour administrer la plateforme de $siteName. 
+Veuillez finaliser votre inscription en cliquant sur le bouton ci-dessous";
+    $mail['btnLabel'] = "Finaliser inscription";
+    $mail['btnLink'] = site_url('login/activate/') . "$userData->id/$userData->activation";
+    $mail['destination'] = $userData->email;
+    sendMail($siteName . ' <no-reply@akasigroup.com>', $mail);
 }

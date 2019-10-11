@@ -7,21 +7,6 @@
  */
 get_flashdata();
 ?>
-<style>
-    .password + span {
-        position: absolute;
-        right: 74px;
-        top: 12px;
-        text-indent: -9999px;
-        width: 25px;
-        height: 25px;
-        background: #aaa;
-        border-radius: 50%;
-        cursor:pointer;
-        border: none;
-        -webkit-appearance:none;
-    }
-</style>
 <div class="content content-fixed content-auth">
     <div class="container">
         <div class="media align-items-stretch justify-content-center ht-100p pos-relative">

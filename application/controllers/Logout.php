@@ -14,7 +14,10 @@ class Logout extends Pro_Controller{
     }
 
     public function index(){
-        $this->ion_auth->logout();
+        while($this->ion_auth->logged_in()){
+            $this->ion_auth->logout();
+            redirect('logout');
+        }
         get_info_message('Vous vous êtes déconnectés');
         redirect('/');
     }

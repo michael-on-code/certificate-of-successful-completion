@@ -26,12 +26,28 @@ class Certificate_model extends CI_Model{
         );
     }
 
+    public function getNumberOfCertificateAddedByUserID($userID=null, $onlyActiveOnes = true){
+        $sql = 'SELECT COUNT(id) as num FROM abe';
+        $sql = $userID ? $sql." where user_id=$userID" : $sql;
+        $sql = $onlyActiveOnes ? $sql. ($userID ? ' AND ' : ' where '). 'active=1' : $sql;
+        return $this->db->query($sql)->row()->num;
+    }
+
+    public function getNumberOfCertificateAddedLastWeekByUserID($userID=null, $onlyActiveOnes = true){
+        $sql = 'SELECT count(id) as num from abe WHERE created_at >= curdate() - INTERVAL DAYOFWEEK(curdate())+6 DAY
+AND created_at < curdate() - INTERVAL DAYOFWEEK(curdate())-1 DAY';
+        $sql = $userID ? $sql." AND user_id=$userID" : $sql;
+        $sql = $onlyActiveOnes ? $sql.' AND active=1' : $sql;
+        return $this->db->query($sql)->row()->num;
+    }
+
     public function getAll($onlyActiveOnes = true){
         $sql = "SELECT abe.*, activity_area.name as activity_area_name, affiliate_companies.name as affiliate_company_name FROM abe 
 join activity_area on activity_area.id = abe.activity_area_id join affiliate_companies on affiliate_companies.id = abe.affiliate_company_id";
         if($onlyActiveOnes){
             $sql = $sql. " where abe.active = 1";
         }
+        $sql=$sql.' order by abe.id desc';
         $certificates = $this->db->query($sql)->result_array();
         if(!empty($certificates)){
             foreach ($certificates as $key=>$certificate){
@@ -94,6 +110,9 @@ join activity_area on activity_area.id = abe.activity_area_id join affiliate_com
             //var_dump($data);exit;
             $this->db->insert('abe', $data);
             $certificateID = $this->db->insert_id();
+            $adminName = maybe_null_or_empty($this->data['user'], 'first_name'). ' '.maybe_null_or_empty($this->data['user'], 'last_name');
+            $data=(object)$data;
+            sendNotificationMail("L'administrateur <strong>$adminName</strong> vient d'ajouter une nouvelle ABE avec pour désignation <strong>$data->title</strong> et pour numéro interne <strong>$data->internal_file_number</strong> ");
         }else{
             $data['updated_at']=date('Y-m-d H:i:s');
             $this->db->update('abe', $data, ['id'=>$certificateID]);

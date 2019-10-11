@@ -69,8 +69,26 @@ $(function () {
         }, function () {
             window.location.href = href;
         });
-
     });
+
+    if($('#total_amount').length){
+        var amount_received=0;
+        var totalAmount=0;
+        $('#total_amount, #amount_received').change(function(){
+            var share = 100;
+            amount_received = $.trim($('#amount_received').val());
+            totalAmount = $.trim($('#total_amount').val());
+            if(amount_received==''){
+                $('#amount_received').val(totalAmount);
+            }else if (parseInt(totalAmount)>=parseInt(amount_received)){
+                share = (parseInt(amount_received) / parseInt(totalAmount))*100;
+                share = parseInt(share);
+            }
+            $('#akasi_share').val(share);
+        });
+    }
+
+
     if ($('#example1').length) {
         var table = $('#example1').DataTable({
             columnDefs: [{

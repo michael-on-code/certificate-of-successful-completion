@@ -11,6 +11,7 @@ class Settings extends Pro_Controller{
     public function __construct()
     {
         parent::__construct();
+        redirect_if_user_cannot('admin', 'dashboard');
     }
 
     public function index(){

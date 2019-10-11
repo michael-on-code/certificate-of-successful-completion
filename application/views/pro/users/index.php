@@ -17,58 +17,130 @@
     <thead class="thead-light">
     <tr>
         <!--        <th>#</th>-->
-        <th>Nom complet</th>
-        <th>Email</th>
-        <th>Derniere connexion</th>
+        <th>Nom complet & Email</th>
+        <th>Date de création</th>
+        <th>Dernière connexion</th>
         <th>Rôles</th>
         <th>Statut</th>
-        <th class="wd-15p-f">Actions</th>
-        <!--            <th class="wd-20p">Montant payé</th>-->
-        <!--            <th class="wd-20p">Période d'exécution</th>-->
-        <!--            <th class="wd-20p">Pays</th>-->
-        <!--            <th class="wd-20p">Ville</th>-->
-        <!--            <th class="wd-20p">Source de financement</th>-->
-        <!--            <th class="wd-20p">Filiale</th>-->
-        <!--            <th class="wd-20p">Date d'attribution</th>-->
-        <!--            <th class="wd-20p">Adresse maître ouvrage</th>-->
-        <!--            <th class="wd-20p">Part AKASI Group</th>-->
-        <!--            <th class="wd-20p">Partenaire / Associé</th>-->
+        <th>Ajouté par</th>
+        <th class="wd-10p-f">Actions</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <!--            <td><i data-feather="plus"></i></td>-->
-        <td>
-            <span
-            <div class="kt-user-card-v2"
-            <div class="kt-user-card-v2__pic"
-            <img alt="photo"
-                 src="https://mockup.csti-digital.com/lnb-final/uploads/a8cbbf96632bc47626b8349ed51e665d.jpg"</div
-            <div class="kt-user-card-v2__details"
-            <a class="kt-user-card-v2__name"
-               href="https://mockup.csti-digital.com/lnb-final/web-admin/users/edit/balogounmarianne5d3de2f79be87">BALOGOUN
-                Marianne</a</div</div></span></td>
-        <td>admin@admin.com</td>
-        <td>09/10/2016 08:25</td>
-        <td>Administrateur, Modérateur</td>
-        <td><span class="d-block wd-10 ht-10 bg-df-1 rounded mg-r-5"></span> Actif</td>
-        <td class="text-center">
-            <button data-toggle="tooltip" data-placement="top" title="Aperçu rapide" class="btn btn-light btn-icon">
-                <i data-feather="eye"></i>
-            </button>
-            <button data-toggle="tooltip" data-placement="top" title="Modifier ABE" class="btn btn-primary btn-icon">
-                <i data-feather="edit"></i>
-            </button>
-            <button data-toggle="tooltip" data-placement="top" title="Télécharger pièces jointes"
-                    class="btn btn-warning btn-icon">
-                <i data-feather="download"></i>
-            </button>
-            <button data-toggle="tooltip" data-placement="top" title="Supprimer ABE" class="btn btn-danger btn-icon">
-                <i data-feather="trash-2"></i>
-            </button>
+    <?php
+    foreach ($users as $key => $eachUser) {
+        $eachUser = (object)$eachUser;
+        $editUrl = site_url("users/edit/$eachUser->username");
+        if ($eachUser->id == maybe_null_or_empty($user, 'id')) {
+            $editUrl = site_url("account");
+        }
+        ?>
+        <tr>
+            <td>
+                <span style="display: flex;">
+                    <div class="avatar">
+                    <img
+                            alt="photo" class="rounded-circle"
+                            src="<?= $uploadPath . ($eachUser->user_photo != '' ? $eachUser->user_photo : $options['siteDefaultAvatar']) ?>">
+                </div>
+                <div class="pd-l-10">
+                    <a
+                            class="tx-medium mg-b-0"
+                            href="<?= $editUrl ?>"><?= $eachUser->last_name . ' ' . $eachUser->first_name . ($eachUser->id == maybe_null_or_empty($user, 'id') ? ' (Vous)' : '') ?></a>
+                    <small class="tx-12 tx-color-03 mg-b-0 mg-l-7"><?= $eachUser->email ?></small>
+                </div>
+                </span>
 
-        </td>
-    </tr>
+            </td>
+            <td><?= getDateByTime($eachUser->created_on, 'd/m/Y G:i:s') ?></td>
+            <td><?= getDateByTime($eachUser->last_login, 'd/m/Y G:i:s') ?></td>
+            <td><?= $eachUser->roles ?></td>
+            <td>
+                <li class="list-inline-item d-flex align-items-center">
+                <?php
+                if ($eachUser->active == 0) {
+                    ?>
+                    <span class="d-block wd-10 ht-10 bg-df-1 rounded mg-r-5"></span>
+                    <span class="tx-sans tx-uppercase tx-10 tx-medium tx-color-03">Attente</span>
+                    <?php
+                } elseif ($eachUser->active == 1) {
+                    ?>
+                    <span class="d-block wd-10 ht-10 bg-success rounded mg-r-5"></span>
+                    <span class="tx-sans tx-uppercase tx-10 tx-medium tx-color-03">Actif</span>
+                    <?php
+                } else {
+                    ?>
+                    <span class="d-block wd-10 ht-10 bg-danger rounded mg-r-5"></span>
+                    <span class="tx-sans tx-uppercase tx-10 tx-medium tx-color-03">Banni</span>
+                    <?php
+                }
+                ?>
+                </li>
+            </td>
+            <td>
+                <?php
+                if ($eachUser->added_by) {
+                    ?>
+                    <span style="display: flex;">
+                    <div class="avatar">
+                    <img
+                            alt="photo" class="rounded-circle"
+                            src="<?= $uploadPath . ($eachUser->added_by->user_photo != '' ? $eachUser->added_by->user_photo : $options['siteDefaultAvatar']) ?>">
+                </div>
+                <div class="pd-l-10">
+                    <a
+                            class="tx-medium mg-b-0"
+                            href="<?= ($eachUser->added_by->id == maybe_null_or_empty($user, 'id') ? site_url('account') : site_url("users/edit/" . $eachUser->added_by->username)) ?>"><?= $eachUser->added_by->last_name . ' ' . $eachUser->added_by->first_name ?></a>
+                </div>
+                </span>
+                    <?php
+                }
+                ?>
+
+            </td>
+            <td>
+                <a href="<?= $editUrl ?>"
+                   data-toggle="tooltip" data-placement="top" title="Modifier" class="btn btn-primary btn-icon">
+                    <i data-feather="edit"></i>
+                </a>
+                <?php
+                if ($eachUser->active == 1 && $eachUser->id != maybe_null_or_empty($user, 'id')) {
+                    ?>
+                    <a data-href="<?= site_url("users/ban/$eachUser->username") ?>"
+                       data-confirm-message="Voulez-vous vraiment bannir cet utilisateur"
+                       title="Bannir"
+                       href="#"
+                       data-toggle="tooltip" data-placement="top" class="btn btn-danger btn-icon prompt">
+                        <i data-feather="slash"></i>
+                    </a>
+                    <?php
+                } elseif ($eachUser->active == 2) {
+                    ?>
+                    <a data-href="<?= site_url("users/activate/$eachUser->username") ?>"
+                       data-confirm-message="Voulez-vous vraiment activé cet utilisateur"
+                       title="Activer"
+                       href="#"
+                       data-toggle="tooltip" data-placement="top" class="btn btn-success btn-icon prompt">
+                        <i data-feather="check"></i>
+                    </a>
+                    <?php
+                } elseif ($eachUser->active == 0) {
+                    ?>
+                    <a data-href="<?= site_url("users/resend-activation/$eachUser->username") ?>"
+                       data-confirm-message="Voulez-vous vraiment renvoyer le mail d'activation à cet utilisateur"
+                       title="Renvoyer Email d'activation"
+                       href="#"
+                       data-toggle="tooltip" data-placement="top" class="btn btn-light btn-icon prompt">
+                        <i data-feather="send"></i>
+                    </a>
+                    <?php
+                }
+                ?>
+            </td>
+        </tr>
+        <?php
+    }
+    ?>
 
 
     </tbody>

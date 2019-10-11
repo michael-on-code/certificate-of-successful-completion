@@ -18,7 +18,8 @@ class User_model extends CI_Model
     {
         return array(
             'user_photo',
-            'added_by'//user who created user
+            'added_by',//user who created user
+            'updated_by'//user who created user
         );
     }
 
@@ -99,6 +100,12 @@ class User_model extends CI_Model
 
         }
         return $users;
+    }
+
+    public function getTotalNumber($onlyActiveOnes=true){
+        $sql="SELECT COUNT(id) as num from users";
+        $sql = $onlyActiveOnes ? $sql." where active=1" : $sql;
+        return $this->db->query($sql)->row()->num;
     }
 
     public function getUsers($exceptCurrentUser = true, $onlyActiveUsers = false, $order = 'asc')
@@ -237,6 +244,7 @@ class User_model extends CI_Model
         }
         $username = $data['last_name'].$data['first_name'] . uniqid();
         $username = strtolower(preg_replace('/[^a-zA-Z0-9-_\.]/', '', $username));
+        $username = substr($username, 0, 100);
         //temporary password
         $password = uniqid();
         $email = $data['email'];

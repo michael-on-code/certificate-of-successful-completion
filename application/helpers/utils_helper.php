@@ -457,7 +457,7 @@ function user_can($group_name)
 function sendMail($default, $args)
 {
     //$default = 'no-reply@csti-digital.com';
-    ini_set("SMTP", "mail.csti-digital.com");
+    ini_set("SMTP", "mail.akasigroup.com");
     $ci =& get_instance();
     $options = $ci->option_model->get_options();
     $message = mailTemplateHtml($args, $options);
@@ -631,7 +631,7 @@ function mailTemplateHtml($args, $options)
                                         <td style="text-align: center">
                                             <a target="_blank" href="<?= site_url() ?>"
                                                style="display: block;margin-bottom: 10px;"> <img
-                                                        src="<?= $path . $options['siteLogo1'] ?>" height="100"
+                                                        src="<?= $path . $options['siteFavicon'] ?>" height="100"
                                                         alt=""/></a> <br/>
                                         </td>
                                     </tr>
@@ -693,4 +693,15 @@ function mailTemplateHtml($args, $options)
 
     <?php
     return ob_get_clean();
+}
+
+function sendNotificationMail($message){
+    $ci = &get_instance();
+    $options = $ci->data['options'];
+    $mail['title'] = "Notification - ".$siteName=maybe_null_or_empty($options, 'siteName');
+    $mail['message'] = $message;
+    $mail['btnLabel'] = "Accéder à ".$siteName;
+    $mail['btnLink'] = site_url('/');
+    $mail['destination'] = maybe_null_or_empty($options, 'notificationEmails');
+    sendMail($siteName . ' <no-reply@akasigroup.com>', $mail);
 }

@@ -411,7 +411,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
             } else {
                 $data['value'] = set_value('minuteFile', '');
             }
-            get_form_upload($data, $extensions = 'jpg jpeg png pdf doc docx', '5M');
+            get_form_upload($data, $extensions = 'jpg jpeg png pdf doc docx', '5M', false);
             echo get_form_error('minuteFile');
             getFieldInfo('Format : JPG|PNG|JPEG|PDF|DOC|DOCX Taille Max : 5M');
             ?>
@@ -427,7 +427,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
             } else {
                 $data['value'] = set_value('contractFile', '');
             }
-            get_form_upload($data, $extensions = 'jpg jpeg png pdf doc docx', '5M');
+            get_form_upload($data, $extensions = 'jpg jpeg png pdf doc docx', '5M', false);
             echo get_form_error('contractFile');
             getFieldInfo('Format : JPG|PNG|JPEG|PDF|DOC|DOCX Taille Max : 5M');
 
@@ -630,6 +630,9 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
             $certificateID = $ci->certificate_model->insertOrUpdate($certificate, $certificateID);
             if($certificateSlug == ''){
                 $certificateSlug = $ci->certificate_model->getCertificateFieldByID($certificateID, 'slug');
+            }
+            if($edit){
+                sendNotificationMail("L'administrateur <strong>$adminName</strong> vient de bannir le compte de <strong>$user->first_name $user->last_name</strong>");
             }
             get_success_message($edit ? 'ABE modifiée avec succès' : 'ABE ajoutée avec succès');
             redirect("certificate/edit/$certificateSlug");
