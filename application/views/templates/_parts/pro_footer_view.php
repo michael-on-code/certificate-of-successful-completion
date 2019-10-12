@@ -34,7 +34,7 @@ if (isset($clientData) && !empty($clientData)) {
 ?>
 <script src="<?= $assetsUrl ?>js/dashforge.js"></script>
 <script src="<?= $assetsUrl ?>js/public.js"></script>
-<script src="<?= $assetsUrl ?>js/pro.js?v=1.14"></script>
+<script src="<?= $assetsUrl ?>js/pro.js?v=1.15"></script>
 
 <!--end::Page Scripts -->
 </body>

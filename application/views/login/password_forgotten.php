@@ -5,6 +5,7 @@
  * Date: 07/10/2019
  * Time: 09:15
  */
+get_flashdata();
 ?>
 <div class="content content-fixed content-auth-alt">
     <div class="container d-flex justify-content-center ht-100p">
@@ -21,19 +22,21 @@
                 echo get_form_error('my_google_recaptcha')
                 ?>
             </div>
-            <div class="wd-100p d-flex flex-column flex-sm-row mg-b-20">
+            <div class="form-group  mg-b-20">
                 <?php
                 echo form_input([
                     'name'=>'email',
-                    'class'=>'form-control wd-sm-250 flex-fill',
+                    'type'=>'email',
+                    'class'=>'form-control flex-fill',
                     'placeholder'=>'Saisissez adresse Email',
                     'required'=>'',
                     'value'=>set_value('email', '', true)
-                ])
+                ]);
+                echo get_form_error('email');
                 ?>
-                <button type="submit" disabled class="btn btn-brand-02 mg-sm-l-10 mg-t-10 mg-sm-t-0">Reinitialiser</button>
             </div>
-            <div class="clearfix">
+            <button type="submit" disabled class="btn btn-brand-02 mg-sm-l-10 mg-t-10 mg-sm-t-0">Reinitialiser</button>
+            <div class="clearfix mg-t-15">
                 <a href="<?= site_url('/') ?>"><i data-feather="arrow-left"></i> Retour</a>
             </div>
             <?php

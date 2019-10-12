@@ -38,7 +38,7 @@ function get_user_menu($user_groups)
             }
         }
         $menus = array();
-        for ($i = 1; $i < 7; $i++) {
+        for ($i = 1; $i < 9; $i++) {
             foreach ($menuss as $menu) {
                 if ($menu['order'] == $i)
                     $menus[] = $menu;
@@ -69,7 +69,7 @@ function get_menu_by_group($group)
                 array(
                     'title' => 'Paramètres',
                     'url' => site_url('settings'),
-                    'order' => 4,
+                    'order' => 6,
                     'icon' => 'settings'
                 ),
                 array(
@@ -96,12 +96,12 @@ function get_menu_by_group($group)
                 array(
                     'title' => 'Mon compte',
                     'url' => site_url('account'),
-                    'order' => 5,
+                    'order' => 7,
                     'icon' => 'user'
                 ), array(
                     'title' => 'Déconnexion',
                     'url' => site_url('logout'),
-                    'order' => 6,
+                    'order' => 8,
                     'icon' => 'log-out'
                 ), array(
                     'title' => 'Attestations',
@@ -116,6 +116,36 @@ function get_menu_by_group($group)
                         [
                             'title' => 'Ajouter',
                             'url' => site_url('certificate/add')
+                        ],
+                    ]
+                ),array(
+                    'title' => 'Filiales',
+                    'url' => site_url('affiliate-companies'),
+                    'order' => 4,
+                    'icon' => 'map-pin',
+                    'submenus' => [
+                        [
+                            'title' => 'Liste',
+                            'url' => site_url('affiliate-companies')
+                        ],
+                        [
+                            'title' => 'Ajouter',
+                            'url' => site_url('affiliate-companies/add')
+                        ],
+                    ]
+                ),array(
+                    'title' => "Secteur d'activité",
+                    'url' => site_url('activity-area'),
+                    'order' => 5,
+                    'icon' => 'share-2',
+                    'submenus' => [
+                        [
+                            'title' => 'Liste',
+                            'url' => site_url('activity-area')
+                        ],
+                        [
+                            'title' => 'Ajouter',
+                            'url' => site_url('activity-area/add')
                         ],
                     ]
                 ),

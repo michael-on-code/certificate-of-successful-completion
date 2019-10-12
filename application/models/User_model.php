@@ -43,6 +43,15 @@ class User_model extends CI_Model
 
     }
 
+    public function do_email_exist($email){
+        $exist = (bool) $this->db->query("SELECT COUNT(id) as num from users where email='$email'")->row()->num;
+        if(!$exist){
+            $this->form_validation->set_message('email_check', 'Aucune adresse email correspondante sur la plateforme');
+            return false;
+        }
+        return true;
+    }
+
     public function old_password_check($password)
     {
         if ($this->ion_auth->hash_password_db($this->data['user']->id, $password)) {
@@ -57,6 +66,13 @@ class User_model extends CI_Model
         $id = $this->db->query("SELECT id from users where username = '$username'")->row();
         return maybe_null_or_empty($id, 'id');
     }
+
+    public function getIDByEmail($email){
+        $id = $this->db->query("SELECT id from users where email = '$email'")->row();
+        return maybe_null_or_empty($id, 'id');
+    }
+
+
 
     public function getList($offSet=1, $search='', $exceptAdmins = true, $exceptCurrentUser = true, $offset = 1, $onlyActiveUsers = false)
     {

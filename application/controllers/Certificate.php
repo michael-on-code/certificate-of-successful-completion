@@ -21,6 +21,24 @@ class Certificate extends Pro_Controller{
     public function index(){
         $this->data['pageTitle']= 'Liste des ABE';
         $this->data['certificates'] = $this->certificate_model->getAll();
+        $this->data['countries']=getCountries();
+        $this->data['tableHeaders']=[
+            'N° Interne', 'Désignation', 'Secteur', 'Sous Secteur', 'Date de signature', 'Autorité contractante',
+            'Montant total', 'Montant payé', 'Part', "Début période d'execution", "Fin période d'execution", "Pays", "Ville",
+            'Source de financement', 'Filiale', "Date d'attribution", "Partenaire/associé", "Adresse maitre d'ouvrage", "Role", "Description du marché","Details des taches exécutés" ,"Ajouté le"
+        ];
+        $numberColumns = count($this->data['tableHeaders']);
+        for($i=7; $i<$numberColumns; $i++){
+            $this->data['invisiblesColumns'][]=$i;
+        }
+        $this->data['visiblesColumns']=[
+            0,1,2,3,4,5,6
+        ];
+        $this->data['clientData']=[
+            'invisiblesColumns'=>$this->data['invisiblesColumns'],
+            'allColumns'=>array_keys($this->data['tableHeaders'])
+        ];
+        //var_dump($this->data['certificates']);exit;
 
         $this->data['headerCss'][] = $this->data['assetsUrl'] . 'lib/sweetalert/sweetalert.css';
         $this->data['footerJs'][] = $this->data['assetsUrl'] . 'lib/sweetalert/sweetalert.min.js';
