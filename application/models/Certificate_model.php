@@ -52,7 +52,9 @@ join activity_area on activity_area.id = abe.activity_area_id join affiliate_com
         if(!empty($certificates)){
             foreach ($certificates as $key=>$certificate){
                 $certificates[$key]= (object) $this->getCertificateMeta($certificate);
+                $certificates[$key]->preview = getMinifiedView($certificates[$key], $key, $this->data['uploadPath']);
             }
+
         }
         return $certificates;
     }

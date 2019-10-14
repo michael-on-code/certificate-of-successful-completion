@@ -46,3 +46,9 @@ td button.btn-icon, td a.btn-icon{
 .dropdown-toggle.no-caret:after{
     display: none!important;
 }
+.my-popover-content table tr td.headies{
+    font-weight: bold;
+}
+.my-popover-content table tr td{
+    border-top: none;
+}

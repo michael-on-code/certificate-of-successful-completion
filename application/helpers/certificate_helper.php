@@ -761,33 +761,72 @@ function createZip($zip,$dir, array $filesWithExtensions){
     }
 }
 
-function getMinifiedView($certificate, $index){
-    return "<div id='popoverContent$index' style='display: none'>
-        <table style='width: 100%;' class='table table-striped table-bordered'>
+function getMinifiedView($certificate, $index, $uploadPath){
+    $preview = "<div id='popoverContent$index' class='my-popover-content'>
+        <table style='width: 100%;' class='table table-bordered table-striped'>
             <tr>
-                <td>N° Interne</td>
+                <td class='headies'>N° Interne</td>
                 <td>$certificate->internal_file_number</td>
             </tr>
             <tr>
-                <td>Désignation</td>
+                <td class='headies'>Désignation</td>
                 <td>$certificate->title</td>
             </tr>
             <tr>
-                <td>Secteur</td>
-                <td>$certificate->activity_area_name</td>
+                <td class='headies'>Secteur</td>
+                <td>$certificate->activity_area_name </td>
             </tr>
             <tr>
-                <td>Sous Secteur d'activité</td>
-                <td>$certificate->sub_activity_area</td>
+                <td class='headies'>Sous Secteur d'activité</td>
+                <td>$certificate->sub_activity_area </td>
             </tr>
             <tr>
-                <td>Date de signature</td>
-                <td>".convert_date_to_french($certificate->signature_date)."td>
+                <td class='headies'>Date de signature</td>
+                <td>".convert_date_to_french($certificate->signature_date)."</td>
             </tr>
             <tr>
-                <td>Autorité contractante</td>
-                <td>$certificate->customer_name</td>
+                <td class='headies'>Autorité contractante</td>
+                <td>$certificate->customer_name </td>
             </tr>
+            <tr>
+                <td class='headies'>Montant total</td>
+                <td>$certificate->total_amount </td>
+            </tr>
+            <tr>
+                <td class='headies'>Montant payé</td>
+                <td>$certificate->amount_received </td>
+            </tr>
+            <tr>
+                <td class='headies'>Part</td>
+                <td>$certificate->akasi_share %</td>
+            </tr>";
+    if($certificateFile=maybe_null_or_empty($certificate, 'certificateFile', true)){
+        $preview.="
+        <tr>
+                <td class='headies'>Copie ABE</td>
+                <td> <a target='_blank' href='$uploadPath$certificateFile'>$certificateFile</a> </td>
+            </tr>
+        ";
+    }
+    if($minuteFile=maybe_null_or_empty($certificate, 'minuteFile', true)){
+        $preview.="
+        <tr>
+                <td class='headies'>PV de réception</td>
+                <td> <a target='_blank' href='$uploadPath$minuteFile'>$minuteFile</a> </td>
+            </tr>
+        ";
+    }
+    if($contractFile=maybe_null_or_empty($certificate, 'contractFile', true)){
+        $preview.="
+        <tr>
+                <td class='headies'>Contrat</td>
+                <td> <a target='_blank' href='$uploadPath$contractFile'>$contractFile</a> </td>
+            </tr>
+        ";
+    }
+
+    $preview.="
         </table>
     </div>";
+    return $preview;
 }

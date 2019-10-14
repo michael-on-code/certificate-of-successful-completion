@@ -305,17 +305,27 @@ $(function () {
         $('.cutter').line(2, "...");
     }
     if ($('[data-toggle="popover"]').length) {
-
+        //console.log(clientData);
         $('[data-toggle="popover"]').popover({
-
+            html: true,
             container: 'body',
+            sanitize: false,
             content: function () {
-                var content = $(this).attr('data-target');
-                return $(content).html()
+                var target=parseInt($(this).attr('data-target'));
+                /*var content = $(this).attr('data-target');
+                return $(content).html()*/
+                //console.log(clientData.certificates[target].preview);
+                return clientData.certificates[target].preview;
             },
-            //trigger: 'focus',
+            title: 'Aperçu rapide <span style="float:right;cursor:pointer;" class="fa fa-times my-close" data-toggle="popover">'
         });
 
+        $(document).on('click', '.my-close', function () {
+            var target = $(this).parents().find('.popover');
+
+            var targetID = target.attr('id');
+            $('[aria-describedby="'+targetID+'"]').trigger('click');
+        })
         /* $('[data-toggle="popover"]').each(function () {
              $(this).popover({
                  html: true,

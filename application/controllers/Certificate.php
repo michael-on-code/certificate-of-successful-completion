@@ -36,7 +36,8 @@ class Certificate extends Pro_Controller{
         ];
         $this->data['clientData']=[
             'invisiblesColumns'=>$this->data['invisiblesColumns'],
-            'allColumns'=>array_keys($this->data['tableHeaders'])
+            'allColumns'=>array_keys($this->data['tableHeaders']),
+            'certificates'=>$this->data['certificates']
         ];
         //var_dump($this->data['certificates']);exit;
 

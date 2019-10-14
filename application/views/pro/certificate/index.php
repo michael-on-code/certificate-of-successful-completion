@@ -8,10 +8,15 @@
 ?>
 <p class="df-lead">Liste des Attestation de Bonnes Fin d'Execution délivrées à AKASI Group
 </p>
-<div class="position-absolute" style="z-index: 9999">
+<div class="position-absolute" style="z-index: 1000">
     <a href="<?= site_url('certificate/add') ?>" class="btn btn-lg btn-primary btn-uppercase mg-l-5"><i
                 data-feather="plus" class="wd-10 mg-r-5"></i> Ajouter ABE</a>
 </div>
+<style>
+    .popover{
+        max-width: 420px;
+    }
+</style>
 <table id="certificateTable" class="table table-bordered table-hover" data-order-column="1" style="font-size: 15px;">
     <?php
     if (isset($tableHeaders) && !empty($tableHeaders)) {
@@ -42,16 +47,16 @@
         <th class="wd-15p-f">Actions</th>
     </tr>
     </thead>-->
-    <tbody class="cut-them">
+    <tbody>
     <?php
     $contents='';
     if (isset($certificates) && !empty($certificates)) {
         foreach ($certificates as $key => $certificate) {
-            $contents.=getMinifiedView($certificate, $key);
+            //$contents.=getMinifiedView($certificate, $key);
             ?>
 
             <tr>
-                <td><a data-target="#popoverContent<?= $key ?>" data-toggle="popover" title="Popover title" data-html="true" data-trigger="focus" tabindex="0" href="javascript:void(0)">
+                <td><a data-target="<?= $key ?>" data-toggle="popover" data-html="true" href="javascript:void(0)">
                         <?= $certificate->internal_file_number ?>
                     </a></td>
                 <td data-toggle="tooltip"
@@ -136,7 +141,7 @@
 
     </tbody>
 </table>
-<?php echo $contents ?>
+<?php //echo $contents ?>
 <div class="wd-md-60p mg-t-15 mg-md-auto mg-t-15-f">
     <div data-label="Afficher / Masquer des colonnes" class="df-example demo-forms">
         <?php
