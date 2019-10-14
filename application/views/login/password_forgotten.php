@@ -35,10 +35,19 @@ get_flashdata();
                 echo get_form_error('email');
                 ?>
             </div>
-            <button type="submit" disabled class="btn btn-brand-02 mg-sm-l-10 mg-t-10 mg-sm-t-0">Reinitialiser</button>
-            <div class="clearfix mg-t-15">
-                <a href="<?= site_url('/') ?>"><i data-feather="arrow-left"></i> Retour</a>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="clearfix mg-t-15 float-left">
+                        <a href="<?= site_url('/') ?>"><i data-feather="arrow-left"></i> Retour</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="float-right">
+                        <button type="submit" disabled class="btn btn-brand-02 mg-sm-l-10 mg-t-10 mg-sm-t-0">Reinitialiser</button>
+                    </div>
+                </div>
             </div>
+
             <?php
             echo form_close();
             ?>

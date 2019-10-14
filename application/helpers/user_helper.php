@@ -173,13 +173,18 @@ function redirect_if_is_banned($to = '/')
 {
     $CI = &get_instance();
     //var_dump($CI->data['user']);exit;
-    if ($CI->data['user']->active == 2 || $CI->data['user']->active == 0) {
+    if ($CI->data['user']->active == 2) {
         $CI->ion_auth->logout();
         get_error_message("Vous avez été banni. <br> Veuillez contacter l'administrateur");
+        redirect($to);
+    }elseif($CI->data['user']->active == 0){
+        $CI->ion_auth->logout();
+        get_error_message("Veuillez finaliser votre inscription à la plateforme avant de vous logger");
         redirect($to);
     }
 
 }
+
 
 
 function redirect_if_logged_in($to = 'dashboard')
@@ -620,7 +625,7 @@ function getUsersAddOrEditValidation($edit = false, $userID = '', $username = ''
                     $siteName = $ci->data['options']['siteName'];
                     //send user mail
                     sendActivationMail($data, $userData, $siteName);
-                    sendNotificationMail("Bonjour cher administrateur, un utilisateur du nom de <strong> $data->first_name $data->last_name vient d'être ajouté à la plateforme.  </strong>");
+                    sendNotificationMail("Bonjour cher administrateur, un utilisateur du nom de <strong> $data->first_name $data->last_name</strong> vient d'être ajouté à la plateforme.  </strong>");
                     //TODO send mail to administrator
                     get_success_message("L'utilisateur a été créé avec succès <br> Un mail de confirmation a été envoyé à $userData->email", 10000);
                     redirect('users/edit/' . $ci->user_model->getUserFieldByID($userData->id, 'username'));

@@ -71,7 +71,7 @@ class Users extends Pro_Controller{
         if ($this->user_model->activateUser($userID, true)) {
             $user =  $this->ion_auth->user($userID)->row();
             $adminName = maybe_null_or_empty($this->data['user'], 'first_name'). ' '.maybe_null_or_empty($this->data['user'], 'last_name');
-            sendNotificationMail("L'administrateur $adminName vient de reactiver le compte de <strong>$user->first_name $user->last_name</strong>");
+            sendNotificationMail("L'administrateur <strong>$adminName</strong> vient de reactiver le compte de <strong>$user->first_name $user->last_name</strong>");
             get_success_message('Utilisateur activé avec succès');
         } else {
             get_warning_message('Action non authorisée');

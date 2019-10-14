@@ -42,19 +42,25 @@
         <th class="wd-15p-f">Actions</th>
     </tr>
     </thead>-->
-    <tbody>
-    <?php if (isset($certificates) && !empty($certificates)) {
+    <tbody class="cut-them">
+    <?php
+    $contents='';
+    if (isset($certificates) && !empty($certificates)) {
         foreach ($certificates as $key => $certificate) {
+            $contents.=getMinifiedView($certificate, $key);
             ?>
+
             <tr>
-                <td><a href="<?= site_url("certificate/edit/$certificate->slug") ?>">
+                <td><a data-target="#popoverContent<?= $key ?>" data-toggle="popover" title="Popover title" data-html="true" data-trigger="focus" tabindex="0" href="javascript:void(0)">
                         <?= $certificate->internal_file_number ?>
                     </a></td>
-                <td><?= $certificate->title ?></td>
+                <td data-toggle="tooltip"
+                    data-placement="top" title="<?= $certificate->title ?>" class="cutter"><?= $certificate->title ?></td>
                 <td><?= $certificate->activity_area_name ?></td>
                 <td><?= $certificate->sub_activity_area ?></td>
                 <td><?= convert_date_to_french($certificate->signature_date) ?></td>
-                <td><?= $certificate->customer_name ?></td>
+                <td data-toggle="tooltip" class="cutter"
+                    data-placement="top" title="<?= $certificate->customer_name ?>"><?= $certificate->customer_name ?></td>
                 <td><?= $certificate->total_amount ?></td>
                 <td><?= $certificate->amount_received ?></td>
                 <td><?= $certificate->akasi_share ?>%</td>
@@ -62,14 +68,18 @@
                 <td><?= convert_date_to_french($certificate->project_execution_end_date) ?></td>
                 <td><?= $countries[$certificate->country] ?></td>
                 <td><?= $certificate->city ?></td>
-                <td><?= $certificate->funding_source ?></td>
+                <td data-toggle="tooltip" class="cutter"
+                    data-placement="top" title="<?= $certificate->funding_source ?>"><?= $certificate->funding_source ?></td>
                 <td><?= $certificate->affiliate_company_name ?></td>
                 <td><?= convert_date_to_french($certificate->project_awarded_date) ?></td>
                 <td><?= $certificate->project_partner ?></td>
                 <td><?= $certificate->customer_adress ?></td>
-                <td><?= $certificate->role ?></td>
-                <td><?= $certificate->project_description ?></td>
-                <td><?= $certificate->detailed_tasks ?></td>
+                <td data-html="true" data-toggle="tooltip" class="cutter"
+                    data-placement="top"  title="<?= $certificate->role ?>"><?= $certificate->role ?></td>
+                <td data-html="true" data-toggle="tooltip" class="cutter"
+                    data-placement="top" title="<?= $certificate->project_description ?>"><?= $certificate->project_description ?></td>
+                <td data-html="true" data-toggle="tooltip" class="cutter"
+                    data-placement="top" title="<?= $certificate->detailed_tasks ?>"><?= $certificate->detailed_tasks ?></td>
                 <td><?= convert_date_to_french($certificate->created_at) ?></td>
                 <td class="text-center">
                     <!--<a data-toggle="tooltip" data-placement="top" title="Aperçu rapide" class="btn btn-light btn-icon">
@@ -79,10 +89,37 @@
                        data-placement="top" title="Modifier ABE" class="btn btn-primary btn-icon">
                         <i data-feather="edit"></i>
                     </a>
-                    <a href="<?= site_url("certificate/download/$certificate->slug") ?>" data-toggle="tooltip"
-                       data-placement="top" title="Télécharger pièces jointes" class="btn btn-warning btn-icon">
-                        <i data-feather="download"></i>
-                    </a>
+                    <?php
+                    if(maybe_null_or_empty($certificate, 'certificateFile', true) || maybe_null_or_empty($certificate, 'minuteFile', true) || maybe_null_or_empty($certificate, 'contractFile', true)){
+                        ?>
+                        <button id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip"
+                                 class="btn btn-warning btn-icon dropdown-toggle no-caret">
+                            <i data-feather="download"></i>
+                        </button>
+                        <div class="dropdown-menu tx-13" aria-labelledby="dropdownMenuButton">
+                            <h6 class="dropdown-header tx-uppercase tx-12 tx-bold tx-inverse">Fichiers</h6>
+                            <?php if($certificateFile=maybe_null_or_empty($certificate, 'certificateFile', true)){
+                                ?>
+                                <a data-toggle="tooltip" data-placement="top" title="Visualiser Copie de l' ABE" class="dropdown-item" target="_blank" href="<?= $uploadPath.$certificateFile ?>">Copie de l' ABE</a>
+                                <?php
+                            } ?>
+                            <?php if($minuteFile=maybe_null_or_empty($certificate, 'minuteFile', true)){
+                                ?>
+                                <a data-toggle="tooltip" data-placement="top" title="Visualiser PV de réception" class="dropdown-item" target="_blank" href="<?= $uploadPath.$minuteFile ?>">PV de réception</a>
+                                <?php
+                            } ?>
+                            <?php if($contractFile=maybe_null_or_empty($certificate, 'contractFile', true)){
+                                ?>
+                                <a data-toggle="tooltip" data-placement="top" title="Visualiser Contrat" class="dropdown-item" target="_blank" href="<?= $uploadPath.$contractFile ?>">Contrat</a>
+                                <?php
+                            } ?>
+                            <div class="dropdown-divider"></div>
+                            <a data-toggle="tooltip" data-placement="top" title="Télécharger toutes pieces jointes" class="dropdown-item" href="<?= site_url("certificate/download/$certificate->slug") ?>">Télécharger tout</a>
+                        </div>
+                        <?php
+                    }
+                    ?>
+
                     <a data-confirm-message="Voulez-vous vraiment supprimer l'ABE N°<?= $certificate->internal_file_number ?> ?"
                        title="Supprimer"
                        href="#"
@@ -99,6 +136,7 @@
 
     </tbody>
 </table>
+<?php echo $contents ?>
 <div class="wd-md-60p mg-t-15 mg-md-auto mg-t-15-f">
     <div data-label="Afficher / Masquer des colonnes" class="df-example demo-forms">
         <?php

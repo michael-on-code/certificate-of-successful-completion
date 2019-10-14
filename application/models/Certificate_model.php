@@ -101,6 +101,7 @@ join activity_area on activity_area.id = abe.activity_area_id join affiliate_com
                 }
             }
         }
+        $adminName = maybe_null_or_empty($this->data['user'], 'first_name'). ' '.maybe_null_or_empty($this->data['user'], 'last_name');
         //creation
         if($certificateID==''){
             $data['active']=1;
@@ -110,12 +111,13 @@ join activity_area on activity_area.id = abe.activity_area_id join affiliate_com
             //var_dump($data);exit;
             $this->db->insert('abe', $data);
             $certificateID = $this->db->insert_id();
-            $adminName = maybe_null_or_empty($this->data['user'], 'first_name'). ' '.maybe_null_or_empty($this->data['user'], 'last_name');
             $data=(object)$data;
             sendNotificationMail("L'administrateur <strong>$adminName</strong> vient d'ajouter une nouvelle ABE avec pour désignation <strong>$data->title</strong> et pour numéro interne <strong>$data->internal_file_number</strong> ");
         }else{
             $data['updated_at']=date('Y-m-d H:i:s');
             $this->db->update('abe', $data, ['id'=>$certificateID]);
+            $data=(object)$data;
+            sendNotificationMail("L'administrateur <strong>$adminName</strong> vient d'ajouter quelques modifications à l'ABE ayant pour désignation <strong>$data->title</strong> et pour numéro interne <strong>$data->internal_file_number</strong> ");
         }
         if (!empty($meta_datas) && $certificateID) {
             foreach ($meta_datas as $key => $meta_data) {

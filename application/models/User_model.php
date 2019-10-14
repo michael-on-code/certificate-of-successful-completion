@@ -46,7 +46,7 @@ class User_model extends CI_Model
     public function do_email_exist($email){
         $exist = (bool) $this->db->query("SELECT COUNT(id) as num from users where email='$email'")->row()->num;
         if(!$exist){
-            $this->form_validation->set_message('email_check', 'Aucune adresse email correspondante sur la plateforme');
+            $this->form_validation->set_message('email_check', "Aucun compte avec cette adresse email n'existe sur la plateforme");
             return false;
         }
         return true;
@@ -69,7 +69,12 @@ class User_model extends CI_Model
 
     public function getIDByEmail($email){
         $id = $this->db->query("SELECT id from users where email = '$email'")->row();
-        return maybe_null_or_empty($id, 'id');
+        return maybe_null_or_empty($id, 'id', true);
+    }
+
+    public function getActiveByEmail($email){
+        $return = $this->db->query("SELECT active from users where email = '$email'")->row();
+        return maybe_null_or_empty($return, 'active');
     }
 
 

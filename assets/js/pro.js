@@ -71,17 +71,17 @@ $(function () {
         });
     });
 
-    if($('#total_amount').length){
-        var amount_received=0;
-        var totalAmount=0;
-        $('#total_amount, #amount_received').change(function(){
+    if ($('#total_amount').length) {
+        var amount_received = 0;
+        var totalAmount = 0;
+        $('#total_amount, #amount_received').change(function () {
             var share = 100;
             amount_received = $.trim($('#amount_received').val());
             totalAmount = $.trim($('#total_amount').val());
-            if(amount_received==''){
+            if (amount_received == '') {
                 $('#amount_received').val(totalAmount);
-            }else if (parseInt(totalAmount)>=parseInt(amount_received)){
-                share = (parseInt(amount_received) / parseInt(totalAmount))*100;
+            } else if (parseInt(totalAmount) >= parseInt(amount_received)) {
+                share = (parseInt(amount_received) / parseInt(totalAmount)) * 100;
                 share = parseInt(share);
             }
             $('#akasi_share').val(share);
@@ -170,13 +170,19 @@ $(function () {
                 }
             }
         });
-        certificateTable.columns( clientData.invisiblesColumns ).visible( false );
+        certificateTable.columns(clientData.invisiblesColumns).visible(false);
 
         $('select#columnToggle').on('change', function (e) {
             var column = certificateTable.columns($(this).val());
             var allColumns = certificateTable.columns(clientData.allColumns);
             allColumns.visible(false);
             column.visible(true, false);
+            if ($('.cutter').length) {
+                $('.cutter').line(2, "...");
+            }
+            if ($('[data-toggle="tooltip"]').length) {
+                $('[data-toggle="tooltip"]').tooltip()
+            }
         });
     }
     if ($('.select2').length) {
@@ -195,62 +201,65 @@ $(function () {
         $('.my-autocomplete').each(function () {
             //console.log(clientData.autocompleteUrl+($(this).attr('data-target')));
             $(this).autocomplete({
-                source: ""+clientData.autocompleteUrl+($(this).attr('data-target'))
+                source: "" + clientData.autocompleteUrl + ($(this).attr('data-target'))
                 //source: availableTags1
             })
         });
     }
-    function getDate( element ) {
+
+    function getDate(element) {
         var date;
         try {
-            date = $.datepicker.parseDate( dateFormat, element.value );
-        } catch( error ) {
+            date = $.datepicker.parseDate(dateFormat, element.value);
+        } catch (error) {
             date = null;
         }
 
         return date;
     }
-    $.datepicker.setDefaults( $.datepicker.regional[ "fr" ] );
-    if($('.dateRanger').length){
+
+    if ($('.dateRanger').length) {
+        $.datepicker.setDefaults($.datepicker.regional["fr"]);
         var dateFormat = 'mm/dd/yy',
             from = $('#dateFrom')
                 .datepicker({
                     defaultDate: '+1w',
                     numberOfMonths: 2,
                     dateFormat: "dd/mm/yy",
-                    regional : ['fr']
+                    regional: ['fr']
                 })
-                .on('change', function() {
+                .on('change', function () {
                     to.datepicker({
-                        minDate : getDate( this ),
+                        minDate: getDate(this),
                         dateFormat: "dd/mm/yy",
-                        regional : ['fr']
+                        regional: ['fr']
                     });
                 }),
             to = $('#dateTo').datepicker({
                 defaultDate: '+1w',
                 numberOfMonths: 2,
                 dateFormat: "dd/mm/yy",
-                regional : ['fr']
+                regional: ['fr']
             })
-                .on('change', function() {
+                .on('change', function () {
                     from.datepicker({
-                        maxDate : getDate( this ),
+                        maxDate: getDate(this),
                         dateFormat: "dd/mm/yy",
-                        regional : ['fr']
+                        regional: ['fr']
                     });
                 });
     }
-    if($('.datepicker').length){
+    if ($('.datepicker').length) {
+        $.datepicker.setDefaults($.datepicker.regional["fr"]);
         $('.datepicker').datepicker({
-            changeMonth : true,
-            changeYear : true,
+            changeMonth: true,
+            changeYear: true,
             dateFormat: "dd/mm/yy",
-            regional : ['fr']
+            regional: ['fr']
         });
     }
-    if($('.currencyInput').length){
-        $('.currencyInput').each(function(){
+    if ($('.currencyInput').length) {
+        $('.currencyInput').each(function () {
             new Cleave(this, {
                 numeral: true,
                 delimiter: ' ',
@@ -258,14 +267,14 @@ $(function () {
             });
         })
     }
-    if($('.number-input').length){
-        $('.number-input').each(function(){
+    if ($('.number-input').length) {
+        $('.number-input').each(function () {
             new Cleave(this, {
                 numeral: true,
             });
         })
     }
-    if ($('.my-summernote')) {
+    if ($('.my-summernote').length) {
         $('.my-summernote').summernote({
             lang: 'fr-FR',
             toolbar: [
@@ -279,6 +288,44 @@ $(function () {
             ],
             height: 130
         });
+    }
+    /*if($('.cutter').length){
+        $('.cutter').each(function () {
+            var length = parseInt($(this).attr('data-length'));
+            length = length ? length : 15;
+            Cutter.run(this, this, length, {
+                viewMoreText : '...'
+            });
+        });
+    }*/
+    /*if($('tbody .cut-them').length){
+        $('tbody .cut-them tr td').line(2, "...");
+    }*/
+    if ($('.cutter').length) {
+        $('.cutter').line(2, "...");
+    }
+    if ($('[data-toggle="popover"]').length) {
+
+        $('[data-toggle="popover"]').popover({
+
+            container: 'body',
+            content: function () {
+                var content = $(this).attr('data-target');
+                return $(content).html()
+            },
+            //trigger: 'focus',
+        });
+
+        /* $('[data-toggle="popover"]').each(function () {
+             $(this).popover({
+                 html: true,
+                 content: function() {
+                     return $('.'+$(this).attr('data-target')).html()
+                 },
+                 trigger: 'focus',
+                 title: 'Aperçu rapide'
+             })
+         })*/
     }
 
 

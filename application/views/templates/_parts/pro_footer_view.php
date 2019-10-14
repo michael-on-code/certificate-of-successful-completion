@@ -13,10 +13,6 @@ pos-fixed b-0
 </div><!-- container -->
 </div><!-- content -->
 <script src="<?= $assetsUrl ?>lib/jquery/jquery.min.js"></script>
-<script src="<?= $assetsUrl ?>lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="<?= $assetsUrl ?>lib/feather-icons/feather.min.js"></script>
-<script src="<?= $assetsUrl ?>lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-<script src="<?= $assetsUrl ?>lib/prismjs/prism.js"></script>
 <?php if (isset($footerJs) && !empty($footerJs)) {
     foreach ($footerJs as $js) {
         ?>
@@ -32,9 +28,14 @@ if (isset($clientData) && !empty($clientData)) {
     <?php
 }
 ?>
+<script src="<?= $assetsUrl ?>lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?= $assetsUrl ?>lib/feather-icons/feather.min.js"></script>
+<script src="<?= $assetsUrl ?>lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="<?= $assetsUrl ?>lib/prismjs/prism.js"></script>
+
 <script src="<?= $assetsUrl ?>js/dashforge.js"></script>
 <script src="<?= $assetsUrl ?>js/public.js"></script>
-<script src="<?= $assetsUrl ?>js/pro.js?v=1.15"></script>
+<script src="<?= $assetsUrl ?>js/pro.js?v=1.16"></script>
 
 <!--end::Page Scripts -->
 </body>
