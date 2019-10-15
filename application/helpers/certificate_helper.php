@@ -177,10 +177,11 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
             <div class="form-group">
                 <?php echo form_label('Attacher le PV de réception');
                 $file = maybe_null_or_empty($certificate, 'minuteFile', true);
-                if($edit && $file){
+                if ($edit && $file) {
                     ?>
                     <a data-toggle="tooltip"
-                       data-placement="top" title="Visualiser le PV de réception" target="_blank" href="<?= $uploadPath.$file ?>" > <i data-feather='external-link' style='width: 15px'></i></a>
+                       data-placement="top" title="Visualiser le PV de réception" target="_blank"
+                       href="<?= $uploadPath . $file ?>"> <i data-feather='external-link' style='width: 15px'></i></a>
                     <?php
                 }
                 $data = [
@@ -197,8 +198,6 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 getFieldInfo('Format : JPG|PNG|JPEG|PDF|DOC|DOCX Taille Max : 5M');
                 ?>
             </div>
-
-
 
 
         </div>
@@ -425,10 +424,11 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
             <div class="form-group">
                 <?php echo form_label("Attacher la Copie de l'ABE ");
                 $file = maybe_null_or_empty($certificate, 'certificateFile', true);
-                if($edit && $file){
+                if ($edit && $file) {
                     ?>
                     <a data-toggle="tooltip"
-                       data-placement="top" title="Visualiser la copie de l'ABE" target="_blank" href="<?= $uploadPath.$file ?>" > <i data-feather='external-link' style='width: 15px'></i></a>
+                       data-placement="top" title="Visualiser la copie de l'ABE" target="_blank"
+                       href="<?= $uploadPath . $file ?>"> <i data-feather='external-link' style='width: 15px'></i></a>
                     <?php
                 }
                 $data = [
@@ -448,10 +448,11 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
             <div class="form-group">
                 <?php echo form_label('Attacher le Contrat');
                 $file = maybe_null_or_empty($certificate, 'contractFile', true);
-                if($edit && $file){
+                if ($edit && $file) {
                     ?>
                     <a data-toggle="tooltip"
-                       data-placement="top" title="Visualiser le contrat" target="_blank" href="<?= $uploadPath.$file ?>" > <i data-feather='external-link' style='width: 15px'></i></a>
+                       data-placement="top" title="Visualiser le contrat" target="_blank"
+                       href="<?= $uploadPath . $file ?>"> <i data-feather='external-link' style='width: 15px'></i></a>
                     <?php
                 }
                 $data = [
@@ -477,7 +478,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
     <div class="row">
         <div class="col-md-6 ">
             <?php
-            if($edit){
+            if ($edit) {
                 ?>
                 <div class="clearfix mg-t-15 float-left">
                     <a href="<?= site_url('certificate') ?>"><i data-feather="arrow-left"></i> Retour à la liste</a>
@@ -545,9 +546,10 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
                 'name' => 'certificate[internal_file_number]',
                 'label' => "N° Interne du dossier",
                 'rules' => [
-                    'trim', 'required', /*[$ci->option_model, 'removeSpacesAndConvertToInt'],*/ 'max_length[25]', $edit ? "callback_is_unique_on_update[abe.internal_file_number.$certificateID]" : 'is_unique[abe.internal_file_number]'
+                    'trim', 'required', /*[$ci->option_model, 'removeSpacesAndConvertToInt'],*/
+                    'max_length[25]', $edit ? "callback_is_unique_on_update[abe.internal_file_number.$certificateID]" : 'is_unique[abe.internal_file_number]'
                 ],
-            ],[
+            ], [
                 'name' => 'certificate[signature_date]',
                 'label' => "Date de signature",
                 'rules' => 'trim|required|max_length[10]'
@@ -646,17 +648,17 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
         if ($ci->form_validation->run()) {
             $certificate = $ci->input->post('certificate');
             //var_dump($certificate);exit;
-            if(maybe_null_or_empty($certificate, 'signature_date', true)){
-                $certificate['signature_date']=convert_date_to_english($certificate['signature_date']);
+            if (maybe_null_or_empty($certificate, 'signature_date', true)) {
+                $certificate['signature_date'] = convert_date_to_english($certificate['signature_date']);
             }
-            if(maybe_null_or_empty($certificate, 'project_awarded_date', true)){
-                $certificate['project_awarded_date']=convert_date_to_english($certificate['project_awarded_date']);
+            if (maybe_null_or_empty($certificate, 'project_awarded_date', true)) {
+                $certificate['project_awarded_date'] = convert_date_to_english($certificate['project_awarded_date']);
             }
-            if(maybe_null_or_empty($certificate, 'project_execution_start_date', true)){
-                $certificate['project_execution_start_date']=convert_date_to_english($certificate['project_execution_start_date']);
+            if (maybe_null_or_empty($certificate, 'project_execution_start_date', true)) {
+                $certificate['project_execution_start_date'] = convert_date_to_english($certificate['project_execution_start_date']);
             }
-            if(maybe_null_or_empty($certificate, 'project_execution_end_date', true)){
-                $certificate['project_execution_end_date']=convert_date_to_english($certificate['project_execution_end_date']);
+            if (maybe_null_or_empty($certificate, 'project_execution_end_date', true)) {
+                $certificate['project_execution_end_date'] = convert_date_to_english($certificate['project_execution_end_date']);
             }
             //var_dump($certificate);exit;
             $uploadNames = [
@@ -665,7 +667,7 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
             if ($data = upload_data(array(
                 'upload_path' => FCPATH . 'uploads',
                 'allowed_types' => 'jpg|png|jpeg|pdf|doc|docx',
-                'max_size' => 1024*5,
+                'max_size' => 1024 * 5,
             ), $uploadNames)) {
                 foreach ($uploadNames as $name) {
                     if (isset($data[$name]) && maybe_null_or_empty($data[$name], 'raw_name')) {
@@ -676,7 +678,7 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
 
             //var_dump($data);exit;
             $certificateID = $ci->certificate_model->insertOrUpdate($certificate, $certificateID);
-            if($certificateSlug == ''){
+            if ($certificateSlug == '') {
                 $certificateSlug = $ci->certificate_model->getCertificateFieldByID($certificateID, 'slug');
             }
             get_success_message($edit ? 'ABE modifiée avec succès' : 'ABE ajoutée avec succès');
@@ -687,44 +689,46 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
     }
 }
 
-function downloadFiles(array $filesToBeDownloaded){
+function downloadFiles(array $filesToBeDownloaded)
+{
     $zip = new ZipArchive();
-    $filename = "fichier-".uniqid().".zip";
+    $filename = "fichier-" . uniqid() . ".zip";
 
-    if ($zip->open($filename, ZipArchive::CREATE)!==TRUE) {
+    if ($zip->open($filename, ZipArchive::CREATE) !== TRUE) {
         exit("cannot open <$filename>\n");
     }
 
     $dir = 'uploads/';
 
     // Create zip
-    createZip($zip,$dir, $filesToBeDownloaded);
+    createZip($zip, $dir, $filesToBeDownloaded);
 
     $zip->close();
 
     if (file_exists($filename)) {
         header('Content-Type: application/zip');
-        header('Content-Disposition: attachment; filename="'.basename($filename).'"');
+        header('Content-Disposition: attachment; filename="' . basename($filename) . '"');
         header('Content-Length: ' . filesize($filename));
         flush();
         readfile($filename);
         unlink($filename);
-    }else{
+    } else {
         get_error_message("Telechargement échoué <br> Une erreur s'est produite");
         redirect('certificate');
     }
 }
 
 // Create zip
-function createZip($zip,$dir, array $filesWithExtensions){
-    if (is_dir($dir) && !empty($filesWithExtensions)){
+function createZip($zip, $dir, array $filesWithExtensions)
+{
+    if (is_dir($dir) && !empty($filesWithExtensions)) {
 
-        if ($dh = opendir($dir)){
+        if ($dh = opendir($dir)) {
             foreach ($filesWithExtensions as $file) {
-                if (is_file($dir.$file)) {
-                    if($file != '' && $file != '.' && $file != '..'){
+                if (is_file($dir . $file)) {
+                    if ($file != '' && $file != '.' && $file != '..') {
 
-                        $zip->addFile($dir.$file, $file);
+                        $zip->addFile($dir . $file, $file);
                     }
                 }
             }
@@ -761,7 +765,190 @@ function createZip($zip,$dir, array $filesWithExtensions){
     }
 }
 
-function getMinifiedView($certificate, $index, $uploadPath){
+function getGlobalPreview($certificate, $index, $uploadPath, $countries)
+{
+    $signature_date = convert_date_to_french($certificate->signature_date);
+    $startProjectExcution = convert_date_to_french($certificate->project_execution_start_date);
+    $endProjectExcution = convert_date_to_french($certificate->project_execution_end_date);
+    $country = $countries[$certificate->country];
+    $projectAwardedDate = convert_date_to_french($certificate->project_awarded_date);
+    $createdAt = convert_date_to_french($certificate->created_at);
+    $preview = "
+    <div id='globalPreviewContent$index' class='my-preview-content w-100'>
+
+    <div class='row'>
+        <div class='col-md-12'>
+            <div class='divider-text'>Désignation</div>
+            <div class='innerContent'>
+                $certificate->title
+            </div>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-md-6'>
+            <div class='row'>
+                <div class='col-md-6'>
+                    <div class='divider-text'>N° Interne</div>
+                    <div class='innerContent'>
+                        $certificate->internal_file_number
+                    </div>
+                    <div class='divider-text'>Date de signature</div>
+                    <div class='innerContent'>
+                        $signature_date
+                    </div>
+                    <div class='divider-text'>Montant total</div>
+                    <div class='innerContent'>
+                        $certificate->total_amount
+                    </div>
+                    <div class='divider-text'>Montant payé</div>
+                    <div class='innerContent'>
+                        $certificate->amount_received
+                    </div>
+                </div>
+                <div class='col-md-6'>
+                    <div class='divider-text'>Secteur d'activité</div>
+                    <div class='innerContent'>
+                        $certificate->activity_area_name
+                    </div>
+                    <div class='divider-text'>Sous Secteur d'activité</div>
+                    <div class='innerContent'>
+                        $certificate->sub_activity_area
+                    </div>
+                    <div class='divider-text'>Autorité contractante</div>
+                    <div class='innerContent'>
+                        $certificate->customer_name
+                    </div>
+
+                    <div class='divider-text'>ABE ajoutée le</div>
+                    <div class='innerContent'>
+                        $createdAt
+                    </div>
+
+                </div>
+            </div>
+            <div class='row'>
+
+                <div class='col-md-12'>
+                    <div class='divider-text'>Partenaire / Associé</div>
+                    <div class='innerContent'>
+                        $certificate->project_partner
+                    </div>
+                </div>
+                <div class='col-md-12'>
+                    <div class='divider-text'>Adresse maitre d'ouvrage</div>
+                    <div class='innerContent'>
+                        $certificate->customer_adress
+                    </div>
+                </div>
+                <div class='col-md-12'>
+                    <div class='divider-text'>Description du projet</div>
+                    <div class='innerContent'>
+                        $certificate->project_description
+                    </div>
+                </div>
+                 <div class='col-md-12'>
+                    <div class='divider-text'>PV de réception</div>
+                    <div class='innerContent'>";
+    if ($minuteFile = maybe_null_or_empty($certificate, 'minuteFile', true)) {
+        $preview .= "
+                    <a target='_blank' href='$uploadPath$minuteFile'>$minuteFile</a>
+                    ";
+    }
+    $preview .=   "</div>
+                </div>
+                
+            </div>
+        </div>
+        <div class='col-md-6'>
+            <div class='row'>
+                <div class='col-md-6'>
+                    <div class='divider-text'>Début Période Execution</div>
+                    <div class='innerContent'>
+                        $startProjectExcution
+                    </div>
+
+                    <div class='divider-text'>Part</div>
+                    <div class='innerContent'>
+                        $certificate->akasi_share %
+                    </div>
+                    <div class='divider-text'>Ville</div>
+                    <div class='innerContent'>
+                        $certificate->city
+                    </div>
+                    <div class='divider-text'>Filiale</div>
+                    <div class='innerContent'>
+                        $certificate->affiliate_company_name
+                    </div>
+
+                </div>
+                <div class='col-md-6'>
+                    <div class='divider-text'>Fin Période Execution</div>
+                    <div class='innerContent'>
+                        $endProjectExcution
+                    </div>
+                    <div class='divider-text'>Pays</div>
+                    <div class='innerContent'>
+                        $country
+                    </div>
+                    <div class='divider-text'>Source financement</div>
+                    <div class='innerContent'>
+                        $certificate->funding_source
+                    </div>
+                    <div class='divider-text'>Date d'attribution</div>
+                    <div class='innerContent'>
+                        $projectAwardedDate
+                    </div>
+
+                </div>
+
+            </div>
+            <div class='row'>
+                <div class='col-md-12'>
+                    <div class='divider-text'>Rôle</div>
+                    <div class='innerContent'>
+                        $certificate->role
+                    </div>
+                </div>
+                <div class='col-md-12'>
+                    <div class='divider-text'>Tâches détaillées</div>
+                    <div class='innerContent'>
+                        $certificate->detailed_tasks
+                    </div>
+                </div>
+                <div class='col-md-12'>
+                    <div class='divider-text'>Copie ABE</div>
+                    <div class='innerContent'>";
+    if ($certificateFile = maybe_null_or_empty($certificate, 'certificateFile', true)) {
+        $preview .= "
+                    <a target='_blank' href='$uploadPath$certificateFile'>$certificateFile</a>
+                    ";
+    }
+    $preview .=   "</div>
+                </div> 
+                <div class='col-md-12'>
+                    <div class='divider-text'>Contrat</div>
+                    <div class='innerContent'>";
+    if ($contractFile = maybe_null_or_empty($certificate, 'contractFile', true)) {
+        $preview .= "
+                    <a target='_blank' href='$uploadPath$contractFile'>$contractFile</a>
+                    ";
+    }
+    $preview .=   "</div>
+                </div>
+                
+                
+                </div>
+        </div>
+
+    </div>
+</div>
+    ";
+    return $preview;
+
+}
+
+function getMinifiedView($certificate, $index, $uploadPath, $countries)
+{
     $preview = "<div id='popoverContent$index' class='my-popover-content'>
         <table style='width: 100%;' class='table table-bordered table-striped'>
             <tr>
@@ -782,7 +969,7 @@ function getMinifiedView($certificate, $index, $uploadPath){
             </tr>
             <tr>
                 <td class='headies'>Date de signature</td>
-                <td>".convert_date_to_french($certificate->signature_date)."</td>
+                <td>" . convert_date_to_french($certificate->signature_date) . "</td>
             </tr>
             <tr>
                 <td class='headies'>Autorité contractante</td>
@@ -799,25 +986,39 @@ function getMinifiedView($certificate, $index, $uploadPath){
             <tr>
                 <td class='headies'>Part</td>
                 <td>$certificate->akasi_share %</td>
-            </tr>";
-    if($certificateFile=maybe_null_or_empty($certificate, 'certificateFile', true)){
-        $preview.="
+            </tr>
+            <tr>
+                <td class='headies'>Pays</td>
+                <td>" . $countries[$certificate->country] . "</td>
+            </tr>
+            <tr>
+                <td class='headies'>Ville</td>
+                <td>$certificate->city </td>
+            </tr>
+            <tr>
+                <td class='headies'>Filiale</td>
+                <td>$certificate->affiliate_company_name </td>
+            </tr>
+            
+            ";
+    if ($certificateFile = maybe_null_or_empty($certificate, 'certificateFile', true)) {
+        $preview .= "
         <tr>
                 <td class='headies'>Copie ABE</td>
                 <td> <a target='_blank' href='$uploadPath$certificateFile'>$certificateFile</a> </td>
             </tr>
         ";
     }
-    if($minuteFile=maybe_null_or_empty($certificate, 'minuteFile', true)){
-        $preview.="
+    if ($minuteFile = maybe_null_or_empty($certificate, 'minuteFile', true)) {
+        $preview .= "
         <tr>
                 <td class='headies'>PV de réception</td>
                 <td> <a target='_blank' href='$uploadPath$minuteFile'>$minuteFile</a> </td>
             </tr>
         ";
     }
-    if($contractFile=maybe_null_or_empty($certificate, 'contractFile', true)){
-        $preview.="
+    if ($contractFile = maybe_null_or_empty($certificate, 'contractFile', true)) {
+        $preview .= "
         <tr>
                 <td class='headies'>Contrat</td>
                 <td> <a target='_blank' href='$uploadPath$contractFile'>$contractFile</a> </td>
@@ -825,7 +1026,7 @@ function getMinifiedView($certificate, $index, $uploadPath){
         ";
     }
 
-    $preview.="
+    $preview .= "
         </table>
     </div>";
     return $preview;

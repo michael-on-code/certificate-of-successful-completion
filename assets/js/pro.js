@@ -304,6 +304,22 @@ $(function () {
     if ($('.cutter').length) {
         $('.cutter').line(2, "...");
     }
+
+    if($('.my-global-preview-btn').length){
+        $('.my-global-preview-btn').click(function (e) {
+            e.preventDefault();
+            var targetID = $(this).attr('data-target');
+            var previewHTML = clientData.certificates[targetID].globalPreview;
+            $('.modalArea .content').html(previewHTML);
+            $('.modalArea .content div.innerContent').each(function () {
+                if($.trim($(this).text())==''){
+                    $(this).text("Néant");
+                }
+            })
+            $('.modalTriggerContainer a').trigger('click');
+        });
+
+    }
     if ($('[data-toggle="popover"]').length) {
         //console.log(clientData);
         $('[data-toggle="popover"]').popover({
@@ -312,10 +328,7 @@ $(function () {
             sanitize: false,
             content: function () {
                 var target=parseInt($(this).attr('data-target'));
-                /*var content = $(this).attr('data-target');
-                return $(content).html()*/
-                //console.log(clientData.certificates[target].preview);
-                return clientData.certificates[target].preview;
+                return clientData.certificates[target].minifiedPreview;
             },
             title: 'Aperçu rapide <span style="float:right;cursor:pointer;" class="fa fa-times my-close" data-toggle="popover">'
         });

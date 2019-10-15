@@ -50,9 +50,11 @@ join activity_area on activity_area.id = abe.activity_area_id join affiliate_com
         $sql=$sql.' order by abe.id desc';
         $certificates = $this->db->query($sql)->result_array();
         if(!empty($certificates)){
+            $countries = getCountries();
             foreach ($certificates as $key=>$certificate){
                 $certificates[$key]= (object) $this->getCertificateMeta($certificate);
-                $certificates[$key]->preview = getMinifiedView($certificates[$key], $key, $this->data['uploadPath']);
+                $certificates[$key]->minifiedPreview = getMinifiedView($certificates[$key], $key, $this->data['uploadPath'], $countries);
+                $certificates[$key]->globalPreview = getGlobalPreview($certificates[$key], $key, $this->data['uploadPath'], $countries);
             }
 
         }

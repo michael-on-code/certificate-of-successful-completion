@@ -52,7 +52,7 @@
     $contents='';
     if (isset($certificates) && !empty($certificates)) {
         foreach ($certificates as $key => $certificate) {
-            //$contents.=getMinifiedView($certificate, $key);
+            //$contents.=getGlobalPreview($certificate, $key, $uploadPath, $coun);
             ?>
 
             <tr>
@@ -87,9 +87,9 @@
                     data-placement="top" title="<?= $certificate->detailed_tasks ?>"><?= $certificate->detailed_tasks ?></td>
                 <td><?= convert_date_to_french($certificate->created_at) ?></td>
                 <td class="text-center">
-                    <!--<a data-toggle="tooltip" data-placement="top" title="Aperçu rapide" class="btn btn-light btn-icon">
+                    <a href="#" data-target="<?= $key ?>" data-toggle="tooltip" data-placement="top" title="Aperçu globale" class="btn btn-light btn-icon my-global-preview-btn">
                         <i data-feather="eye"></i>
-                    </a>-->
+                    </a>
                     <a href="<?= site_url("certificate/edit/$certificate->slug") ?>" data-toggle="tooltip"
                        data-placement="top" title="Modifier ABE" class="btn btn-primary btn-icon">
                         <i data-feather="edit"></i>
@@ -141,6 +141,25 @@
 
     </tbody>
 </table>
+<div class="modalTriggerContainer">
+    <a href="#modalSplitColumn" data-toggle="modal" class="outline-none modalTrigger">
+    </a>
+</div>
+<div class="modal fade modalArea" id="modalSplitColumn" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered mx-wd-sm-70p" role="document">
+        <div class="modal-content bd-0 bg-transparent">
+            <div class="modal-body pd-0">
+                <a href="" role="button" class="close pos-absolute t-15 r-15 z-index-10" data-dismiss="modal" aria-label="Fermer">
+                    <span aria-hidden="true">×</span>
+                </a>
+
+                <div class="row no-gutters content bg-white">
+
+                </div><!-- row -->
+            </div><!-- modal-body -->
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div>
 <?php //echo $contents ?>
 <div class="wd-md-60p mg-t-15 mg-md-auto mg-t-15-f">
     <div data-label="Afficher / Masquer des colonnes" class="df-example demo-forms">
