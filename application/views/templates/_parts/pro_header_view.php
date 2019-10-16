@@ -8,6 +8,7 @@
     <title><?= maybe_null_or_empty($options, 'siteName') ?> | <?= $pageTitle ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="<?= $options['siteDescription'] ?>">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="shortcut icon" href="<?= $uploadPath.$options['siteFavicon'] ?>"/>
 
     <!--begin::Fonts -->
