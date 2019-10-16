@@ -125,7 +125,7 @@ class Login extends Login_Controller{
                                 'password' => $password['new']
                             ));
                             $this->user_model->update_meta($userID, 'completionToken', null);
-                            get_success_message('Mot de passe défini avec succès <br> Vous pouvez à présent vous connecter à présent avec vos identifiants', 10000);
+                            get_success_message('Mot de passe défini avec succès <br> Vous pouvez à présent vous connecter avec vos identifiants', 10000);
                             redirect('/');
                         }else{
                             get_error_message("Google Recaptcha n'autorise pas votre connexion <br> Veuillez rééssayer");

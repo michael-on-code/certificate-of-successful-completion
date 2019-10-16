@@ -8,7 +8,9 @@
 
 function get_add_edit_certificate_html_form($edit = false, $certificate = [], $activity_areas = [], $countries, $affiliateCompanies, $currencies, $uploadPath)
 {
-    echo form_open_multipart() ?>
+    echo form_open_multipart();
+    echo form_hidden('certificate[currency]', set_value('certificate[currency]', maybe_null_or_empty($certificate, 'currency') ? maybe_null_or_empty($certificate, 'currency') : $currencies[0]))
+    ?>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -248,7 +250,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                     ?>
                     <div class="input-group">
                         <?php
-                        getCurrencyInputGroupHTML($currencies);
+                        getCurrencyInputGroupHTML($currencies, maybe_null_or_empty($certificate, 'currency'));
                         echo form_input([
                             'name' => 'certificate[total_amount]',
                             'class' => 'form-control currencyInput',
@@ -269,7 +271,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                     ?>
                     <div class="input-group">
                         <?php
-                        getCurrencyInputGroupHTML($currencies);
+                        getCurrencyInputGroupHTML($currencies, maybe_null_or_empty($certificate, 'currency'));
                         echo form_input([
                             'name' => 'certificate[amount_received]',
                             'class' => 'form-control currencyInput',
@@ -497,17 +499,23 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
     <?php
 }
 
-function getCurrencyInputGroupHTML($currencies)
+function getCurrencyInputGroupHTML($currencies, $currency='')
 {
+
+    if($currency=='' || !$currency){
+        $currency=$currencies[0];
+        unset($currencies[0]);
+    }
+    $actualCurrencyKey = array_keys($currencies, $currency)[0];
     ?>
     <div class="input-group-prepend">
         <?php
         ?>
         <button class="btn btn-outline-light dropdown-toggle" type="button" data-toggle="dropdown"
-                aria-haspopup="false" aria-expanded="false"><?= $currencies[0] ?>
+                aria-haspopup="false" aria-expanded="false"><?= $currency ?>
         </button>
         <?php
-        unset($currencies[0]);
+        unset($currencies[$actualCurrencyKey]);
         ?>
         <div class="dropdown-menu tx-13 currency-dropdown">
             <?php
@@ -588,6 +596,10 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
                 'name' => 'certificate[customer_adress]',
                 'label' => "Adresse maître d'ouvrage",
                 'rules' => 'trim|required|max_length[100]'
+            ],[
+                'name' => 'certificate[currency]',
+                'label' => "Devise",
+                'rules' => 'trim|required|in_list['.implode(',', $ci->data['currencies']).']'
             ],
             [
                 'name' => 'certificate[total_amount]',
@@ -798,11 +810,11 @@ function getGlobalPreview($certificate, $index, $uploadPath, $countries)
                     </div>
                     <div class='divider-text'>Montant total</div>
                     <div class='innerContent'>
-                        $certificate->total_amount
+                        $certificate->total_amount $certificate->currency
                     </div>
                     <div class='divider-text'>Montant payé</div>
                     <div class='innerContent'>
-                        $certificate->amount_received
+                        $certificate->amount_received $certificate->currency
                     </div>
                 </div>
                 <div class='col-md-6'>
@@ -977,11 +989,11 @@ function getMinifiedView($certificate, $index, $uploadPath, $countries)
             </tr>
             <tr>
                 <td class='headies'>Montant total</td>
-                <td>$certificate->total_amount </td>
+                <td>$certificate->total_amount $certificate->currency</td>
             </tr>
             <tr>
                 <td class='headies'>Montant payé</td>
-                <td>$certificate->amount_received </td>
+                <td>$certificate->amount_received $certificate->currency</td>
             </tr>
             <tr>
                 <td class='headies'>Part</td>

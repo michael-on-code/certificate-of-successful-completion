@@ -70,13 +70,12 @@ class Certificate extends Pro_Controller{
 
     public function add(){
         $this->data['pageTitle']='Ajouter une ABE';
-
+        $this->data['currencies']= ['FCFA', '€', '$'];
         getCertificationAddOrEditValidation();
 
         $this->data['countries']=getCountries();
         $this->data['activityAreas']= $this->certificate_model->getActivityAreasForSelect2();
         $this->data['affiliateCompanies']= $this->certificate_model->getAffiliateCompaniesForSelect2();
-        $this->data['currencies']= ['FCFA', '€', '$'];
 
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/select2/js/select2.min.js';
         $this->data['footerJs'][] = '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js';
@@ -101,14 +100,13 @@ class Certificate extends Pro_Controller{
         $certificateID = (int) $this->certificate_model->getCertificateIDBySlug($certificateSlug);
         redirect_if_id_is_not_valid($certificateID, 'abe', '/');
         $this->data['pageTitle']='Modifier une ABE';
-
+        $this->data['currencies']= ['FCFA', '€', '$'];
         getCertificationAddOrEditValidation(true, $certificateID,$certificateSlug);
         $this->data['certificate']=$this->certificate_model->get_data_by_id($certificateID);
         $this->data['pageTitle']="Modifier l'ABE N°".$this->data['certificate']['internal_file_number'];
         $this->data['countries']=getCountries();
         $this->data['activityAreas']= $this->certificate_model->getActivityAreasForSelect2();
         $this->data['affiliateCompanies']= $this->certificate_model->getAffiliateCompaniesForSelect2();
-        $this->data['currencies']= ['FCFA', '€', '$'];
 
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/select2/js/select2.min.js';
         $this->data['footerJs'][] = '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js';

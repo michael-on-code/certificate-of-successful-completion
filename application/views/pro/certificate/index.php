@@ -66,8 +66,8 @@
                 <td><?= convert_date_to_french($certificate->signature_date) ?></td>
                 <td data-toggle="tooltip" class="cutter"
                     data-placement="top" title="<?= $certificate->customer_name ?>"><?= $certificate->customer_name ?></td>
-                <td><?= $certificate->total_amount ?></td>
-                <td><?= $certificate->amount_received ?></td>
+                <td><?= $certificate->total_amount ?><?= $certificate->currency ?></td>
+                <td><?= $certificate->amount_received ?><?= $certificate->currency ?></td>
                 <td><?= $certificate->akasi_share ?>%</td>
                 <td><?= convert_date_to_french($certificate->project_execution_start_date) ?></td>
                 <td><?= convert_date_to_french($certificate->project_execution_end_date) ?></td>

@@ -320,6 +320,25 @@ $(function () {
         });
 
     }
+    if($('.currency-dropdown').length){
+        $(document).on('click', '.currency-dropdown a.dropdown-item', function (e) {
+            e.preventDefault();
+            var button = $(this).parent().prev('button');
+            var actualCurrency = $.trim(button.text());
+            var choosedCurrency = $.trim($(this).text());
+            button.text(choosedCurrency);
+            $(this).parent().prepend('<a class="dropdown-item" href="#">'+actualCurrency+'</a>')
+            $('[name="certificate[currency]"]').val(choosedCurrency);
+            $(this).addClass('choosed-currency-remove');
+            var inputDropdownHTML = $(this).parent().parent().html();
+            $('.currency-dropdown').parents('.input-group-prepend').each(function () {
+               $(this).html(inputDropdownHTML);
+               $(this).removeClass('show');
+               $(this).find('.currency-dropdown').removeClass("show")
+            });
+            $('.choosed-currency-remove').remove();
+        });
+    }
     if ($('[data-toggle="popover"]').length) {
         //console.log(clientData);
         $('[data-toggle="popover"]').popover({
