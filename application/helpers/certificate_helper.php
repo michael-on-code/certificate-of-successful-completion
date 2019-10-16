@@ -504,7 +504,6 @@ function getCurrencyInputGroupHTML($currencies, $currency='')
 
     if($currency=='' || !$currency){
         $currency=$currencies[0];
-        unset($currencies[0]);
     }
     $actualCurrencyKey = array_keys($currencies, $currency)[0];
     ?>
