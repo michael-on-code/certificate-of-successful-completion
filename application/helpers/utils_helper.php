@@ -516,7 +516,7 @@ function mailTemplateHtml($args, $options)
     ob_start();
     ?>
 
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//FR"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml"
           style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
@@ -642,6 +642,7 @@ function mailTemplateHtml($args, $options)
                                             <?php echo $args['message'] ?>
                                         </td>
                                     </tr>
+                                    <?php echo (isset($args['tableMessage']) ?  $args['tableMessage'] : '') ?>
                                     <?php
                                     if (isset($args['btnLink']) && isset($args['btnLabel'])) {
                                         ?>
@@ -662,7 +663,9 @@ function mailTemplateHtml($args, $options)
                                         <td class="content-block"
                                             style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;"
                                             valign="top">
-                                            &mdash; <b>Cordialement</b> <?php echo $options['siteName'] ?>
+                                            <b>Equipe</b> <?php echo $options['siteName'] ?>
+                                            <br>
+                                            AKASI Consulting Group
                                         </td>
                                     </tr>
                                 </table>
@@ -695,11 +698,12 @@ function mailTemplateHtml($args, $options)
     return ob_get_clean();
 }
 
-function sendNotificationMail($message){
+function sendNotificationMail($message, $title='', $tableMessage=''){
     $ci = &get_instance();
     $options = $ci->data['options'];
-    $mail['title'] = "Notification - ".$siteName=maybe_null_or_empty($options, 'siteName');
+    $mail['title'] = $title== '' ? ("Notification - ".$siteName=maybe_null_or_empty($options, 'siteName')) : $title;
     $mail['message'] = $message;
+    $mail['tableMessage'] = $tableMessage;
     $mail['btnLabel'] = "Accéder à ".$siteName;
     $mail['btnLink'] = site_url('/');
     $mail['destination'] = maybe_null_or_empty($options, 'notificationEmails');

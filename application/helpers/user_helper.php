@@ -623,9 +623,33 @@ function getUsersAddOrEditValidation($edit = false, $userID = '', $username = ''
                     $userData = (object)$userData;
                     $data = (object)$user;
                     $siteName = $ci->data['options']['siteName'];
+                    $groupArray =  $this->ion_auth->get_users_groups($userData->id)->result();
+                    $userRolesInString = '';
+                    $temp=[];
+                    if(!empty($groupArray)){
+                        foreach ($groupArray as $role){
+                            $temp[]=$role->description;
+                        }
+                    }
+                    $userRolesInString = implode(', ', $temp);
                     //send user mail
                     sendActivationMail($data, $userData, $siteName);
-                    sendNotificationMail("Bonjour cher administrateur, un utilisateur du nom de <strong> $data->first_name $data->last_name</strong> vient d'être ajouté à la plateforme.  </strong>");
+                    sendNotificationMail("Bonjour Team <br><br> Un utilisateur vient d'être ajouté à la plateforme",
+                        "Ajout d'un nouvel utilisateur",
+                        "<tr>
+<td> <strong>Nom</strong> </td>
+<td> <strong>$data->first_name</strong> </td>
+</tr>
+<tr>
+<td> <strong>Prénom(s)</strong> </td>
+<td> <strong>$data->last_name</strong> </td>
+</tr>
+<tr>
+<td> <strong>Roles</strong> </td>
+<td> <strong>$userRolesInString</strong> </td>
+</tr>
+
+");
                     //TODO send mail to administrator
                     get_success_message("L'utilisateur a été créé avec succès <br> Un mail de confirmation a été envoyé à $userData->email", 10000);
                     redirect('users/edit/' . $ci->user_model->getUserFieldByID($userData->id, 'username'));
