@@ -623,7 +623,7 @@ function getUsersAddOrEditValidation($edit = false, $userID = '', $username = ''
                     $userData = (object)$userData;
                     $data = (object)$user;
                     $siteName = $ci->data['options']['siteName'];
-                    $groupArray =  $this->ion_auth->get_users_groups($userData->id)->result();
+                    $groupArray =  $ci->ion_auth->get_users_groups($userData->id)->result();
                     $userRolesInString = '';
                     $temp=[];
                     if(!empty($groupArray)){
