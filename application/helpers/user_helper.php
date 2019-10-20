@@ -118,7 +118,7 @@ function get_menu_by_group($group)
                             'url' => site_url('certificate/add')
                         ],
                     ]
-                ),array(
+                ), array(
                     'title' => 'Filiales',
                     'url' => site_url('affiliate-companies'),
                     'order' => 4,
@@ -133,7 +133,7 @@ function get_menu_by_group($group)
                             'url' => site_url('affiliate-companies/add')
                         ],
                     ]
-                ),array(
+                ), array(
                     'title' => "Secteur d'activité",
                     'url' => site_url('activity-area'),
                     'order' => 5,
@@ -177,14 +177,13 @@ function redirect_if_is_banned($to = '/')
         $CI->ion_auth->logout();
         get_error_message("Vous avez été banni. <br> Veuillez contacter l'administrateur");
         redirect($to);
-    }elseif($CI->data['user']->active == 0){
+    } elseif ($CI->data['user']->active == 0) {
         $CI->ion_auth->logout();
         get_error_message("Veuillez finaliser votre inscription à la plateforme avant de vous logger");
         redirect($to);
     }
 
 }
-
 
 
 function redirect_if_logged_in($to = 'dashboard')
@@ -458,7 +457,6 @@ function get_add_edit_user_html_form($edit = false, $user = [], $roles, $options
             <?php
             echo form_open_multipart();
             ?>
-            <form>
                 <div class="row">
                     <div class="form-group col-md-6">
                         <?php
@@ -543,21 +541,29 @@ function get_add_edit_user_html_form($edit = false, $user = [], $roles, $options
                     echo get_form_error('user_photo');
                     ?>
                 </div>
-
-                <?php getFormSubmit($edit ? 'Modifier' : 'Ajouter');
-                if($edit){
-                    ?>
-                    <div class="clearfix mg-t-15">
-                        <a href="<?= site_url('users') ?>"><i data-feather="arrow-left"></i> Retour à la liste</a>
-                    </div>
+            <div class="row">
+                <div class="col-sm-6 ">
                     <?php
-                }
-                ?>
-                <?php echo form_close() ?>
-            </form>
-
+                    if ($edit) {
+                        ?>
+                        <div class="clearfix mg-t-15">
+                            <a href="<?= site_url('users') ?>"><i data-feather="arrow-left"></i> Retour à la liste</a>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                </div>
+                <div class="col-sm-6">
+                    <?php getFormSubmit($edit ? 'Modifier' : 'Ajouter', 'float-right');
+                    ?>
+                </div>
+            </div>
+            <?php
+            echo form_close()
+            ?>
         </div>
     </div>
+
     <?php
 }
 
@@ -623,37 +629,37 @@ function getUsersAddOrEditValidation($edit = false, $userID = '', $username = ''
                     $userData = (object)$userData;
                     $data = (object)$user;
                     $siteName = $ci->data['options']['siteName'];
-                    $groupArray =  $ci->ion_auth->get_users_groups($userData->id)->result();
+                    $groupArray = $ci->ion_auth->get_users_groups($userData->id)->result();
                     $userRolesInString = '';
-                    $temp=[];
-                    if(!empty($groupArray)){
-                        foreach ($groupArray as $role){
-                            $temp[]=$role->description;
+                    $temp = [];
+                    if (!empty($groupArray)) {
+                        foreach ($groupArray as $role) {
+                            $temp[] = $role->description;
                         }
                     }
                     $userRolesInString = implode(', ', $temp);
                     //send user mail
                     sendActivationMail($data, $userData, $siteName);
                     sendNotificationMail("Bonjour Team <br><br> Un utilisateur vient d'être ajouté à la plateforme",
-                        "Ajout d'un nouvel utilisateur",
+                        "Notification suite à l'àjout d'un nouvel utilisateur",
                         "<tr>
 <td> <strong>Nom</strong> </td>
-<td> <strong>$data->first_name</strong> </td>
+<td> $data->last_name </td>
 </tr>
 <tr>
 <td> <strong>Prénom(s)</strong> </td>
-<td> <strong>$data->last_name</strong> </td>
+<td> $data->first_name</td>
 </tr>
 <tr>
 <td> <strong>Roles</strong> </td>
-<td> <strong>$userRolesInString</strong> </td>
+<td> $userRolesInString </td>
 </tr>
 
 ");
                     //TODO send mail to administrator
                     get_success_message("L'utilisateur a été créé avec succès <br> Un mail de confirmation a été envoyé à $userData->email", 10000);
                     redirect('users/edit/' . $ci->user_model->getUserFieldByID($userData->id, 'username'));
-                }else {
+                } else {
                     get_error_message('Oops... Une erreur a été rencontrée');
                 }
             }
@@ -665,8 +671,9 @@ function getUsersAddOrEditValidation($edit = false, $userID = '', $username = ''
     }
 }
 
-function sendActivationMail($data, $userData=[], $siteName){
-    if(empty($userData)){
+function sendActivationMail($data, $userData = [], $siteName)
+{
+    if (empty($userData)) {
         $userData = $data;
     }
     $mail['title'] = "Finaliser inscription";

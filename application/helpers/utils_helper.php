@@ -17,6 +17,7 @@ function getFormSubmit($label, $additionalClass = '', $class = "btn btn-primary 
 
 function googleRecaptchaCurl1(array $data)
 {
+    //var_dump($data);exit;
     //$json = json_encode($data);
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
@@ -701,7 +702,8 @@ function mailTemplateHtml($args, $options)
 function sendNotificationMail($message, $title='', $tableMessage=''){
     $ci = &get_instance();
     $options = $ci->data['options'];
-    $mail['title'] = $title== '' ? ("Notification - ".$siteName=maybe_null_or_empty($options, 'siteName')) : $title;
+    $siteName=maybe_null_or_empty($options, 'siteName');
+    $mail['title'] = $title== '' ? ("Notification - ".$siteName) : $title;
     $mail['message'] = $message;
     $mail['tableMessage'] = $tableMessage;
     $mail['btnLabel'] = "Accéder à ".$siteName;

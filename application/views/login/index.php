@@ -25,7 +25,6 @@ get_flashdata();
                     <h3 class="tx-color-01 mg-b-5">Se connecter</h3>
                     <p class="tx-color-03 tx-16 mg-b-40">Bienvenue sur la plateforme AKASI ABE</p>
                     <?php echo form_open('') ?>
-                    <?= form_hidden('g-recaptcha-response') ?>
                     <div class="form-group">
                         <?php
                         echo form_label('Adresse Email', 'email');
@@ -60,7 +59,8 @@ get_flashdata();
                     <div class="form-group">
                         <div id="my_google_recaptcha"></div>
                         <?php
-                       echo get_form_error('my_google_recaptcha')
+                        echo form_hidden('g-recaptcha-response');
+                       echo get_form_error('g-recaptcha-response')
                         ?>
                     </div>
                     <div class="form-group position-relative">

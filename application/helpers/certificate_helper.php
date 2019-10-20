@@ -478,7 +478,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
 
     </div>
     <div class="row">
-        <div class="col-md-6 ">
+        <div class="col-sm-6 ">
             <?php
             if ($edit) {
                 ?>
@@ -489,14 +489,14 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
             }
             ?>
         </div>
-        <div class="col-md-6">
+        <div class="col-sm-6">
             <?php getFormSubmit($edit ? 'Modifier' : 'Ajouter', 'float-right');
+
             ?>
         </div>
     </div>
-
-
     <?php
+    echo form_close();
 }
 
 function getCurrencyInputGroupHTML($currencies, $currency='')
