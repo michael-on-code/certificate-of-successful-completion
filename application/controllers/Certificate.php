@@ -23,9 +23,9 @@ class Certificate extends Pro_Controller{
         $this->data['certificates'] = $this->certificate_model->getAll();
         $this->data['countries']=getCountries();
         $this->data['tableHeaders']=[
-            'N° Interne', 'Désignation', 'Secteur', 'Sous Secteur', 'Date de signature', 'Autorité contractante',
+            'N° Interne', 'Désignation', 'Secteur', 'Sous Secteur', 'Date de signature du contrat', 'Autorité contractante',
             'Montant total', 'Montant payé', 'Part', "Début période d'execution", "Fin période d'execution", "Pays", "Ville",
-            'Source de financement', 'Filiale', "Date d'attribution", "Partenaire/associé", "Adresse maitre d'ouvrage", "Role", "Description du marché","Details des taches exécutés" ,"Ajouté le"
+            'Source de financement', 'Filiale', "Date d'attribution", "Partenaire/associé", "Adresse de l'autorité contractante", "Role", "Description du marché","Details des taches exécutés" ,"Ajouté le"
         ];
         $numberColumns = count($this->data['tableHeaders']);
         for($i=7; $i<$numberColumns; $i++){
@@ -45,6 +45,7 @@ class Certificate extends Pro_Controller{
         $this->data['footerJs'][] = $this->data['assetsUrl'] . 'lib/sweetalert/sweetalert.min.js';
 
         $this->data['footerJs'][] = '//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js';
+        $this->data['footerJs'][] = '//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js';
 
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/datatables.net/js/jquery.dataTables.min.js';
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/datatables.net-dt/js/dataTables.dataTables.min.js';
@@ -92,6 +93,7 @@ class Certificate extends Pro_Controller{
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/dropify/dist/js/dropify.min.js';
         $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/dropify/dist/css/dropify.min.css';
 
+        $this->data['footerJs'][] = $this->data['assetsUrl'].'js/line-cutter.js';
         $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/select2/css/select2.min.css';
         $this->render('certificate/add');
     }
@@ -123,6 +125,7 @@ class Certificate extends Pro_Controller{
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/dropify/dist/js/dropify.min.js';
         $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/dropify/dist/css/dropify.min.css';
 
+        $this->data['footerJs'][] = $this->data['assetsUrl'].'js/line-cutter.js';
         $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/select2/css/select2.min.css';
         $this->render('certificate/edit');
     }

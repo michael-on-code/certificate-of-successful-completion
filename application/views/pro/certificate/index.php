@@ -66,8 +66,8 @@
                 <td><?= convert_date_to_french($certificate->signature_date) ?></td>
                 <td data-toggle="tooltip" class="cutter"
                     data-placement="top" title="<?= $certificate->customer_name ?>"><?= $certificate->customer_name ?></td>
-                <td><?= $certificate->total_amount ?><?= $certificate->currency ?></td>
-                <td><?= $certificate->amount_received ?><?= $certificate->currency ?></td>
+                <td><span class="is-currency"><?= $certificate->total_amount ?></span> <?= $certificate->currency ?></td>
+                <td><span class="is-currency"><?= $certificate->amount_received ?></span> <?= $certificate->currency ?></td>
                 <td><?= $certificate->akasi_share ?>%</td>
                 <td><?= convert_date_to_french($certificate->project_execution_start_date) ?></td>
                 <td><?= convert_date_to_french($certificate->project_execution_end_date) ?></td>
@@ -79,7 +79,7 @@
                 <td><?= convert_date_to_french($certificate->project_awarded_date) ?></td>
                 <td><?= $certificate->project_partner ?></td>
                 <td><?= $certificate->customer_adress ?></td>
-                <td data-html="true" data-toggle="tooltip" class="cutter"
+                <td data-toggle="tooltip" class="cutter"
                     data-placement="top"  title="<?= $certificate->role ?>"><?= $certificate->role ?></td>
                 <td data-html="true" data-toggle="tooltip" class="cutter"
                     data-placement="top" title="<?= $certificate->project_description ?>"><?= $certificate->project_description ?></td>

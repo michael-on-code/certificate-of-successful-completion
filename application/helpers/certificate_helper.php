@@ -11,6 +11,11 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
     echo form_open_multipart();
     echo form_hidden('certificate[currency]', set_value('certificate[currency]', maybe_null_or_empty($certificate, 'currency') ? maybe_null_or_empty($certificate, 'currency') : $currencies[0]))
     ?>
+    <style>
+        .dropify-wrapper{
+            height: 160px;
+        }
+    </style>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -63,22 +68,27 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
             <div class="row">
                 <div class="form-group col-md-6">
                     <?php
-                    echo form_label("Pays", 'country', [
+                    echo form_label("Partenaire / associé", 'project_partner', [
                         'class' => 'd-block'
                     ]);
                     ?>
                     <?php
-                    echo form_dropdown('certificate[country]', $countries, set_value('certificate[country]', maybe_null_or_empty($certificate, 'country'), false), [
-                        'class' => 'form-control select2',
-                        'id' => 'country',
-                        'required' => '',
+                    echo form_input([
+                        'name' => 'certificate[project_partner]',
+                        'class' => 'form-control my-autocomplete',
+                        //'required' => '',
+                        'placeholder' => "Partenaire ou associé",
+                        'id' => 'project_partner',
+                        'data-target' => 'project_partner',
+                        'value' => set_value('certificate[project_partner]', maybe_null_or_empty($certificate, 'project_partner')? maybe_null_or_empty($certificate, 'project_partner') : 'Néant', false)
                     ]);
-                    echo form_error('certificate[country]')
+                    echo get_form_error('certificate[project_partner]');
+                    getFieldInfo('Autocomplétion disponible');
                     ?>
                 </div>
                 <div class="form-group col-md-6">
                     <?php
-                    echo form_label("Date de signature", 'signature_date', [
+                    echo form_label("Date de signature du contrat", 'signature_date', [
                         'class' => 'd-block'
                     ]);
                     ?>
@@ -87,7 +97,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                         'name' => 'certificate[signature_date]',
                         'class' => 'form-control datepicker',
                         'required' => '',
-                        'placeholder' => 'Date de signature',
+                        'placeholder' => 'Date de signature du contrat',
                         'id' => 'signature_date',
                         'value' => set_value('certificate[signature_date]', convert_date_to_french(maybe_null_or_empty($certificate, 'signature_date')), false)
                     ]);
@@ -116,6 +126,74 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 </div>
                 <div class="form-group col-md-6">
                     <?php
+                    echo form_label("Filiale ayant éxécuté", 'affiliate_company', [
+                        'class' => 'd-block'
+                    ]);
+                    ?>
+                    <?php
+                    echo form_dropdown('certificate[affiliate_company_id]', $affiliateCompanies, set_value('certificate[affiliate_company_id]', maybe_null_or_empty($certificate, 'affiliate_company_id'), false), [
+                        'class' => 'form-control select2',
+                        'id' => 'affiliate_company',
+                        'required' => ''
+                    ]);
+                    echo form_error('certificate[affiliate_company_id]')
+                    ?>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <?php
+                    echo form_label("Source de financement", 'funding_source', [
+                        'class' => 'd-block'
+                    ]);
+                    ?>
+                    <?php
+                    echo form_input([
+                        'name' => 'certificate[funding_source]',
+                        'class' => 'form-control my-autocomplete',
+                        //'required' => '',
+                        'placeholder' => "Source de financement",
+                        'id' => 'funding_source',
+                        'data-target' => 'funding_source',
+                        'value' => set_value('certificate[funding_source]', maybe_null_or_empty($certificate, 'funding_source'), true)
+                    ]);
+                    echo get_form_error('certificate[funding_source]');
+                    getFieldInfo('Autocomplétion disponible');
+                    ?>
+                </div>
+                <div class="form-group col-md-6">
+                    <?= form_label("Rôle de l'entreprise") ?>
+                    <?= form_input([
+                        'name' => 'certificate[role]',
+                        'class' => 'form-control',
+                        'placeholder' => "Rôle de l'entreprise",
+                        //'required' => '',
+                        'value' => set_value('certificate[role]', maybe_null_or_empty($certificate, 'role'), false),
+                    ]) ?>
+                    <?= get_form_error('certificate[role]') ?>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <?= form_label("Détail des tâches exécutées") ?>
+                <?= form_textarea([
+                    'name' => 'certificate[detailed_tasks]',
+                    'class' => 'my-summernote',
+                    'required' => '',
+                    'value' => set_value('certificate[detailed_tasks]', maybe_null_or_empty($certificate, 'detailed_tasks'), false),
+                ]) ?>
+                <?= get_form_error('certificate[detailed_tasks]') ?>
+            </div>
+
+
+
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <?php
                     echo form_label("Nom Autorité contractante", 'customer_name', [
                         'class' => 'd-block'
                     ]);
@@ -135,94 +213,9 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                     ?>
                 </div>
 
-            </div>
-            <div class="form-group">
-                <?php
-                echo form_label("Source de financement", 'funding_source', [
-                    'class' => 'd-block'
-                ]);
-                ?>
-                <?php
-                echo form_input([
-                    'name' => 'certificate[funding_source]',
-                    'class' => 'form-control my-autocomplete',
-                    //'required' => '',
-                    'placeholder' => "Source de financement",
-                    'id' => 'funding_source',
-                    'data-target' => 'funding_source',
-                    'value' => set_value('certificate[funding_source]', maybe_null_or_empty($certificate, 'funding_source'), false)
-                ]);
-                echo get_form_error('certificate[funding_source]');
-                getFieldInfo('Autocomplétion disponible');
-                ?>
-            </div>
-            <div class="form-group">
-                <?= form_label("Rôle de l'entreprise") ?>
-                <?= form_textarea([
-                    'name' => 'certificate[role]',
-                    'class' => 'my-summernote',
-                    //'required' => '',
-                    'value' => set_value('certificate[role]', maybe_null_or_empty($certificate, 'role'), false),
-                ]) ?>
-                <?= get_form_error('certificate[role]') ?>
-            </div>
-            <div class="form-group">
-                <?= form_label("Détail des tâches exécutées") ?>
-                <?= form_textarea([
-                    'name' => 'certificate[detailed_tasks]',
-                    'class' => 'my-summernote',
-                    'required' => '',
-                    'value' => set_value('certificate[detailed_tasks]', maybe_null_or_empty($certificate, 'detailed_tasks'), false),
-                ]) ?>
-                <?= get_form_error('certificate[detailed_tasks]') ?>
-            </div>
-            <div class="form-group">
-                <?php echo form_label('Attacher le PV de réception');
-                $file = maybe_null_or_empty($certificate, 'minuteFile', true);
-                if ($edit && $file) {
-                    ?>
-                    <a data-toggle="tooltip"
-                       data-placement="top" title="Visualiser le PV de réception" target="_blank"
-                       href="<?= $uploadPath . $file ?>"> <i data-feather='external-link' style='width: 15px'></i></a>
-                    <?php
-                }
-                $data = [
-                    'name' => 'minuteFile',
-                    'title' => 'Attacher le PV de réception',
-                ];
-                if ($file) {
-                    $data['value'] = $uploadPath . $file;
-                } else {
-                    $data['value'] = set_value('minuteFile', '');
-                }
-                get_form_upload($data, $extensions = 'jpg jpeg png pdf doc docx', '5M', false);
-                echo get_form_error('minuteFile');
-                getFieldInfo('Format : JPG|PNG|JPEG|PDF|DOC|DOCX Taille Max : 5M');
-                ?>
-            </div>
-
-
-        </div>
-        <div class="col-md-6">
-            <div class="row">
                 <div class="form-group col-md-6">
                     <?php
-                    echo form_label("Filiale ayant éxécuté", 'affiliate_company', [
-                        'class' => 'd-block'
-                    ]);
-                    ?>
-                    <?php
-                    echo form_dropdown('certificate[affiliate_company_id]', $affiliateCompanies, set_value('certificate[affiliate_company_id]', maybe_null_or_empty($certificate, 'affiliate_company_id'), false), [
-                        'class' => 'form-control select2',
-                        'id' => 'affiliate_company',
-                        'required' => ''
-                    ]);
-                    echo form_error('certificate[affiliate_company_id]')
-                    ?>
-                </div>
-                <div class="form-group col-md-6">
-                    <?php
-                    echo form_label("Adresse maître d'ouvrage", 'customer_adress', [
+                    echo form_label("Adresse autorité contractante", 'customer_adress', [
                         'class' => 'd-block'
                     ]);
                     ?>
@@ -231,7 +224,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                         'name' => 'certificate[customer_adress]',
                         'class' => 'form-control ',
                         'required' => '',
-                        'placeholder' => "Adresse maître d'ouvrage",
+                        'placeholder' => "Adresse de l'autorité contractante",
                         'id' => 'customer_adress',
                         'value' => set_value('certificate[customer_adress]', maybe_null_or_empty($certificate, 'customer_adress'), false)
                     ]);
@@ -288,8 +281,10 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
             <div class="row">
                 <div class="form-group col-md-6">
                     <?php
-                    echo form_label("Date d'attribution", 'project_awarded_date', [
-                        'class' => 'd-block'
+                    echo form_label("Date d'attribution/Notification du Marché", 'project_awarded_date', [
+                        'class' => 'd-block cutter',
+                        'data-toggle'=>'tooltip',
+                        'title'=>"Date d'attribution/Notification du Marché"
                     ]);
                     ?>
                     <?php
@@ -297,7 +292,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                         'name' => 'certificate[project_awarded_date]',
                         'class' => 'form-control datepicker',
                         'required' => '',
-                        'placeholder' => "Date d'attribution",
+                        'placeholder' => "Date d'attribution/Notification du Marché",
                         'id' => 'project_awarded_date',
                         'value' => set_value('certificate[project_awarded_date]', convert_date_to_french(maybe_null_or_empty($certificate, 'project_awarded_date')), false)
                     ]);
@@ -330,6 +325,22 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 </div>
             </div>
             <div class="row">
+
+                <div class="form-group col-md-6">
+                    <?php
+                    echo form_label("Pays d’exécution du projet", 'country', [
+                        'class' => 'd-block'
+                    ]);
+                    ?>
+                    <?php
+                    echo form_dropdown('certificate[country]', $countries, set_value('certificate[country]', maybe_null_or_empty($certificate, 'country'), false), [
+                        'class' => 'form-control select2',
+                        'id' => 'country',
+                        'required' => '',
+                    ]);
+                    echo form_error('certificate[country]')
+                    ?>
+                </div>
                 <div class="form-group col-md-6">
                     <?php
                     echo form_label("Ville", 'city', [
@@ -350,26 +361,7 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                     getFieldInfo('Autocomplétion disponible');
                     ?>
                 </div>
-                <div class="form-group col-md-6">
-                    <?php
-                    echo form_label("Partenaire / associé", 'project_partner', [
-                        'class' => 'd-block'
-                    ]);
-                    ?>
-                    <?php
-                    echo form_input([
-                        'name' => 'certificate[project_partner]',
-                        'class' => 'form-control my-autocomplete',
-                        //'required' => '',
-                        'placeholder' => "Partenaire ou associé",
-                        'id' => 'project_partner',
-                        'data-target' => 'project_partner',
-                        'value' => set_value('certificate[project_partner]', maybe_null_or_empty($certificate, 'project_partner'), false)
-                    ]);
-                    echo get_form_error('certificate[project_partner]');
-                    getFieldInfo('Autocomplétion disponible');
-                    ?>
-                </div>
+
 
             </div>
             <div class="row">
@@ -423,59 +415,86 @@ function get_add_edit_certificate_html_form($edit = false, $certificate = [], $a
                 ]) ?>
                 <?= get_form_error('certificate[project_description]') ?>
             </div>
-            <div class="form-group">
-                <?php echo form_label("Attacher la Copie de l'ABE ");
-                $file = maybe_null_or_empty($certificate, 'certificateFile', true);
-                if ($edit && $file) {
-                    ?>
-                    <a data-toggle="tooltip"
-                       data-placement="top" title="Visualiser la copie de l'ABE" target="_blank"
-                       href="<?= $uploadPath . $file ?>"> <i data-feather='external-link' style='width: 15px'></i></a>
-                    <?php
-                }
-                $data = [
-                    'name' => 'certificateFile',
-                    'title' => "Attacher la Copie de l'ABE",
-                ];
-                if ($file) {
-                    $data['value'] = $uploadPath . $file;
-                } else {
-                    $data['value'] = set_value('certificateFile', '');
-                }
-                get_form_upload($data, $extensions = 'jpg jpeg png pdf doc docx', '5M');
-                echo get_form_error('certificateFile');
-                getFieldInfo('Format : JPG|PNG|JPEG|PDF|DOC|DOCX Taille Max : 5M');
-                ?>
-            </div>
-            <div class="form-group">
-                <?php echo form_label('Attacher le Contrat');
-                $file = maybe_null_or_empty($certificate, 'contractFile', true);
-                if ($edit && $file) {
-                    ?>
-                    <a data-toggle="tooltip"
-                       data-placement="top" title="Visualiser le contrat" target="_blank"
-                       href="<?= $uploadPath . $file ?>"> <i data-feather='external-link' style='width: 15px'></i></a>
-                    <?php
-                }
-                $data = [
-                    'name' => 'contractFile',
-                    'title' => 'Attacher le Contrat',
-                ];
-                if ($file) {
-                    $data['value'] = $uploadPath . $file;
-                } else {
-                    $data['value'] = set_value('contractFile', '');
-                }
-                get_form_upload($data, $extensions = 'jpg jpeg png pdf doc docx', '5M', false);
-                echo get_form_error('contractFile');
-                getFieldInfo('Format : JPG|PNG|JPEG|PDF|DOC|DOCX Taille Max : 5M');
 
-                ?>
-            </div>
 
         </div>
 
 
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <?php echo form_label('Attacher le PV de réception');
+            $file = maybe_null_or_empty($certificate, 'minuteFile', true);
+            if ($edit && $file) {
+                ?>
+                <a data-toggle="tooltip"
+                   data-placement="top" title="Visualiser le PV de réception" target="_blank"
+                   href="<?= $uploadPath . $file ?>"> <i data-feather='external-link' style='width: 15px'></i></a>
+                <?php
+            }
+            $data = [
+                'name' => 'minuteFile',
+                'title' => 'Attacher le PV de réception',
+            ];
+            if ($file) {
+                $data['value'] = $uploadPath . $file;
+            } else {
+                $data['value'] = set_value('minuteFile', '');
+            }
+            get_form_upload($data, $extensions = 'jpg jpeg png pdf doc docx', '5M', false);
+            echo get_form_error('minuteFile');
+            getFieldInfo('Format : JPG|PNG|JPEG|PDF|DOC|DOCX Taille Max : 5M');
+            ?>
+        </div>
+        <div class="form-group col-md-4">
+            <?php echo form_label("Attacher la Copie de l'ABE ");
+            $file = maybe_null_or_empty($certificate, 'certificateFile', true);
+            if ($edit && $file) {
+                ?>
+                <a data-toggle="tooltip"
+                   data-placement="top" title="Visualiser la copie de l'ABE" target="_blank"
+                   href="<?= $uploadPath . $file ?>"> <i data-feather='external-link' style='width: 15px'></i></a>
+                <?php
+            }
+            $data = [
+                'name' => 'certificateFile',
+                'title' => "Attacher la Copie de l'ABE",
+            ];
+            if ($file) {
+                $data['value'] = $uploadPath . $file;
+            } else {
+                $data['value'] = set_value('certificateFile', '');
+            }
+            get_form_upload($data, $extensions = 'jpg jpeg png pdf doc docx', '5M');
+            echo get_form_error('certificateFile');
+            getFieldInfo('Format : JPG|PNG|JPEG|PDF|DOC|DOCX Taille Max : 5M');
+            ?>
+        </div>
+        <div class="form-group col-md-4">
+            <?php echo form_label('Attacher le Contrat');
+            $file = maybe_null_or_empty($certificate, 'contractFile', true);
+            if ($edit && $file) {
+                ?>
+                <a data-toggle="tooltip"
+                   data-placement="top" title="Visualiser le contrat" target="_blank"
+                   href="<?= $uploadPath . $file ?>"> <i data-feather='external-link' style='width: 15px'></i></a>
+                <?php
+            }
+            $data = [
+                'name' => 'contractFile',
+                'title' => 'Attacher le Contrat',
+            ];
+            if ($file) {
+                $data['value'] = $uploadPath . $file;
+            } else {
+                $data['value'] = set_value('contractFile', '');
+            }
+            get_form_upload($data, $extensions = 'jpg jpeg png pdf doc docx', '5M', false);
+            echo get_form_error('contractFile');
+            getFieldInfo('Format : JPG|PNG|JPEG|PDF|DOC|DOCX Taille Max : 5M');
+
+            ?>
+        </div>
     </div>
     <div class="row">
         <div class="col-sm-6 ">
@@ -537,7 +556,7 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
             [
                 'name' => 'certificate[title]',
                 'label' => 'Désignation de la mission',
-                'rules' => 'trim|required|max_length[100]'
+                'rules' => 'trim|required'
             ],
             [
                 'name' => 'certificate[activity_area_id]',
@@ -547,7 +566,7 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
             [
                 'name' => 'certificate[sub_activity_area]',
                 'label' => "Sous Secteur d'activité",
-                'rules' => 'trim|required|max_length[35]'
+                'rules' => 'trim|required|max_length[100]'
             ],
             [
                 'name' => 'certificate[internal_file_number]',
@@ -558,12 +577,12 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
                 ],
             ], [
                 'name' => 'certificate[signature_date]',
-                'label' => "Date de signature",
+                'label' => "Date de signature du contrat",
                 'rules' => 'trim|required|max_length[10]'
             ],
             [
                 'name' => 'certificate[project_awarded_date]',
-                'label' => "Date d'attribution",
+                'label' => "Date d'attribution/Notification du Marché",
                 'rules' => 'trim|required|max_length[10]'
             ],
             [
@@ -579,11 +598,11 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
             [
                 'name' => 'certificate[customer_name]',
                 'label' => "Autorité contractante",
-                'rules' => 'trim|required|max_length[100]'
+                'rules' => 'trim|required'
             ],
             [
                 'name' => 'certificate[country]',
-                'label' => "Pays",
+                'label' => "Pays d’exécution du projet",
                 'rules' => 'trim|required|max_length[4]'
             ],
             [
@@ -593,8 +612,8 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
             ],
             [
                 'name' => 'certificate[customer_adress]',
-                'label' => "Adresse maître d'ouvrage",
-                'rules' => 'trim|required|max_length[100]'
+                'label' => "Adresse de l'autorité contractante",
+                'rules' => 'trim|required'
             ],[
                 'name' => 'certificate[currency]',
                 'label' => "Devise",
@@ -619,7 +638,7 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
             [
                 'name' => 'certificate[funding_source]',
                 'label' => "Source de financement",
-                'rules' => 'trim|max_length[35]'
+                'rules' => 'trim|max_length[100]'
             ],
             [
                 'name' => 'certificate[akasi_share]',
@@ -637,7 +656,7 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
             [
                 'name' => 'certificate[project_partner]',
                 'label' => "Partenaire / associé",
-                'rules' => 'trim|max_length[35]'
+                'rules' => 'trim|max_length[100]'
             ],
             [
                 'name' => 'certificate[role]',
@@ -686,14 +705,15 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
                     }
                 }
             }
-
+            $ci->certificate_model->insertOrUpdate($certificate, $certificateID);
             //var_dump($data);exit;
-            $certificateID = $ci->certificate_model->insertOrUpdate($certificate, $certificateID);
+            /*$certificateID = $ci->certificate_model->insertOrUpdate($certificate, $certificateID);
             if ($certificateSlug == '') {
                 $certificateSlug = $ci->certificate_model->getCertificateFieldByID($certificateID, 'slug');
-            }
+            }*/
             get_success_message($edit ? 'ABE modifiée avec succès' : 'ABE ajoutée avec succès');
-            redirect("certificate/edit/$certificateSlug");
+            //redirect("certificate/edit/$certificateSlug");
+            redirect("certificate". ($edit ? "/edit/$certificateSlug" : ''));
         } else {
             get_error_message();
         }
@@ -803,17 +823,17 @@ function getGlobalPreview($certificate, $index, $uploadPath, $countries)
                     <div class='innerContent'>
                         $certificate->internal_file_number
                     </div>
-                    <div class='divider-text'>Date de signature</div>
+                    <div class='divider-text'>Date de signature du contrat</div>
                     <div class='innerContent'>
                         $signature_date
                     </div>
                     <div class='divider-text'>Montant total</div>
                     <div class='innerContent'>
-                        $certificate->total_amount $certificate->currency
+                        <span class='is-currency'>$certificate->total_amount</span> $certificate->currency
                     </div>
                     <div class='divider-text'>Montant payé</div>
                     <div class='innerContent'>
-                        $certificate->amount_received $certificate->currency
+                        <span class='is-currency'>$certificate->amount_received</span> $certificate->currency
                     </div>
                 </div>
                 <div class='col-md-6'>
@@ -846,7 +866,7 @@ function getGlobalPreview($certificate, $index, $uploadPath, $countries)
                     </div>
                 </div>
                 <div class='col-md-12'>
-                    <div class='divider-text'>Adresse maitre d'ouvrage</div>
+                    <div class='divider-text'>Adresse de l'autorité contractante</div>
                     <div class='innerContent'>
                         $certificate->customer_adress
                     </div>
@@ -878,14 +898,15 @@ function getGlobalPreview($certificate, $index, $uploadPath, $countries)
                         $startProjectExcution
                     </div>
 
+                    <div class='divider-text'>Pays d’exécution du projet</div>
+                    <div class='innerContent'>
+                        $country
+                    </div>
                     <div class='divider-text'>Part</div>
                     <div class='innerContent'>
                         $certificate->akasi_share %
                     </div>
-                    <div class='divider-text'>Ville</div>
-                    <div class='innerContent'>
-                        $certificate->city
-                    </div>
+                    
                     <div class='divider-text'>Filiale</div>
                     <div class='innerContent'>
                         $certificate->affiliate_company_name
@@ -897,15 +918,16 @@ function getGlobalPreview($certificate, $index, $uploadPath, $countries)
                     <div class='innerContent'>
                         $endProjectExcution
                     </div>
-                    <div class='divider-text'>Pays</div>
+                    <div class='divider-text'>Ville</div>
                     <div class='innerContent'>
-                        $country
+                        $certificate->city
                     </div>
+                    
                     <div class='divider-text'>Source financement</div>
                     <div class='innerContent'>
                         $certificate->funding_source
                     </div>
-                    <div class='divider-text'>Date d'attribution</div>
+                    <div class='divider-text'>Date d'attribution/Notification du Marché</div>
                     <div class='innerContent'>
                         $projectAwardedDate
                     </div>
@@ -979,7 +1001,7 @@ function getMinifiedView($certificate, $index, $uploadPath, $countries)
                 <td>$certificate->sub_activity_area </td>
             </tr>
             <tr>
-                <td class='headies'>Date de signature</td>
+                <td class='headies'>Date de signature du contrat</td>
                 <td>" . convert_date_to_french($certificate->signature_date) . "</td>
             </tr>
             <tr>
@@ -988,18 +1010,18 @@ function getMinifiedView($certificate, $index, $uploadPath, $countries)
             </tr>
             <tr>
                 <td class='headies'>Montant total</td>
-                <td>$certificate->total_amount $certificate->currency</td>
+                <td><span class='is-currency'>$certificate->total_amount</span> $certificate->currency</td>
             </tr>
             <tr>
                 <td class='headies'>Montant payé</td>
-                <td>$certificate->amount_received $certificate->currency</td>
+                <td><span class='is-currency'>$certificate->amount_received</span> $certificate->currency</td>
             </tr>
             <tr>
                 <td class='headies'>Part</td>
                 <td>$certificate->akasi_share %</td>
             </tr>
             <tr>
-                <td class='headies'>Pays</td>
+                <td class='headies'>Pays d’exécution du projet</td>
                 <td>" . $countries[$certificate->country] . "</td>
             </tr>
             <tr>

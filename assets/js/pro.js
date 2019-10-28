@@ -20,8 +20,8 @@ $(function () {
     if ($('.dropify').length) {
         $('.dropify').dropify({
             messages: {
-                default: 'Glissez ou déposez un fichier ici ou cliquez ici',
-                replace: 'Glissez ou déposez un fichier ou cliquez ici pour remplacer',
+                default: 'Glissez / déposez un fichier ici ou cliquez ici',
+                replace: 'Glissez / déposez un fichier ou cliquez ici pour remplacer',
                 remove: 'Enlever',
                 error: 'Ooops, une erreur a été rencontrée'
             },
@@ -201,7 +201,7 @@ $(function () {
         $('.my-autocomplete').each(function () {
             //console.log(clientData.autocompleteUrl+($(this).attr('data-target')));
             $(this).autocomplete({
-                source: "" + clientData.autocompleteUrl + ($(this).attr('data-target'))
+                source: encodeURI(clientData.autocompleteUrl + ($(this).attr('data-target')))
                 //source: availableTags1
             })
         });
@@ -219,34 +219,31 @@ $(function () {
     }
 
     if ($('.dateRanger').length) {
-        $.datepicker.setDefaults($.datepicker.regional["fr"]);
-        var dateFormat = 'mm/dd/yy',
+        //$.datepicker.setDefaults($.datepicker.regional["fr"]);
+        var dateFormat = 'dd/mm/yy',
             from = $('#dateFrom')
                 .datepicker({
-                    defaultDate: '+1w',
+                    //defaultDate: '+1w',
                     numberOfMonths: 2,
-                    dateFormat: "dd/mm/yy",
-                    regional: ['fr']
+                    changeMonth: true,
+                    changeYear: true,
                 })
-                .on('change', function () {
-                    to.datepicker({
-                        minDate: getDate(this),
-                        dateFormat: "dd/mm/yy",
-                        regional: ['fr']
-                    });
+                .on('change', function() {
+                    console.log(getDate( this ));
+                    var date = new Date(getDate( this ));
+                    date.setDate(date.getDate() + 1);
+                    to.datepicker('option','minDate', date );
                 }),
             to = $('#dateTo').datepicker({
-                defaultDate: '+1w',
+                //defaultDate: '+1w',
                 numberOfMonths: 2,
-                dateFormat: "dd/mm/yy",
-                regional: ['fr']
+                changeMonth: true,
+                changeYear: true,
             })
-                .on('change', function () {
-                    from.datepicker({
-                        maxDate: getDate(this),
-                        dateFormat: "dd/mm/yy",
-                        regional: ['fr']
-                    });
+                .on('change', function() {
+                    var date = new Date(getDate( this ));
+                    date.setDate(date.getDate() -1);
+                    from.datepicker('option','maxDate', date );
                 });
     }
     if ($('.datepicker').length) {
@@ -266,6 +263,11 @@ $(function () {
                 numeralThousandsGroupStyle: 'thousand'
             });
         })
+    }
+    if($('.is-currency').length){
+        $('.is-currency').each(function () {
+            $(this).text(numeral(parseInt($.trim($(this).text()))).format('0,0'))
+        });
     }
     if ($('.number-input').length) {
         $('.number-input').each(function () {
@@ -302,7 +304,7 @@ $(function () {
         $('tbody .cut-them tr td').line(2, "...");
     }*/
     if ($('.cutter').length) {
-        $('.cutter').line(2, "...");
+        $('.cutter').line(1, "...");
     }
 
     if($('.my-global-preview-btn').length){

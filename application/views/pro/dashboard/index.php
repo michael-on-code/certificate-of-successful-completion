@@ -21,7 +21,7 @@
                     <h3 class="tx-normal tx-rubik mg-b-0 mg-r-5 lh-1"><?= $totalCertificates ?></h3>
                     <p class="tx-11 tx-color-03 mg-b-0"><span class="tx-medium tx-success"><?php
                             if($totalCertificates){
-                                echo ($totalCertificates/($totalCertificatesLastWeek==0 ? $totalCertificates : $totalCertificatesLastWeek))*100;
+                                echo round(($totalCertificates/($totalCertificatesLastWeek==0 ? $totalCertificates : $totalCertificatesLastWeek))*100);
                             }else{
                                 echo 0;
                             }
@@ -41,7 +41,7 @@
                 <p class="tx-11 tx-color-03 mg-b-0"><span class="tx-medium tx-success">
                         <?php
                         if($addedByMe){
-                            echo ($addedByMe/($addedLastWeekByMe==0 ? $addedByMe : $addedLastWeekByMe))*100;
+                            echo round(($addedByMe/($addedLastWeekByMe==0 ? $addedByMe : $addedLastWeekByMe))*100);
                         }else{
                             echo 0;
                         }

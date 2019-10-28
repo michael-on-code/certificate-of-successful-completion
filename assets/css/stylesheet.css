@@ -52,3 +52,6 @@ td button.btn-icon, td a.btn-icon{
 .my-popover-content table tr td{
     border-top: none;
 }
+.ui-datepicker{
+    z-index: 999 !important;
+}

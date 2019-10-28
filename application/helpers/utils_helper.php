@@ -145,7 +145,9 @@ function redirect_if_id_is_not_valid($id, $table_name = '', $redirect)
 
 function getSlugifyString($string)
 {
-    return strtolower(preg_replace('/[^a-zA-Z0-9-_\.]/', '', $string));
+    $ci = &get_instance();
+    $ci->load->helper('text');
+    return strtolower(preg_replace('/[^a-zA-Z0-9-_\.]/', '', convert_accented_characters($string)));
 }
 
 function update_meta($id, $key, $value, $table_meta, $table_id_val)

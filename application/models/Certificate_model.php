@@ -124,8 +124,11 @@ join activity_area on activity_area.id = abe.activity_area_id join affiliate_com
             sendNotificationMail("L'administrateur <strong>$adminName</strong> vient d'ajouter quelques modifications à l'ABE ayant pour désignation <strong>$data->title</strong> et pour numéro interne <strong>$data->internal_file_number</strong> ");
         }
         if (!empty($meta_datas) && $certificateID) {
+            require (APPPATH . '/third_party/HTMLPurifier/HTMLPurifier.auto.php');
+            $config = HTMLPurifier_Config::createDefault();
+            $purifier = new HTMLPurifier($config);
             foreach ($meta_datas as $key => $meta_data) {
-                $this->update_meta($certificateID, $key, $meta_data);
+                $this->update_meta($certificateID, $key, $purifier->purify($meta_data));
             }
         }
         return $certificateID;
