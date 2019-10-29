@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 29 Octobre 2019 à 14:49
+-- Généré le :  Mar 29 Octobre 2019 à 18:02
 -- Version du serveur :  5.7.14
 -- Version de PHP :  7.0.10
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `akasiabe-new`
+-- Base de données :  `akasiabe`
 --
 
 -- --------------------------------------------------------
@@ -65,7 +65,8 @@ INSERT INTO `abe` (`id`, `title`, `slug`, `activity_area_id`, `sub_activity_area
 (22, 'MISE EN PLACE ET L’ADMINISTRATION D’UN SYSTEME D’INFORMATION SUR LES MARCHES DANS LES COMMUNES', 'miseenplaceetladmini5db4d49325b4d', 3, 'SYSTEME D\'INFORMATION', '2015-05-08', 'AGENCE BENINOISE DES SERVICES UNIVERSELLES DES COMMUNICATIONS ÉLECTRONIQUES ET DE LA POSTE', 'FCFA', 116839479, 116839479, 'AKASI-BJ-1910006', '2015-07-16', '2016-07-16', 'Cotonou', 'ABSU-CEP', 2, '2015-04-07', 100, 'Neant', 1, '2019-10-26 23:19:47', '2019-10-29 09:44:03', 5),
 (23, 'REALISATION DE L’INTEGRATION DU SIGPAC ET DU GUICHET UNIQUE A TRAVERS L’EAI/ESB DU PAC', 'realisationdelintegr5db4dad745d34', 3, 'SYSTEME D\'INFORMATION (INTEGRATION)', '2016-04-05', 'PROJET CORRIDOR (ABIDJAN - LAGOS)', 'FCFA', 34887500, 34887500, 'AKASI-BJ-1910007', '2016-10-20', '2016-12-30', 'Cotonou', 'PROJET CORRIDOR (ABIDJAN - LAGOS)', 2, '2016-03-09', 100, 'NEANT', 1, '2019-10-26 23:46:31', '2019-10-29 09:43:53', 5),
 (24, 'MISE EN PLACE ET LA CONFIGURATION D’UNE APPLICATION DE GESTION DES DOSSIERS', 'miseenplaceetlaconfi5db4de11a5fac', 3, 'SYSTEME D\'INFORMATION', '2015-03-20', 'UNITE DE GESTION DE LA REFORME DES FINANCES PUBLIQUES', 'FCFA', 7000000, 7000000, 'AKASI-BJ-1910008', '2015-03-24', '2015-05-29', 'Cotonou', 'UNION EUROPEENNE', 2, '2015-03-10', 100, 'Neant', 1, '2019-10-27 00:00:17', '2019-10-29 09:43:26', 5),
-(25, 'MISE EN ŒUVRE DE L’ENTERPRISE APPLICATION INTEGRATION (EAI) PILOTE SOUS TALEND OPEN STUDIO', 'miseenuvredelenterpr5db4e0e5a9edd', 3, 'SYSTEME D\'INFORMATION (INTEGRATION)', '2014-03-07', 'MINISTERE DE L’ECONOMIE ET DES FINANCES', 'FCFA', 64334678, 64334678, 'AKASI-BJ-1910009', '2014-03-10', '2014-08-08', 'Cotonou', 'UNION EUROPEENNE (PROJET PESI N°A8)', 2, '2014-02-21', 100, 'Neant', 1, '2019-10-27 00:12:21', '2019-10-29 12:15:47', 5);
+(25, 'MISE EN ŒUVRE DE L’ENTERPRISE APPLICATION INTEGRATION (EAI) PILOTE SOUS TALEND OPEN STUDIO', 'miseenuvredelenterpr5db4e0e5a9edd', 3, 'SYSTEME D\'INFORMATION (INTEGRATION)', '2014-03-07', 'MINISTERE DE L’ECONOMIE ET DES FINANCES', 'FCFA', 64334678, 64334678, 'AKASI-BJ-1910009', '2014-03-10', '2014-08-08', 'Cotonou', 'UNION EUROPEENNE (PROJET PESI N°A8)', 2, '2014-02-21', 100, 'Neant', 1, '2019-10-27 00:12:21', '2019-10-29 12:15:47', 5),
+(26, 'ksjdk lsdlskdk', 'ksjdklsdlskdk5db84fd5b5e3a', 2, 'sdsds', '2019-10-16', 'sdsd sdsd', 'FCFA', 23232323, 23232323, 'sdsds', '2019-11-20', '2019-12-11', 'SDSD SD SD', 'sdsds', 5, '2019-10-23', 100, 'Néant', 1, '2019-10-29 14:42:29', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -92,7 +93,9 @@ INSERT INTO `abe_country_groups` (`id`, `country_code`, `abe_id`) VALUES
 (250, 'BJ', 19),
 (251, 'BJ', 18),
 (252, 'CA', 17),
-(256, 'BJ', 25);
+(256, 'BJ', 25),
+(257, 'AS', 26),
+(258, 'AD', 26);
 
 -- --------------------------------------------------------
 
@@ -169,7 +172,15 @@ INSERT INTO `abe_meta` (`id`, `abe_id`, `key`, `value`) VALUES
 (158, 25, 'certificateFile', '2dc55e32acc2f600847eac23c4142a96.pdf'),
 (159, 25, 'detailed_tasks', '<p>\r\n\r\n</p>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n<ul><li><span lang="fr" xml:lang="fr">Chargé de la mise\r\nen œuvre de l\'EAI du MEF (Ministère de l\'Economie et des Finances) et du Pilote\r\nde l\'EAI avec Talend</span></li><li><span lang="fr" xml:lang="fr">Étude des\r\ninterfaces, des applications, de l\'infrastructure réseau existantes</span></li><li><span lang="fr" xml:lang="fr">Analyse détaillée\r\ndes besoins</span></li><li><span lang="fr" xml:lang="fr">Rédaction du\r\nrapport initial (description de la description existante - des besoins exprimés\r\n- méthodologie pour le déploiement de l\'EAI et de l\'entrepôt de données -\r\nplanification détaillée des activités à mener dans le cadre de la mission)</span></li><li><span lang="fr" xml:lang="fr">Rédaction des\r\nspécifications fonctionnelles de l\'EAI et validation</span></li><li><span lang="fr" xml:lang="fr">Benchmark des\r\noutils EAI</span></li><li><span lang="fr" xml:lang="fr">Choix de la\r\nsolution technique et validation</span></li><li><span lang="fr" xml:lang="fr">Mise en œuvre de\r\nl\'EAI pilote</span></li><li><span lang="fr" xml:lang="fr">Transfert de\r\ncompétence</span></li><li><span lang="fr" xml:lang="fr">Animation d\'un\r\natelier de sensibilisation des décideurs sur les bénéfices de l\'EAI et\r\nprésentation des premiers résultats déjà obtenus<span>      </span></span></li></ul>'),
 (160, 25, 'project_description', '<p>\r\n\r\n</p>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n<ul><li><span lang="fr" xml:lang="fr">Elaboration du\r\ncahier de charges de la mise en place de l’EAI ;</span></li><li><span lang="fr" xml:lang="fr">Installation\r\nconfiguration et mise en place du serveur Talend Open Studio pour l’EAI ;</span></li><li><span lang="fr" xml:lang="fr">Conception et\r\nimplémentation du pilote choisi pour la mise en œuvre de l’EAI ;</span></li><li><span lang="fr" xml:lang="fr">Déploiement de\r\nl’EAI pilote </span></li><li><span lang="fr" xml:lang="fr">Formation et\r\ntransfert de technologies aux techniciens)</span></li></ul>'),
-(161, 25, 'updated_by', '1');
+(161, 25, 'updated_by', '1'),
+(163, 26, 'customer_adress', 'sd sdsd'),
+(164, 26, 'role', 'sdd'),
+(165, 26, 'certificateFile', 'Map12-8.png'),
+(166, 26, 'minuteFile', 'Document_de_Regles_de_Gestion_BEPPAAG_(002).docx'),
+(167, 26, 'contractFile', 'test.png'),
+(168, 26, 'detailed_tasks', '<p>sdsd dsd sd</p>'),
+(169, 26, 'project_description', '<p>sdd sds ds sd </p>'),
+(170, 26, 'updated_by', '1');
 
 -- --------------------------------------------------------
 
@@ -565,6 +576,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
+(1, '127.0.0.1', 'administrator', '$2y$08$XU.b7o6fOb7VXft0pBxESO7vi0wXJCBn8.ccTKBrprh79nI/DiO12', '', 'admin@admin.com', '', NULL, NULL, 'uDsCGN2umzphUMqaYZx6Iu', 1268889823, 1572368053, 1, 'Michael', 'ANIMASHAUN', 'ADMIN', '0'),
 (5, '76.28.46.184', 'toudonoualine5db4ab01a43f8', '$2y$08$TEbFdZpm9mPbQjHZFjuirerLlpy5UQw2LUfvdRTHZFZbdzjBJHtUi', NULL, 'aline.toudonou@akasigroup.com', NULL, NULL, NULL, 'P8ZSllHOxorBqTUW7TYKi.', 1572121345, 1572121541, 1, 'Aline', 'Toudonou', NULL, NULL),
 (6, '76.28.46.184', 'houdagbapierre5db4ab5f82fe2', '$2y$08$/TZkXM2CUAJ4Z4GysaL9BOfesBTe7QxN9Sm2FnEb14wPjmOAU5Umy', NULL, 'phoudagba@akasigroup.com', NULL, NULL, NULL, 'OlWUxhip1GtXqM2lNp5qkO', 1572121439, 1572134666, 1, 'PIERRE', 'HOUDAGBA', NULL, NULL);
 
@@ -585,6 +597,8 @@ CREATE TABLE `users_groups` (
 --
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
+(1, 1, 1),
+(2, 1, 2),
 (9, 5, 1),
 (10, 5, 2),
 (11, 6, 1),
@@ -608,8 +622,9 @@ CREATE TABLE `user_meta` (
 --
 
 INSERT INTO `user_meta` (`id`, `user_id`, `key`, `value`) VALUES
+(1, 1, 'user_photo', '94ee395e256b28f7cbd592808c19a4c1.jpg'),
 (9, 5, 'added_by', '1'),
-(10, 6, 'added_by', '1'),
+(10, 6, 'added_by', '19'),
 (11, 5, 'completionToken', '296aa1a702554fba0dee1e312839975c'),
 (12, 6, 'completionToken', '17449382cd84f818564221c3cbd6e94a');
 
@@ -708,17 +723,17 @@ ALTER TABLE `user_meta`
 -- AUTO_INCREMENT pour la table `abe`
 --
 ALTER TABLE `abe`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT pour la table `abe_country_groups`
 --
 ALTER TABLE `abe_country_groups`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=257;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=259;
 --
 -- AUTO_INCREMENT pour la table `abe_meta`
 --
 ALTER TABLE `abe_meta`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
 --
 -- AUTO_INCREMENT pour la table `activity_area`
 --
