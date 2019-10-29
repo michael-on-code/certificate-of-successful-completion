@@ -36,7 +36,10 @@ $(function () {
                 $(this).on('change', function () {
                     var data={};
                     var dropifyInput = $(this);
-                    if(this.files){
+                    var currentForm = dropifyInput.parents('form');
+                    var currentFormGroup = dropifyInput.parents('.form-group');
+                    var submitBtn = currentForm.find('button[type=submit]');
+                    if(this.files && this.files[0]){
                         var fd = new FormData();
                         var target = dropifyInput.attr('data-target');
                         var targetName = dropifyInput.attr('data-target-name');
@@ -52,7 +55,9 @@ $(function () {
                             dataType: 'JSON',
                             cache:false,
                             beforeSend : function(){
-
+                                dropifyInput.addClass('upload-on-progress');
+                                submitBtn.attr('disabled', true);
+                                currentFormGroup.find('label').append(' <span class="spinner-border spinner-border-sm upload-spinner" role="status" aria-hidden="true"></span>');
                             },
                             error: function () {
                                 alert('Ooops... Une erreur a été rencontrée');
@@ -61,10 +66,16 @@ $(function () {
                                 if(response.status){
                                     clientData.csrf_token_name = response.csrf_token_name;
                                     clientData.csrf_hash = response.csrf_hash;
-                                    $('input[name="'+targetName+'"]').val(response.fileName)
-                                    var previewBtn = dropifyInput.parents('.form-group').find('.my-file-preview-btn');
+                                    $('input[name="'+targetName+'"]').val(response.fileName);
+                                    var previewBtn = currentFormGroup.find('.my-file-preview-btn');
                                     previewBtn.attr('href', clientData.uploadPath+response.fileName);
+                                    dropifyInput.removeClass('upload-on-progress');
+                                    currentFormGroup.find('label span.upload-spinner').fadeOut();
+                                    currentFormGroup.find('label span.upload-spinner').remove();
                                     previewBtn.fadeIn();
+                                    if(currentForm.find('.upload-on-progress').length < 1){
+                                        submitBtn.removeAttr('disabled')
+                                    }
                                 }
                             }
                         });
