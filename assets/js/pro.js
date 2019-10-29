@@ -62,6 +62,7 @@ $(function () {
                             error: function () {
                                 alert('Ooops... Une erreur a été rencontrée');
                             },
+
                             success: function (response) {
                                 if(response.status){
                                     clientData.csrf_token_name = response.csrf_token_name;
