@@ -716,15 +716,13 @@ function getCertificationAddOrEditValidation($edit = false, $certificateID = '',
             if (maybe_null_or_empty($certificate, 'project_execution_end_date', true)) {
                 $certificate['project_execution_end_date'] = convert_date_to_english($certificate['project_execution_end_date']);
             }
-            $ci->certificate_model->insertOrUpdate($certificate, $certificateID);
-            //var_dump($data);exit;
-            /*$certificateID = $ci->certificate_model->insertOrUpdate($certificate, $certificateID);
+            $certificateID=$ci->certificate_model->insertOrUpdate($certificate, $certificateID);
             if ($certificateSlug == '') {
                 $certificateSlug = $ci->certificate_model->getCertificateFieldByID($certificateID, 'slug');
-            }*/
+            }
             get_success_message($edit ? 'ABE modifiée avec succès' : 'ABE ajoutée avec succès');
             //redirect("certificate/edit/$certificateSlug");
-            redirect("certificate" . ($edit ? "/edit/$certificateSlug" : ''));
+            redirect("certificate/edit/$certificateSlug");
         } else {
             get_error_message();
         }
