@@ -18,7 +18,7 @@ $(function () {
     }
 
     if ($('.dropify').length) {
-        $('.dropify').dropify({
+        var myDropify = $('.dropify').dropify({
             messages: {
                 default: 'Glissez / déposez un fichier ici ou cliquez ici',
                 replace: 'Glissez / déposez un fichier ou cliquez ici pour remplacer',
@@ -30,27 +30,60 @@ $(function () {
                 'fileExtension': "Le format du fichier n'est pas autorisé | {{ value }} autorisé."
             }
         });
-        // Used events
-        var drEvent = $('#input-file-events').dropify();
-        drEvent.on('dropify.beforeClear', function (event, element) {
-            return confirm("Voulez vous vraiment supprimer \"" + element.file.name + "\" ?");
-        });
-        drEvent.on('dropify.afterClear', function (event, element) {
-            alert('File deleted');
-        });
-        drEvent.on('dropify.errors', function (event, element) {
-            console.log('Has Errors');
-        });
-        var drDestroy = $('#input-file-to-destroy').dropify();
-        drDestroy = drDestroy.data('dropify')
-        $('#toggleDropify').on('click', function (e) {
-            e.preventDefault();
-            if (drDestroy.isDropified()) {
-                drDestroy.destroy();
-            } else {
-                drDestroy.init();
+
+        myDropify.each(function () {
+            if($(this).hasClass('auto-upload')){
+                $(this).on('change', function () {
+                    var data={};
+                    var dropifyInput = $(this);
+                    if(this.files){
+                        var fd = new FormData();
+                        var target = dropifyInput.attr('data-target');
+                        var targetName = dropifyInput.attr('data-target-name');
+                        fd.append(target, this.files[0]);
+                        fd.append('name', target);
+                        fd.append(clientData.csrf_token_name, clientData.csrf_hash);
+                        $.ajax({
+                            url : clientData.uploadUrl,
+                            processData:false,
+                            contentType:false,
+                            data : fd,
+                            type: 'POST',
+                            dataType: 'JSON',
+                            cache:false,
+                            beforeSend : function(){
+
+                            },
+                            error: function () {
+                                alert('Ooops... Une erreur a été rencontrée');
+                            },
+                            success: function (response) {
+                                if(response.status){
+                                    clientData.csrf_token_name = response.csrf_token_name;
+                                    clientData.csrf_hash = response.csrf_hash;
+                                    $('input[name="'+targetName+'"]').val(response.fileName)
+                                    var previewBtn = dropifyInput.parents('.form-group').find('.my-file-preview-btn');
+                                    previewBtn.attr('href', clientData.uploadPath+response.fileName);
+                                    previewBtn.fadeIn();
+                                }
+                            }
+                        });
+                    }
+                });
             }
-        })
+        });
+    }
+
+    if($('input[required]').length){
+        $('input[required], select[required], textarea[required]').each(function () {
+            $(this).parents('.form-group').find('label').append(" <span style='color: red'>*</span>");
+            /*if($(this).prev('label').length){
+                $(this).prev('label').append(" <span style='color: red'>*</span>");
+            }else{
+                $(this).parents ('label').append(" <span style='color: red'>*</span>");
+            }*/
+
+        });
     }
 
     $(document).on('click', ".prompt", function (e) {
@@ -138,14 +171,16 @@ $(function () {
 
     if ($('#certificateTable').length) {
         var certificateTable = $('#certificateTable').DataTable({
-            columnDefs: [{
-                'targets': [0], /* column index */
-                'orderable': false, /* true or false */
-            }],
+
             //stateSave: true,
             info: false,
             stripe: true,
-            ordering: false,
+            ordering: true,
+            columnDefs: [{
+                'targets': clientData.unOrderableColumns, /* column index */
+                'orderable': false, /* true or false */
+            }],
+            aaSorting: [],
             lengthChange: false,
             language: {
                 processing: "Traitement en cours...",
@@ -268,6 +303,9 @@ $(function () {
         $('.is-currency').each(function () {
             $(this).text(numeral(parseInt($.trim($(this).text()))).format('0,0'))
         });
+        /*$('.is-currency').each(function () {
+            $(this).text(currency(parseInt($.trim($(this).text())), { separator: ',' }).format())
+        });*/
     }
     if ($('.number-input').length) {
         $('.number-input').each(function () {
@@ -341,6 +379,38 @@ $(function () {
             $('.choosed-currency-remove').remove();
         });
     }
+
+    /*$(document).on('change', '.dropify.auto-upload', function () {
+        var data={};
+        if(this.files){
+            data.files =  this.files;
+            data[clientData.csrf_token_name]=clientData.csrf_hash;
+            $.ajax({
+                url : clientData.uploadUrl,
+                processData:false,
+                contentType:false,
+                data : data,
+                type: 'POST',
+                //dataType: 'JSON',
+                cache:false,
+                beforeSend : function(){
+
+                },
+                error: function () {
+                    alert('Ooops... Une erreur a été rencontrée');
+                },
+                success: function (response) {
+                    console.log(response);
+                    if(response.status){
+                        clientData.csrf_token_name = response.csrf_token_name;
+                        clientData.csrf_hash = response.csrf_hash;
+                    }
+                }
+            });
+        }
+
+    });*/
+
     if ($('[data-toggle="popover"]').length) {
         //console.log(clientData);
         $('[data-toggle="popover"]').popover({

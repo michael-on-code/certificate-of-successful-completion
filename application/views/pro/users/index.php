@@ -79,7 +79,7 @@
             </td>
             <td>
                 <?php
-                if ($eachUser->added_by) {
+                if ($eachUser->added_by && !empty($eachUser->added_by)) {
                     ?>
                     <span style="display: flex;">
                     <div class="avatar">

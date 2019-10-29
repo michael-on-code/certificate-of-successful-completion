@@ -117,6 +117,11 @@ function get_menu_by_group($group)
                             'title' => 'Ajouter',
                             'url' => site_url('certificate/add')
                         ],
+                        [
+                            'title' => 'Corbeille',
+                            'url' => site_url('certificate/trash')
+                        ],
+
                     ]
                 ), array(
                     'title' => 'Filiales',
@@ -206,7 +211,7 @@ function redirect_if_user_cannot($group_name, $redirect = 'dashboard')
 function getCountries()
 {
     return array(
-        '' => '',
+        //'' => '',
         "AF" => "Afghanistan",
         "AL" => "Albania",
         "DZ" => "Algeria",

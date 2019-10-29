@@ -150,7 +150,13 @@ class User_model extends CI_Model
                 $users[$key] = $this->getUserMeta($user);
                 $groups = $this->ion_auth->get_users_groups($user['id'])->result();
                 if($users[$key]['added_by'] && is_numeric($users[$key]['added_by'])){
-                    $users[$key]['added_by']= (object) $this->get_data_by_id($users[$key]['added_by']);
+                    $addedBy = $this->get_data_by_id($users[$key]['added_by']);
+                    if(!empty($addedBy)){
+                        $users[$key]['added_by']= (object)$addedBy;
+                    }else{
+                        $users[$key]['added_by']=null;
+                    }
+
                 }
                 if(!empty($groups)){
                     $tempGroup=[];

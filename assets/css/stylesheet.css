@@ -55,3 +55,12 @@ td button.btn-icon, td a.btn-icon{
 .ui-datepicker{
     z-index: 999 !important;
 }
+@media (min-width: 992px){
+    .df-title {
+        font-size: 55px;
+    }
+}
+.df-title {
+    text-align: center;
+    text-transform: uppercase
+}

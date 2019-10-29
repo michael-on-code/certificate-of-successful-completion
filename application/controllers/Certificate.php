@@ -15,6 +15,10 @@ class Certificate extends Pro_Controller{
         $this->load->model('certificate_model');
         $this->data['clientData'] = [
             'autocompleteUrl' => site_url('certificate/retrieveAutoCompletes/'),
+            'uploadUrl' => site_url('upload/doAjaxUpload'),
+            'csrf_token_name' => $this->security->get_csrf_token_name(),
+            'csrf_hash' => $this->security->get_csrf_hash(),
+            'uploadPath'=>$this->data['uploadPath']
         ];
     }
 
@@ -34,10 +38,18 @@ class Certificate extends Pro_Controller{
         $this->data['visiblesColumns']=[
             0,1,2,3,4,5,6
         ];
+        $unOrderableColumns=[];
+        for($i=0; $i<=$numberColumns; $i++){//<= because of action column
+            if($i==4 || $i==6){
+                continue;
+            }
+            $unOrderableColumns[]=$i;
+        }
         $this->data['clientData']=[
             'invisiblesColumns'=>$this->data['invisiblesColumns'],
             'allColumns'=>array_keys($this->data['tableHeaders']),
-            'certificates'=>$this->data['certificates']
+            'certificates'=>$this->data['certificates'],
+            'unOrderableColumns'=>$unOrderableColumns
         ];
         //var_dump($this->data['certificates']);exit;
 
@@ -53,11 +65,63 @@ class Certificate extends Pro_Controller{
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js';
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/select2/js/select2.min.js';
         $this->data['footerJs'][] = $this->data['assetsUrl'].'js/line-cutter.js';
+        //$this->data['footerJs'][] = $this->data['assetsUrl'].'js/currency.min.js';
         $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/datatables.net-dt/css/jquery.dataTables.min.css';
         $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css';
         $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/select2/css/select2.min.css';
         $this->render('certificate/index');
     }
+    public function trash(){
+        $this->data['pageTitle']= 'Liste des ABE supprimées';
+        $this->data['certificates'] = $this->certificate_model->getAll(false, true);
+        $this->data['countries']=getCountries();
+        $this->data['tableHeaders']=[
+            'N° Interne', 'Désignation', 'Secteur', 'Sous Secteur', 'Date de signature du contrat', 'Autorité contractante',
+            'Montant total', 'Montant payé', 'Part', "Début période d'execution", "Fin période d'execution", "Pays", "Ville",
+            'Source de financement', 'Filiale', "Date d'attribution", "Partenaire/associé", "Adresse de l'autorité contractante", "Role", "Description du marché","Details des taches exécutés" ,"Ajouté le"
+        ];
+        $numberColumns = count($this->data['tableHeaders']);
+        for($i=7; $i<$numberColumns; $i++){
+            $this->data['invisiblesColumns'][]=$i;
+        }
+        $this->data['visiblesColumns']=[
+            0,1,2,3,4,5,6
+        ];
+        $unOrderableColumns=[];
+        for($i=0; $i<=$numberColumns; $i++){//<= because of action column
+            if($i==4 || $i==6){
+                continue;
+            }
+            $unOrderableColumns[]=$i;
+        }
+        $this->data['clientData']=[
+            'invisiblesColumns'=>$this->data['invisiblesColumns'],
+            'allColumns'=>array_keys($this->data['tableHeaders']),
+            'certificates'=>$this->data['certificates'],
+            'unOrderableColumns'=>$unOrderableColumns
+        ];
+        //var_dump($this->data['certificates']);exit;
+
+        $this->data['headerCss'][] = $this->data['assetsUrl'] . 'lib/sweetalert/sweetalert.css';
+        $this->data['footerJs'][] = $this->data['assetsUrl'] . 'lib/sweetalert/sweetalert.min.js';
+
+        $this->data['footerJs'][] = '//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js';
+        $this->data['footerJs'][] = '//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js';
+
+        $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/datatables.net/js/jquery.dataTables.min.js';
+        $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/datatables.net-dt/js/dataTables.dataTables.min.js';
+        $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/datatables.net-responsive/js/dataTables.responsive.min.js';
+        $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js';
+        $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/select2/js/select2.min.js';
+        $this->data['footerJs'][] = $this->data['assetsUrl'].'js/line-cutter.js';
+        //$this->data['footerJs'][] = $this->data['assetsUrl'].'js/currency.min.js';
+        $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/datatables.net-dt/css/jquery.dataTables.min.css';
+        $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css';
+        $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/select2/css/select2.min.css';
+        $this->render('certificate/trash');
+    }
+
+
 
     public function retrieveAutoCompletes($fieldName){
         if($fieldName && ($searchTerm = $this->input->get('term'))){
@@ -73,7 +137,6 @@ class Certificate extends Pro_Controller{
         $this->data['pageTitle']='Ajouter une ABE';
         $this->data['currencies']= ['FCFA', '€', '$'];
         getCertificationAddOrEditValidation();
-
         $this->data['countries']=getCountries();
         $this->data['activityAreas']= $this->certificate_model->getActivityAreasForSelect2();
         $this->data['affiliateCompanies']= $this->certificate_model->getAffiliateCompaniesForSelect2();
@@ -133,10 +196,28 @@ class Certificate extends Pro_Controller{
     public function delete($certificateSlug){
         $certificateID = (int) $this->certificate_model->getCertificateIDBySlug($certificateSlug);
         redirect_if_id_is_not_valid($certificateID, 'abe', 'certificate');
-        $this->certificate_model->insertOrUpdate(['active'=>0], $certificateID);
+        $this->db->update('abe', ['active'=>0], ['id'=>$certificateID]);
         get_success_message('Suppression avec succès');
         redirect('certificate');
     }
+    public function activate($certificateSlug){
+        $certificateID = (int) $this->certificate_model->getCertificateIDBySlug($certificateSlug);
+        redirect_if_id_is_not_valid($certificateID, 'abe', 'certificate');
+        $this->db->update('abe', ['active'=>1], ['id'=>$certificateID]);
+        get_success_message('ABE réactivée avec succès');
+        redirect('certificate/trash');
+    }
+
+
+
+    public function delete_completely($certificateSlug){
+        $certificateID = (int) $this->certificate_model->getCertificateIDBySlug($certificateSlug);
+        redirect_if_id_is_not_valid($certificateID, 'abe', 'certificate');
+        delete_in_table('abe', $certificateID, 'certificate/trash');
+    }
+
+
+
 
     public function download($certificateSlug){
         $certificateID = (int) $this->certificate_model->getCertificateIDBySlug($certificateSlug);

@@ -36,9 +36,9 @@ function get_form_error($name)
     return form_error($name, '<p class="form-error">', '</p>');
 }
 
-function upload_data($args, $names, $resize = false)
+function upload_data($args, $names, $resize = false, $encryptName=true)
 {
-    $args['encrypt_name'] = true;
+    $args['encrypt_name'] = $encryptName;
 //    var_dump($args);exit;
     $ci =& get_instance();
     $ci->load->library('upload', $args);
@@ -174,18 +174,23 @@ function update_meta($id, $key, $value, $table_meta, $table_id_val)
     }
 }
 
-function get_form_upload($data, $extensions = 'png jpg jpeg', $maxSize = "1M", $required = true)
+function get_form_upload($data, $extensions = 'png jpg jpeg', $maxSize = "1M", $required = true, $additionalClass='')
 {
     ?>
     <?php
     $attributes = array(
         'data-default-file' => maybe_null_or_empty($data, 'value'),
-        'class' => "dropify",
+        'class' => "dropify $additionalClass",
         'id' => 'input-file-now-custom-1',
         'data-max-file-size' => $maxSize,
         'data-allowed-file-extensions' => $extensions,
         'value' => set_value($data['name'], maybe_null_or_empty($data, 'value'))
     );
+    if(isset($data['attributes'])){
+        foreach ($data['attributes'] as $key=>$attribute){
+            $attributes[$key]=$attribute;
+        }
+    }
     if ($required && !maybe_null_or_empty($data, 'value')) {
         $attributes['required'] = '';
     }

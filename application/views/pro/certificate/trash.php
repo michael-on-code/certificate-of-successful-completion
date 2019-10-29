@@ -6,7 +6,7 @@
  * Time: 10:27
  */
 ?>
-<p class="df-lead">Liste des Attestation de Bonnes Fin d'Execution délivrées à AKASI Group
+<p class="df-lead">Liste des Attestation de Bonnes Fin d'Execution délivrées à AKASI Group qui ont été deplacées à la corbeille
 </p>
 <div class="position-absolute" style="z-index: 1000">
     <a href="<?= site_url('certificate/add') ?>" class="btn btn-lg btn-primary btn-uppercase mg-l-5"><i
@@ -56,7 +56,7 @@
             ?>
 
             <tr>
-                <td><a tabindex="0" data-trigger="focus"  data-target="<?= $key ?>" data-toggle="popover" data-html="true" href="javascript:void(0)">
+                <td><a tabindex="0" data-trigger="focus" data-target="<?= $key ?>" data-toggle="popover" data-html="true" href="javascript:void(0)">
                         <?= $certificate->internal_file_number ?>
                     </a></td>
                 <td data-toggle="tooltip"
@@ -90,10 +90,6 @@
                     <a href="#" data-target="<?= $key ?>" data-toggle="tooltip" data-placement="top" title="Aperçu globale" class="btn btn-light btn-icon my-global-preview-btn">
                         <i data-feather="eye"></i>
                     </a>
-                    <a href="<?= site_url("certificate/edit/$certificate->slug") ?>" data-toggle="tooltip"
-                       data-placement="top" title="Modifier ABE" class="btn btn-primary btn-icon">
-                        <i data-feather="edit"></i>
-                    </a>
                     <?php
                     if(maybe_null_or_empty($certificate, 'certificateFile', true) || maybe_null_or_empty($certificate, 'minuteFile', true) || maybe_null_or_empty($certificate, 'contractFile', true)){
                         ?>
@@ -124,12 +120,18 @@
                         <?php
                     }
                     ?>
-
-                    <a data-confirm-message="Voulez-vous vraiment supprimer l'ABE N°<?= $certificate->internal_file_number ?> ?"
-                       title="Supprimer"
+                    <a data-href="<?= site_url("certificate/activate/$certificate->slug") ?>"
+                       data-confirm-message="Voulez-vous vraiment réactiver l'ABE N°<?= $certificate->internal_file_number ?>"
+                       title="Réactiver l'ABE"
                        href="#"
-                       data-href="<?= site_url("certificate/delete/$certificate->slug") ?>" data-toggle="tooltip"
-                       data-placement="top" title="Supprimer ABE" class="btn btn-danger btn-icon prompt">
+                       data-toggle="tooltip" data-placement="top" class="btn btn-success btn-icon prompt">
+                        <i data-feather="check"></i>
+                    </a>
+                    <a data-confirm-message="Voulez-vous vraiment supprimer définitivement l'ABE N°<?= $certificate->internal_file_number ?> ?"
+                       title="Supprimer définitivement l'ABE"
+                       href="#"
+                       data-href="<?= site_url("certificate/delete-completely/$certificate->slug") ?>" data-toggle="tooltip"
+                       data-placement="top" title="Supprimer définitivement ABE" class="btn btn-danger btn-icon prompt">
                         <i data-feather="trash-2"></i>
                     </a>
 
