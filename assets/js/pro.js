@@ -57,7 +57,7 @@ $(function () {
                             beforeSend : function(){
                                 dropifyInput.addClass('upload-on-progress');
                                 submitBtn.attr('disabled', true);
-                                currentFormGroup.find('label').append(' <span class="spinner-border spinner-border-sm upload-spinner" role="status" aria-hidden="true"></span>');
+                                currentFormGroup.find('label').append(' <span data-toggle="tooltip" data-placement="top" title="Upload en cours" class="spinner-border spinner-border-sm upload-spinner" role="status" aria-hidden="true"></span>');
                             },
                             error: function () {
                                 alert('Ooops... Une erreur a été rencontrée');
