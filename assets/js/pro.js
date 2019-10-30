@@ -185,6 +185,20 @@ $(function () {
         var certificateTable = $('#certificateTable').DataTable({
 
             //stateSave: true,
+            //Is a LifeSAVER
+            drawCallback: function( settings ) {
+                var api = this.api();
+
+                $('[data-toggle="tooltip"]', api.table().container()).tooltip();
+                $('.cutter', api.table().container()).line(1, "...");
+                $('.is-currency:not(.converted)', api.table().container()).each(function () {
+                    $(this).text(numeral(parseInt($.trim($(this).text()))).format('0,0'))
+                    $(this).addClass('converted')
+                });
+                /*$('[data-toggle="tooltip"]', api.table().container()).on('mouseenter', function () {
+                    $(this).tooltip()
+                });*/
+            },
             info: false,
             stripe: true,
             ordering: true,
@@ -217,7 +231,33 @@ $(function () {
                 }
             }
         });
+        //Is a Life Saver
         certificateTable.columns(clientData.invisiblesColumns).visible(false);
+        certificateTable.$("a[data-toggle=popover]").popover(
+            {
+                html: true,
+                container: 'body',
+                sanitize: false,
+                content: function () {
+                    var target=parseInt($(this).attr('data-target'));
+                    return clientData.certificates[target].minifiedPreview;
+                },
+                title: 'Aperçu rapide <span style="float:right;cursor:pointer;" class="fa fa-times my-close" data-toggle="popover">'
+            }
+        ).click(function(e) {e.preventDefault();});
+
+        certificateTable.$('.my-global-preview-btn').click(function (e) {
+            e.preventDefault();
+            var targetID = $(this).attr('data-target');
+            var previewHTML = clientData.certificates[targetID].globalPreview;
+            $('.modalArea .content').html(previewHTML);
+            $('.modalArea .content div.innerContent').each(function () {
+                if($.trim($(this).text())==''){
+                    $(this).text("Néant");
+                }
+            })
+            $('.modalTriggerContainer a').trigger('click');
+        });
 
         $('select#columnToggle').on('change', function (e) {
             var column = certificateTable.columns($(this).val());
@@ -229,6 +269,12 @@ $(function () {
             }
             if ($('[data-toggle="tooltip"]').length) {
                 $('[data-toggle="tooltip"]').tooltip()
+            }
+            if ($('.is-currency:not(.converted)').length) {
+                $('.is-currency:not(.converted)').each(function () {
+                    $(this).text(numeral(parseInt($.trim($(this).text()))).format('0,0'))
+                    $(this).addClass('converted')
+                });
             }
         });
     }
@@ -312,9 +358,9 @@ $(function () {
         })
     }
     if($('.is-currency').length){
-        $('.is-currency').each(function () {
+        /*$('.is-currency').each(function () {
             $(this).text(numeral(parseInt($.trim($(this).text()))).format('0,0'))
-        });
+        });*/
         /*$('.is-currency').each(function () {
             $(this).text(currency(parseInt($.trim($(this).text())), { separator: ',' }).format())
         });*/
@@ -341,37 +387,6 @@ $(function () {
             height: 130
         });
     }
-    /*if($('.cutter').length){
-        $('.cutter').each(function () {
-            var length = parseInt($(this).attr('data-length'));
-            length = length ? length : 15;
-            Cutter.run(this, this, length, {
-                viewMoreText : '...'
-            });
-        });
-    }*/
-    /*if($('tbody .cut-them').length){
-        $('tbody .cut-them tr td').line(2, "...");
-    }*/
-    if ($('.cutter').length) {
-        $('.cutter').line(1, "...");
-    }
-
-    if($('.my-global-preview-btn').length){
-        $('.my-global-preview-btn').click(function (e) {
-            e.preventDefault();
-            var targetID = $(this).attr('data-target');
-            var previewHTML = clientData.certificates[targetID].globalPreview;
-            $('.modalArea .content').html(previewHTML);
-            $('.modalArea .content div.innerContent').each(function () {
-                if($.trim($(this).text())==''){
-                    $(this).text("Néant");
-                }
-            })
-            $('.modalTriggerContainer a').trigger('click');
-        });
-
-    }
     if($('.currency-dropdown').length){
         $(document).on('click', '.currency-dropdown a.dropdown-item', function (e) {
             e.preventDefault();
@@ -392,66 +407,13 @@ $(function () {
         });
     }
 
-    /*$(document).on('change', '.dropify.auto-upload', function () {
-        var data={};
-        if(this.files){
-            data.files =  this.files;
-            data[clientData.csrf_token_name]=clientData.csrf_hash;
-            $.ajax({
-                url : clientData.uploadUrl,
-                processData:false,
-                contentType:false,
-                data : data,
-                type: 'POST',
-                //dataType: 'JSON',
-                cache:false,
-                beforeSend : function(){
-
-                },
-                error: function () {
-                    alert('Ooops... Une erreur a été rencontrée');
-                },
-                success: function (response) {
-                    console.log(response);
-                    if(response.status){
-                        clientData.csrf_token_name = response.csrf_token_name;
-                        clientData.csrf_hash = response.csrf_hash;
-                    }
-                }
-            });
-        }
-
-    });*/
-
     if ($('[data-toggle="popover"]').length) {
-        //console.log(clientData);
-        $('[data-toggle="popover"]').popover({
-            html: true,
-            container: 'body',
-            sanitize: false,
-            content: function () {
-                var target=parseInt($(this).attr('data-target'));
-                return clientData.certificates[target].minifiedPreview;
-            },
-            title: 'Aperçu rapide <span style="float:right;cursor:pointer;" class="fa fa-times my-close" data-toggle="popover">'
-        });
-
         $(document).on('click', '.my-close', function () {
             var target = $(this).parents().find('.popover');
 
             var targetID = target.attr('id');
             $('[aria-describedby="'+targetID+'"]').trigger('click');
         })
-        /* $('[data-toggle="popover"]').each(function () {
-             $(this).popover({
-                 html: true,
-                 content: function() {
-                     return $('.'+$(this).attr('data-target')).html()
-                 },
-                 trigger: 'focus',
-                 title: 'Aperçu rapide'
-             })
-         })*/
     }
 
 
