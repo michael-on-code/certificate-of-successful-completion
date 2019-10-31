@@ -62,5 +62,18 @@ td button.btn-icon, td a.btn-icon{
 }
 .df-title {
     text-align: center;
-    text-transform: uppercase
+    text-transform: uppercase;
+    font-weight: 500;
+}
+.df-lead{
+    text-align: center;
+}
+.my-form-btn-container button, .my-form-btn-container a{
+    margin-left: 15px;
+}
+.minified-preview-btn{
+    font-size: 14px;
+}
+.divider-text{
+    min-height: 45px;
 }

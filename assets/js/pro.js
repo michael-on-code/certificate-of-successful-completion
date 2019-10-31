@@ -17,6 +17,16 @@ $(function () {
         });
     }
 
+    $(document).on('reset', 'form', function () {
+        $(this).find('textarea, input').val('');
+        $(this).find('select').val('').trigger('change');
+        $(this).find('.my-summernote').each(function () {
+            $(this).summernote('code', '')
+        });
+        $('.dropify-clear').trigger('click');
+        $('.my-file-preview-btn').fadeOut();
+    });
+
     if ($('.dropify').length) {
         var myDropify = $('.dropify').dropify({
             messages: {
@@ -64,6 +74,7 @@ $(function () {
                             },
 
                             success: function (response) {
+                                //console.log(response);
                                 if(response.status){
                                     clientData.csrf_token_name = response.csrf_token_name;
                                     clientData.csrf_hash = response.csrf_hash;
@@ -84,16 +95,19 @@ $(function () {
                 });
             }
         });
+        myDropify.on('dropify.beforeClear', function(event, element){
+            var $this = $(element.element);
+            $this.parents('.form-group').find('input[type=hidden]').val('');
+            $this.parents('.form-group').find('.my-file-preview-btn').fadeOut();
+        });
+    }
+    if ($('.cutter:not(td.cutter)').length) {
+        $('.cutter:not(td.cutter)').line(1, "..");
     }
 
     if($('input[required]').length){
         $('input[required], select[required], textarea[required]').each(function () {
-            $(this).parents('.form-group').find('label').append(" <span style='color: red'>*</span>");
-            /*if($(this).prev('label').length){
-                $(this).prev('label').append(" <span style='color: red'>*</span>");
-            }else{
-                $(this).parents ('label').append(" <span style='color: red'>*</span>");
-            }*/
+            $(this).parents('.form-group').find('label:not(.empty)').append(" <span style='color: red'>*</span>");
 
         });
     }
@@ -190,7 +204,7 @@ $(function () {
                 var api = this.api();
 
                 $('[data-toggle="tooltip"]', api.table().container()).tooltip();
-                $('.cutter', api.table().container()).line(1, "...");
+                $('td.cutter', api.table().container()).line(1, "...");
                 $('.is-currency:not(.converted)', api.table().container()).each(function () {
                     $(this).text(numeral(parseInt($.trim($(this).text()))).format('0,0'))
                     $(this).addClass('converted')
@@ -199,7 +213,7 @@ $(function () {
                     $(this).tooltip()
                 });*/
             },
-            info: false,
+            //info: false,
             stripe: true,
             ordering: true,
             columnDefs: [{
@@ -207,12 +221,12 @@ $(function () {
                 'orderable': false, /* true or false */
             }],
             aaSorting: [],
-            lengthChange: false,
+            //lengthChange: false,
             language: {
                 processing: "Traitement en cours...",
                 search: "Rechercher&nbsp;:&nbsp;",
                 lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
-                info: "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                info: "Affichage de <strong>_START_ &agrave; _END_</strong> ABE sur <strong>_TOTAL_</strong> ABE",
                 infoEmpty: "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
                 infoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
                 infoPostFix: "",
@@ -259,13 +273,19 @@ $(function () {
             $('.modalTriggerContainer a').trigger('click');
         });
 
+        $('.dataTables_length select').addClass('form-control');
+        $('.dataTables_length select').css({
+            display : 'inline',
+            width: 'unset'
+        });
+
         $('select#columnToggle').on('change', function (e) {
             var column = certificateTable.columns($(this).val());
             var allColumns = certificateTable.columns(clientData.allColumns);
             allColumns.visible(false);
             column.visible(true, false);
-            if ($('.cutter').length) {
-                $('.cutter').line(2, "...");
+            if ($('td.cutter').length) {
+                $('td.cutter').line(2, "...");
             }
             if ($('[data-toggle="tooltip"]').length) {
                 $('[data-toggle="tooltip"]').tooltip()
@@ -317,7 +337,7 @@ $(function () {
             from = $('#dateFrom')
                 .datepicker({
                     //defaultDate: '+1w',
-                    numberOfMonths: 2,
+                    //numberOfMonths: 2,
                     changeMonth: true,
                     changeYear: true,
                 })
@@ -329,7 +349,7 @@ $(function () {
                 }),
             to = $('#dateTo').datepicker({
                 //defaultDate: '+1w',
-                numberOfMonths: 2,
+                //numberOfMonths: 2,
                 changeMonth: true,
                 changeYear: true,
             })

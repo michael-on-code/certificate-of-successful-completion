@@ -6,12 +6,10 @@
  * Time: 10:27
  */
 ?>
-<p class="df-lead">Liste des Attestation de Bonnes Fin d'Execution délivrées à AKASI Group
+<p class="df-lead" style="margin-bottom: 10px">Liste des Attestation de Bonnes Fin d'Execution délivrées à AKASI Group
 </p>
-<div class="position-absolute" style="z-index: 1000">
-    <a href="<?= site_url('certificate/add') ?>" class="btn btn-lg btn-primary btn-uppercase mg-l-5"><i
-                data-feather="plus" class="wd-10 mg-r-5"></i> Ajouter ABE</a>
-</div>
+<a style="margin-bottom: 20px;" href="<?= site_url('certificate/add') ?>" class="btn btn-lg btn-primary btn-uppercase mg-l-5"><i
+            data-feather="plus" class="wd-10 mg-r-5"></i> Ajouter ABE</a>
 <style>
     .popover{
         max-width: fit-content;
@@ -24,9 +22,9 @@
         <thead class="thead-light">
         <tr>
             <?php
-            foreach ($tableHeaders as $header) {
+            foreach ($tableHeaders as $key=> $header) {
                 ?>
-                <th><?= $header ?></th> <?php
+                <th <?= $key == 0 ? 'class="wd-25p"' : '' ?>><?= $header ?></th> <?php
             }
             ?>
             <th class="wd-15p-f">Actions</th>
@@ -56,7 +54,7 @@
             ?>
 
             <tr>
-                <td><a tabindex="0" data-trigger="focus"  data-target="<?= $key ?>" data-toggle="popover" data-html="true" href="javascript:void(0)">
+                <td><a class="minified-preview-btn" tabindex="0" data-trigger="focus"  data-target="<?= $key ?>" data-toggle="popover" data-html="true" href="javascript:void(0)">
                         <?= $certificate->internal_file_number ?>
                     </a></td>
                 <td data-toggle="tooltip"
@@ -105,17 +103,17 @@
                             <h6 class="dropdown-header tx-uppercase tx-12 tx-bold tx-inverse">Fichiers</h6>
                             <?php if($certificateFile=maybe_null_or_empty($certificate, 'certificateFile', true)){
                                 ?>
-                                <a data-toggle="tooltip" data-placement="top" title="Visualiser Copie de l' ABE" class="dropdown-item" target="_blank" href="<?= $uploadPath.$certificateFile ?>">Copie de l' ABE</a>
+                                <a data-toggle="tooltip" data-placement="top" title="Visualiser Copie de l' ABE" class="dropdown-item" target="_blank" href="<?= $uploadPath.utf8_encode($certificateFile) ?>">Copie de l' ABE</a>
                                 <?php
                             } ?>
                             <?php if($minuteFile=maybe_null_or_empty($certificate, 'minuteFile', true)){
                                 ?>
-                                <a data-toggle="tooltip" data-placement="top" title="Visualiser PV de réception" class="dropdown-item" target="_blank" href="<?= $uploadPath.$minuteFile ?>">PV de réception</a>
+                                <a data-toggle="tooltip" data-placement="top" title="Visualiser PV de réception" class="dropdown-item" target="_blank" href="<?= $uploadPath.utf8_encode($minuteFile) ?>">PV de réception</a>
                                 <?php
                             } ?>
                             <?php if($contractFile=maybe_null_or_empty($certificate, 'contractFile', true)){
                                 ?>
-                                <a data-toggle="tooltip" data-placement="top" title="Visualiser Contrat" class="dropdown-item" target="_blank" href="<?= $uploadPath.$contractFile ?>">Contrat</a>
+                                <a data-toggle="tooltip" data-placement="top" title="Visualiser Contrat" class="dropdown-item" target="_blank" href="<?= $uploadPath.utf8_encode($contractFile) ?>">Contrat</a>
                                 <?php
                             } ?>
                             <div class="dropdown-divider"></div>

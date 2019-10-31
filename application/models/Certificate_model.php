@@ -247,7 +247,7 @@ join activity_area on activity_area.id = abe.activity_area_id join affiliate_com
         ];
         $temp = [];
         foreach ($metas as $meta) {
-            $temp[$meta] = $this->get_meta($certificateID, $meta);
+            $temp[$meta] = utf8_encode($this->get_meta($certificateID, $meta));
         }
         return $temp;
     }
