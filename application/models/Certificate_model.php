@@ -39,16 +39,16 @@ class Certificate_model extends CI_Model
     public function updateCertificateCountries($certificateID, array $countries=[], $returnInsertedData = true)
     {
         $allCountries = getCountries();
-        $this->db->delete('abe_country_groups', array('abe_id' => $certificateID));
         $data = [];
         $countryNames = [];
         if (!empty($countries)) {
+            $this->db->delete('abe_country_groups', array('abe_id' => $certificateID));
             foreach ($countries as $countryCode) {
                 $data[] = [
                     'country_code' => $countryCode,
                     'abe_id' => $certificateID
                 ];
-                $countryNames = $allCountries[$countryCode];
+                $countryNames[] = $allCountries[$countryCode];
             }
             $this->db->insert_batch('abe_country_groups', $data);
         }
@@ -178,6 +178,7 @@ join activity_area on activity_area.id = abe.activity_area_id join affiliate_com
             $this->db->insert('abe', $data);
             $certificateID = $this->db->insert_id();
             $data['country'] = $this->updateCertificateCountries($certificateID, $certificateCountry);
+
             $data = (object)$data;
             sendCertificateNotificationMail($data, "Enregistrement d'une ABE", "Dear Akasi Group Members,<br><br>
                                     Une ABE vient d'être publiée sur la plateforme AKASI-ABE");
@@ -186,6 +187,7 @@ join activity_area on activity_area.id = abe.activity_area_id join affiliate_com
             $data['updated_at'] = date('Y-m-d H:i:s');
             $this->db->update('abe', $data, ['id' => $certificateID]);
             $data['country'] = $this->updateCertificateCountries($certificateID, $certificateCountry);
+            //var_dump($data['country']);exit;
             $data = (object)$data;
             sendCertificateNotificationMail($data, "Mise à jour d'une ABE", "Dear Akasi Group Members,<br><br>
                                     Une ABE vient d'être mise à jour sur la plateforme AKASI-ABE");

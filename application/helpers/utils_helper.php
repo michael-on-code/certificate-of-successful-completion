@@ -478,6 +478,7 @@ function notificationMailSender($args)
     $siteName=maybe_null_or_empty($options, 'siteName');
     $default=$siteName . ' <no-reply@akasigroup.com>';
     $message = notificationTemplateHTML($args, $options);
+    //echo $message;exit;
     $headers = "MIME-Version: 1.0 \n";
 
     $headers .= "Content-type: text/html; charset=iso-8859-1 \n";
@@ -989,7 +990,7 @@ function sendCertificateNotificationMail($certificateDatas, $title, $description
     $ci->load->model(['activity_area_model', 'affiliate_company_model']);
     $title = 'AKASI-ABE Notification : '.$title;
     $elements['Titre']=maybe_null_or_empty($certificateDatas, 'title');
-    $elements['Numéro interne']=maybe_null_or_empty($certificateDatas, '	internal_file_number');
+    $elements['Numéro interne']=maybe_null_or_empty($certificateDatas, 'internal_file_number');
     $activityAreaID = maybe_null_or_empty($certificateDatas, 'activity_area_id');
     $elements["Secteur d'activité"]=$ci->activity_area_model->getByID($activityAreaID)->name;
     $elements["Sous secteur d'activité"]=maybe_null_or_empty($certificateDatas, 'sub_activity_area');
@@ -998,16 +999,15 @@ function sendCertificateNotificationMail($certificateDatas, $title, $description
     $elements["Montant Total du Marché "]=maybe_null_or_empty($certificateDatas, 'total_amount');
     $elements["Montant de la Prestation"]=maybe_null_or_empty($certificateDatas, 'amount_received');
     $elements["Devise"]=maybe_null_or_empty($certificateDatas, 'currency');
-    $elements["Part de la prestation de l’Entreprise"]=maybe_null_or_empty($certificateDatas, 'akasi_share');
+    $elements["Part de la prestation de l’Entreprise"]=maybe_null_or_empty($certificateDatas, 'akasi_share').'%';
     $elements["Début d’exécution du Marché "]=convert_date_to_french(maybe_null_or_empty($certificateDatas, 'project_execution_start_date'));
     $elements["Fin d’exécution du Marché "]=convert_date_to_french(maybe_null_or_empty($certificateDatas, 'project_execution_end_date'));
-    $elements["Pays"]=maybe_null_or_empty($certificateDatas, 'country');
-    $elements["Ville"]=maybe_null_or_empty($certificateDatas, 'city');
+    $elements["Pays d’exécution du Marché"]=maybe_null_or_empty($certificateDatas, 'country');
+    $elements["Ville d’exécution du Marché"]=maybe_null_or_empty($certificateDatas, 'city');
     $companyID = maybe_null_or_empty($certificateDatas, 'affiliate_company_id');
     $elements["Filiale ayant exécutée le marché "]=$ci->affiliate_company_model->getByID($companyID)->name;
     $args['elements']=$elements;
     $args['title']=$title;
-    $args['destination']=$title;
     $args['description']=$description;
     notificationMailSender($args);
 }

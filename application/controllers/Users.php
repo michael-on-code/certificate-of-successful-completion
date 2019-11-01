@@ -69,9 +69,9 @@ class Users extends Pro_Controller{
         $userID = (int)$this->user_model->getUserIDByUsername($username);
         redirect_if_id_is_not_valid($userID, 'users', 'users');
         if ($this->user_model->activateUser($userID, true)) {
-            $user =  $this->ion_auth->user($userID)->row();
+            /*$user =  $this->ion_auth->user($userID)->row();
             $adminName = maybe_null_or_empty($this->data['user'], 'first_name'). ' '.maybe_null_or_empty($this->data['user'], 'last_name');
-            sendNotificationMail("L'administrateur <strong>$adminName</strong> vient de reactiver le compte de <strong>$user->first_name $user->last_name</strong>");
+            sendNotificationMail("L'administrateur <strong>$adminName</strong> vient de reactiver le compte de <strong>$user->first_name $user->last_name</strong>");*/
             get_success_message('Utilisateur activé avec succès');
         } else {
             get_warning_message('Action non authorisée');
@@ -107,9 +107,9 @@ class Users extends Pro_Controller{
             get_warning_message('Action non authorisée');
         } else {
             if ($this->user_model->banUser($userID, true)) {
-                $user =  $this->ion_auth->user($userID)->row();
+                /*$user =  $this->ion_auth->user($userID)->row();
                 $adminName = maybe_null_or_empty($this->data['user'], 'first_name'). ' '.maybe_null_or_empty($this->data['user'], 'last_name');
-                sendNotificationMail("L'administrateur <strong>$adminName</strong> vient de bannir le compte de <strong>$user->first_name $user->last_name</strong>");
+                sendNotificationMail("L'administrateur <strong>$adminName</strong> vient de bannir le compte de <strong>$user->first_name $user->last_name</strong>");*/
                 get_success_message('Utilisateur banni avec succès');
             } else {
                 get_warning_message('Action non authorisée');

@@ -635,33 +635,18 @@ function getUsersAddOrEditValidation($edit = false, $userID = '', $username = ''
                     $data = (object)$user;
                     $siteName = $ci->data['options']['siteName'];
                     $groupArray = $ci->ion_auth->get_users_groups($userData->id)->result();
-                    $userRolesInString = '';
                     $temp = [];
                     if (!empty($groupArray)) {
                         foreach ($groupArray as $role) {
                             $temp[] = $role->description;
                         }
                     }
-                    $userRolesInString = implode(', ', $temp);
+                    $fetchedUserData = $ci->ion_auth->user($userData->id)->row();
+                    $fetchedUserData->roles = implode(', ', $temp);
                     //send user mail
                     sendActivationMail($data, $userData, $siteName);
-                    sendNotificationMail("Bonjour Team <br><br> Un utilisateur vient d'être ajouté à la plateforme",
-                        "Notification suite à l'àjout d'un nouvel utilisateur",
-                        "<tr>
-<td> <strong>Nom</strong> </td>
-<td> $data->last_name </td>
-</tr>
-<tr>
-<td> <strong>Prénom(s)</strong> </td>
-<td> $data->first_name</td>
-</tr>
-<tr>
-<td> <strong>Roles</strong> </td>
-<td> $userRolesInString </td>
-</tr>
-
-");
-                    //TODO send mail to administrator
+                    sendUserAddNotificationMail($fetchedUserData, "Ajout d'un nouvel utilisateur", "Dear Akasi Group Members,<br><br>
+                                    Un nouvel utilisateur vient d'être ajouté à la plateforme AKASI-ABE");
                     get_success_message("L'utilisateur a été créé avec succès <br> Un mail de confirmation a été envoyé à $userData->email", 10000);
                     redirect('users/edit/' . $ci->user_model->getUserFieldByID($userData->id, 'username'));
                 } else {
@@ -688,4 +673,16 @@ Veuillez finaliser votre inscription en cliquant sur le bouton ci-dessous";
     $mail['btnLink'] = site_url('login/activate/') . "$userData->id/$userData->activation";
     $mail['destination'] = $userData->email;
     sendMail($siteName . ' <no-reply@akasigroup.com>', $mail);
+}
+
+function sendUserAddNotificationMail($userData, $title, $description){
+    $title = 'AKASI-ABE Notification : '.$title;
+    $elements['Nom']=maybe_null_or_empty($userData, 'last_name');
+    $elements['Prénom(s)']=maybe_null_or_empty($userData, 'first_name');
+    $elements['Email']=maybe_null_or_empty($userData, 'email');
+    $elements['Rôle(s)']=maybe_null_or_empty($userData, 'roles');
+    $args['elements']=$elements;
+    $args['title']=$title;
+    $args['description']=$description;
+    notificationMailSender($args);
 }

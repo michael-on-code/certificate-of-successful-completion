@@ -22,9 +22,17 @@
         <thead class="thead-light">
         <tr>
             <?php
-            foreach ($tableHeaders as $header) {
+            foreach ($tableHeaders as $key=> $header) {
+                $class='';
+                if($key==0){
+                    //Numero Interne
+                    $class='class="min-wd-150-f"';
+                }elseif($key==1){
+                    //Designation
+                    $class='class="min-wd-200-f"';
+                }
                 ?>
-                <th><?= $header ?></th> <?php
+                <th <?= $class ?>><?= $header ?></th> <?php
             }
             ?>
             <th class="wd-15p-f">Actions</th>
@@ -54,7 +62,7 @@
             ?>
 
             <tr>
-                <td><a class="minified-preview-btn" tabindex="0" data-trigger="focus" data-target="<?= $key ?>" data-toggle="popover" data-html="true" href="javascript:void(0)">
+                <td><a class="minified-preview-btn" data-target="<?= $key ?>" data-toggle="popover" data-html="true" href="javascript:void(0)">
                         <?= $certificate->internal_file_number ?>
                     </a></td>
                 <td data-toggle="tooltip"

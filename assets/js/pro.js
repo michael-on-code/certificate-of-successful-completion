@@ -262,6 +262,32 @@ $(function () {
             e.preventDefault();
         });
 
+        /*$(document).on('click', function (e) {
+            var
+                $popover,
+                $target = $(e.target);
+            console.log($target);
+
+            //do nothing if there was a click on popover content
+            if ($target.hasClass('popover') || $target.hasClass('file-preview') || $target.closest('.popover').length) {
+                return;
+            }
+
+            $('[data-toggle="popover"]').each(function () {
+                $popover = $(this);
+
+                if (!$popover.is(e.target) &&
+                    $popover.has(e.target).length === 0 &&
+                    $popover.has(e.target).length === 0)
+                {
+                    $popover.popover('hide');
+                } else {
+                    //fixes issue described above
+                    $popover.popover('toggle');
+                }
+            });
+        })*/
+
         /*certificateTable.$("a[data-toggle=popover]").on('shown.bs.popover', function () {
 
             if($(this).find)
@@ -355,8 +381,6 @@ $(function () {
         var minDate, maxDate;
         var from = $('#dateFrom')
             .datepicker({
-                //defaultDate: '+1w',
-                //numberOfMonths: 2,
                 changeMonth: true,
                 changeYear: true,
             })
@@ -365,11 +389,11 @@ $(function () {
                 date.setDate(date.getDate() + 1);
                 to.datepicker('option', 'minDate', date);
             });
-        var minDate = new Date(getDate(from[0]));
-        minDate.setDate(minDate.getDate() + 1);
+        if(from.val()){
+           minDate = new Date(getDate(from[0]));
+            minDate.setDate(minDate.getDate() + 1);
+        }
         var to = $('#dateTo').datepicker({
-            //defaultDate: '+1w',
-            //numberOfMonths: 2,
             changeMonth: true,
             changeYear: true,
         })
@@ -378,10 +402,15 @@ $(function () {
                 date.setDate(date.getDate() - 1);
                 from.datepicker('option', 'maxDate', date);
             });
-        var maxDate = new Date(getDate(to[0]));
-        maxDate.setDate(maxDate.getDate() - 1);
-        to.datepicker('option', 'minDate', minDate);
-        from.datepicker('option', 'maxDate', maxDate);
+        if(to.val()){
+            maxDate = new Date(getDate(to[0]));
+            maxDate.setDate(maxDate.getDate() - 1);
+            from.datepicker('option', 'maxDate', maxDate);
+        }
+        if(from.val()){
+            to.datepicker('option', 'minDate', minDate);
+        }
+
     }
     if ($('.datepicker').length) {
         $.datepicker.setDefaults($.datepicker.regional["fr"]);
@@ -459,30 +488,6 @@ $(function () {
             $('[aria-describedby="' + targetID + '"]').trigger('click');
         });
     }
-    $(document).on('click', function (e) {
-        var
-            $popover,
-            $target = $(e.target);
-        console.log($target);
 
-        //do nothing if there was a click on popover content
-        if ($target.hasClass('popover') || $target.hasClass('file-preview') || $target.closest('.popover').length) {
-            return;
-        }
-
-        $('[data-toggle="popover"]').each(function () {
-            $popover = $(this);
-
-            if (!$popover.is(e.target) &&
-                $popover.has(e.target).length === 0 &&
-                $popover.has(e.target).length === 0)
-            {
-                $popover.popover('hide');
-            } else {
-                //fixes issue described above
-                $popover.popover('toggle');
-            }
-        });
-    })
 
 });

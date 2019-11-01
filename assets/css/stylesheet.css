@@ -77,3 +77,14 @@ td button.btn-icon, td a.btn-icon{
 .divider-text{
     min-height: 45px;
 }
+.min-wd-150-f{
+    min-width: 130px!important;
+}
+.min-wd-200-f{
+    min-width: 150px!important;
+}
+.dataTables_info{
+    position: absolute;
+    top: -11px;
+    left: 34%;
+}
