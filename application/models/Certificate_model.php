@@ -179,13 +179,17 @@ join activity_area on activity_area.id = abe.activity_area_id join affiliate_com
             $certificateID = $this->db->insert_id();
             $data['country'] = $this->updateCertificateCountries($certificateID, $certificateCountry);
             $data = (object)$data;
-            sendNotificationMail("L'administrateur <strong>$adminName</strong> vient d'ajouter une nouvelle ABE avec pour désignation <strong>$data->title</strong> et pour numéro interne <strong>$data->internal_file_number</strong> ");
+            sendCertificateNotificationMail($data, "Enregistrement d'une ABE", "Dear Akasi Group Members,<br><br>
+                                    Une ABE vient d'être publiée sur la plateforme AKASI-ABE");
+            //sendNotificationMail("L'administrateur <strong>$adminName</strong> vient d'ajouter une nouvelle ABE avec pour désignation <strong>$data->title</strong> et pour numéro interne <strong>$data->internal_file_number</strong> ");
         } else {
             $data['updated_at'] = date('Y-m-d H:i:s');
             $this->db->update('abe', $data, ['id' => $certificateID]);
             $data['country'] = $this->updateCertificateCountries($certificateID, $certificateCountry);
             $data = (object)$data;
-            sendNotificationMail("L'administrateur <strong>$adminName</strong> vient d'ajouter quelques modifications à l'ABE ayant pour désignation <strong>$data->title</strong> et pour numéro interne <strong>$data->internal_file_number</strong> ");
+            sendCertificateNotificationMail($data, "Mise à jour d'une ABE", "Dear Akasi Group Members,<br><br>
+                                    Une ABE vient d'être mise à jour sur la plateforme AKASI-ABE");
+            //sendNotificationMail("L'administrateur <strong>$adminName</strong> vient d'ajouter quelques modifications à l'ABE ayant pour désignation <strong>$data->title</strong> et pour numéro interne <strong>$data->internal_file_number</strong> ");
         }
         if (!empty($meta_datas) && $certificateID) {
             require(APPPATH . '/third_party/HTMLPurifier/HTMLPurifier.auto.php');

@@ -469,6 +469,32 @@ function user_can($group_name)
     return $ci->ion_auth->in_group($group_name);
 }
 
+function notificationMailSender($args)
+{
+    //$default = 'no-reply@csti-digital.com';
+    ini_set("SMTP", "mail.akasigroup.com");
+    $ci =& get_instance();
+    $options = $ci->option_model->get_options();
+    $siteName=maybe_null_or_empty($options, 'siteName');
+    $default=$siteName . ' <no-reply@akasigroup.com>';
+    $message = notificationTemplateHTML($args, $options);
+    $headers = "MIME-Version: 1.0 \n";
+
+    $headers .= "Content-type: text/html; charset=iso-8859-1 \n";
+
+    $headers .= "From: $default  \n";
+
+    $headers .= "Disposition-Notification-To: $default  \n";
+    $headers .= "X-Priority: 1  \n";
+
+    $headers .= "X-MSMail-Priority: High \n";
+    @mail($options['notificationEmails'], $args['title'], $message, $headers);
+
+    //echoResponse($ci->email->print_debugger());
+//    var_dump($args['destination']);exit;
+    //var_dump();exit;
+}
+
 function sendMail($default, $args)
 {
     //$default = 'no-reply@csti-digital.com';
@@ -523,6 +549,238 @@ function sendMail1($default = '', $args)
     $ci->email->send();
 //    var_dump($args['destination']);exit;
 //    var_dump($ci->email->print_debugger());exit;
+}
+
+function notificationTemplateHTML($args, $options){
+    //TODO title,
+    $path = get_upload_path();
+    ob_start();
+    ?>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title><?= maybe_null_or_empty($args, 'title') ?></title>
+        <style>
+            html,
+            body,
+            table,
+            tbody,
+            tr,
+            td,
+            div,
+            p,
+            ul,
+            ol,
+            li,
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                font-size: 0;
+                line-height: 0;
+                -ms-text-size-adjust: 100%;
+                -webkit-text-size-adjust: 100%;
+            }
+
+            table {
+                border-spacing: 0;
+                mso-table-lspace: 0pt;
+                mso-table-rspace: 0pt;
+            }
+
+            table td {
+                border-collapse: collapse;
+            }
+
+            .ExternalClass {
+                width: 100%;
+            }
+
+            .ExternalClass,
+            .ExternalClass p,
+            .ExternalClass span,
+            .ExternalClass font,
+            .ExternalClass td,
+            .ExternalClass div {
+                line-height: 100%;
+            }
+
+            /* Outermost container in Outlook.com */
+            .ReadMsgBody {
+                width: 100%;
+            }
+
+            img {
+                -ms-interpolation-mode: bicubic;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-family: Arial;
+            }
+
+            h1 {
+                font-size: 28px;
+                line-height: 32px;
+                padding-top: 10px;
+                padding-bottom: 24px;
+            }
+
+            h2 {
+                font-size: 24px;
+                line-height: 28px;
+                padding-top: 10px;
+                padding-bottom: 20px;
+            }
+
+            h3 {
+                font-size: 20px;
+                line-height: 24px;
+                padding-top: 10px;
+                padding-bottom: 16px;
+            }
+
+            p {
+                font-size: 16px;
+                line-height: 20px;
+                font-family: Georgia, Arial, sans-serif;
+            }
+        </style>
+        <style>
+
+            .container600 {
+                width: 600px;
+                max-width: 100%;
+            }
+
+            @media all and (max-width: 599px) {
+                .container600 {
+                    width: 100% !important;
+                }
+            }
+            .message-content-body tr td:first-child{
+                font-weight: bold;
+            }
+            .message-content-body tr td{
+                vertical-align: middle;
+            }
+            .message-content-head tr td:first-child{
+                width: 37%;
+            }
+        </style>
+
+        <!--[if gte mso 9]>
+        <style>
+            .ol {
+                width: 100%;
+            }
+        </style>
+        <![endif]-->
+
+    </head>
+    <body style="background-color:#F4F4F4;">
+    <center>
+
+        <!--[if gte mso 9]>
+        <table width="600" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+        <![endif]-->
+        <table class="container600" cellpadding="0" cellspacing="0" border="0" width="100%"
+               style="width:calc(100%);max-width:calc(600px);margin: 0 auto;">
+            <tr>
+                <td width="100%" style="text-align: left;">
+
+                    <table width="100%" cellpadding="0" cellspacing="0" style="min-width:100%;">
+                        <tr>
+                            <td style="background-color:#FFFFFF;color:#000000;padding:30px;">
+                                <img alt="" src="<?= $path.maybe_null_or_empty($options, 'siteFavicon') ?>" width="210"
+                                     style="display: block;width: auto;margin: auto;"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table width="100%" cellpadding="0" cellspacing="0" style="min-width:100%;">
+                        <tr>
+                            <td style="background-color:#F8F7F0;color:#58585A;padding:30px;">
+
+                                <h1><?= maybe_null_or_empty($args, 'title') ?></h1>
+                                <p><!--Dear Akasi Group Members,<br><br>
+                                    Une ABE vient d'être publiée sur la plateforme AKASI-ABE-->
+                                    <?= maybe_null_or_empty($args, 'description') ?>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:20px;background-color:#F8F7F0;">
+                                <?php
+                                if(isset($args['elements']) && !empty($args['elements'])){
+                                    ?>
+                                    <table width="100%" cellpadding="0" cellspacing="0" style="min-width:100%;">
+                                        <thead class="message-content-head">
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="message-content-body">
+                                        <?php
+                                        foreach ($args['elements'] as $key=> $element){
+                                            ?>
+                                            <tr>
+                                                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;"><?= $key ?></td>
+                                                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">
+                                                    <?= $element ?>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                    <?php
+                                }
+                                ?>
+
+                                <p><br>
+                                    <br>==================== <br>Equipe AKASI ABE <br><a href="mailto:abe-support@akasigroup.com" target="_blank">abe-support@akasigroup.com</a> <br>Akasi Consulting Group <u></u><u></u></p>
+
+                            </td>
+                        </tr>
+                    </table>
+                    <table width="100%" cellpadding="0" cellspacing="0" style="min-width:100%;">
+                        <tr>
+                            <td width="100%" style="min-width:100%;background-color:#58585A;color:#FFFFFF;padding:30px;">
+                                <p style="font-size:16px;line-height:20px;font-family:Georgia,Arial,sans-serif;text-align:center;">
+                                    © 2019 AKASI ABE</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <!--[if gte mso 9]></td></tr></table>
+        <![endif]-->
+    </center>
+    </body>
+    </html>
+    <?php
+    return ob_get_clean();
 }
 
 function mailTemplateHtml($args, $options)
@@ -724,4 +982,32 @@ function sendNotificationMail($message, $title='', $tableMessage=''){
     $mail['btnLink'] = site_url('/');
     $mail['destination'] = maybe_null_or_empty($options, 'notificationEmails');
     sendMail($siteName . ' <no-reply@akasigroup.com>', $mail);
+}
+
+function sendCertificateNotificationMail($certificateDatas, $title, $description){
+    $ci = &get_instance();
+    $ci->load->model(['activity_area_model', 'affiliate_company_model']);
+    $title = 'AKASI-ABE Notification : '.$title;
+    $elements['Titre']=maybe_null_or_empty($certificateDatas, 'title');
+    $elements['Numéro interne']=maybe_null_or_empty($certificateDatas, '	internal_file_number');
+    $activityAreaID = maybe_null_or_empty($certificateDatas, 'activity_area_id');
+    $elements["Secteur d'activité"]=$ci->activity_area_model->getByID($activityAreaID)->name;
+    $elements["Sous secteur d'activité"]=maybe_null_or_empty($certificateDatas, 'sub_activity_area');
+    $elements["Date de signature du contrat"]=convert_date_to_french(maybe_null_or_empty($certificateDatas, 'signature_date'));
+    $elements["Nom de l’Autorité Contractante"]=maybe_null_or_empty($certificateDatas, 'customer_name');
+    $elements["Montant Total du Marché "]=maybe_null_or_empty($certificateDatas, 'total_amount');
+    $elements["Montant de la Prestation"]=maybe_null_or_empty($certificateDatas, 'amount_received');
+    $elements["Devise"]=maybe_null_or_empty($certificateDatas, 'currency');
+    $elements["Part de la prestation de l’Entreprise"]=maybe_null_or_empty($certificateDatas, 'akasi_share');
+    $elements["Début d’exécution du Marché "]=convert_date_to_french(maybe_null_or_empty($certificateDatas, 'project_execution_start_date'));
+    $elements["Fin d’exécution du Marché "]=convert_date_to_french(maybe_null_or_empty($certificateDatas, 'project_execution_end_date'));
+    $elements["Pays"]=maybe_null_or_empty($certificateDatas, 'country');
+    $elements["Ville"]=maybe_null_or_empty($certificateDatas, 'city');
+    $companyID = maybe_null_or_empty($certificateDatas, 'affiliate_company_id');
+    $elements["Filiale ayant exécutée le marché "]=$ci->affiliate_company_model->getByID($companyID)->name;
+    $args['elements']=$elements;
+    $args['title']=$title;
+    $args['destination']=$title;
+    $args['description']=$description;
+    notificationMailSender($args);
 }
