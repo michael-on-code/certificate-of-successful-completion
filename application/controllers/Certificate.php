@@ -64,7 +64,7 @@ class Certificate extends Pro_Controller{
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/datatables.net-responsive/js/dataTables.responsive.min.js';
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js';
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/select2/js/select2.min.js';
-        $this->data['footerJs'][] = $this->data['assetsUrl'].'js/line-cutter.js';
+        $this->data['footerJs'][] = $this->data['assetsUrl'].'js/line-cutter.js?v=1.0';
         //$this->data['footerJs'][] = $this->data['assetsUrl'].'js/currency.min.js';
         $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/datatables.net-dt/css/jquery.dataTables.min.css';
         $this->data['headerCss'][] = $this->data['assetsUrl'].'lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css';

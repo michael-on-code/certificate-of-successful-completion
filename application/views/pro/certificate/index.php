@@ -54,7 +54,7 @@
             ?>
 
             <tr>
-                <td><a class="minified-preview-btn" tabindex="0" data-trigger="focus"  data-target="<?= $key ?>" data-toggle="popover" data-html="true" href="javascript:void(0)">
+                <td><a class="minified-preview-btn"   data-target="<?= $key ?>" data-toggle="popover" data-html="true" href="javascript:void(0)">
                         <?= $certificate->internal_file_number ?>
                     </a></td>
                 <td data-toggle="tooltip"

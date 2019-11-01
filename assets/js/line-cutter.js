@@ -49,7 +49,7 @@
       element.html(
         addSuffix( editedLines, endStr ) );
 
-      console.log('Finish!');
+      //console.log('Finish!');
 
       // Refresh
       lineHeight      = 0,

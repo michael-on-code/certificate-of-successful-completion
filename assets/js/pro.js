@@ -42,14 +42,14 @@ $(function () {
         });
 
         myDropify.each(function () {
-            if($(this).hasClass('auto-upload')){
+            if ($(this).hasClass('auto-upload')) {
                 $(this).on('change', function () {
-                    var data={};
+                    var data = {};
                     var dropifyInput = $(this);
                     var currentForm = dropifyInput.parents('form');
                     var currentFormGroup = dropifyInput.parents('.form-group');
                     var submitBtn = currentForm.find('button[type=submit]');
-                    if(this.files && this.files[0]){
+                    if (this.files && this.files[0]) {
                         var fd = new FormData();
                         var target = dropifyInput.attr('data-target');
                         var targetName = dropifyInput.attr('data-target-name');
@@ -57,14 +57,14 @@ $(function () {
                         fd.append('name', target);
                         fd.append(clientData.csrf_token_name, clientData.csrf_hash);
                         $.ajax({
-                            url : clientData.uploadUrl,
-                            processData:false,
-                            contentType:false,
-                            data : fd,
+                            url: clientData.uploadUrl,
+                            processData: false,
+                            contentType: false,
+                            data: fd,
                             type: 'POST',
                             dataType: 'JSON',
-                            cache:false,
-                            beforeSend : function(){
+                            cache: false,
+                            beforeSend: function () {
                                 dropifyInput.addClass('upload-on-progress');
                                 submitBtn.attr('disabled', true);
                                 currentFormGroup.find('label').append(' <span data-toggle="tooltip" data-placement="top" title="Upload en cours" class="spinner-border spinner-border-sm upload-spinner" role="status" aria-hidden="true"></span>');
@@ -75,17 +75,17 @@ $(function () {
 
                             success: function (response) {
                                 //console.log(response);
-                                if(response.status){
+                                if (response.status) {
                                     clientData.csrf_token_name = response.csrf_token_name;
                                     clientData.csrf_hash = response.csrf_hash;
-                                    $('input[name="'+targetName+'"]').val(response.fileName);
+                                    $('input[name="' + targetName + '"]').val(response.fileName);
                                     var previewBtn = currentFormGroup.find('.my-file-preview-btn');
-                                    previewBtn.attr('href', clientData.uploadPath+response.fileName);
+                                    previewBtn.attr('href', clientData.uploadPath + response.fileName);
                                     dropifyInput.removeClass('upload-on-progress');
                                     currentFormGroup.find('label span.upload-spinner').fadeOut();
                                     currentFormGroup.find('label span.upload-spinner').remove();
                                     previewBtn.fadeIn();
-                                    if(currentForm.find('.upload-on-progress').length < 1){
+                                    if (currentForm.find('.upload-on-progress').length < 1) {
                                         submitBtn.removeAttr('disabled')
                                     }
                                 }
@@ -95,7 +95,7 @@ $(function () {
                 });
             }
         });
-        myDropify.on('dropify.beforeClear', function(event, element){
+        myDropify.on('dropify.beforeClear', function (event, element) {
             var $this = $(element.element);
             $this.parents('.form-group').find('input[type=hidden]').val('');
             $this.parents('.form-group').find('.my-file-preview-btn').fadeOut();
@@ -105,7 +105,7 @@ $(function () {
         $('.cutter:not(td.cutter)').line(1, "..");
     }
 
-    if($('input[required]').length){
+    if ($('input[required]').length) {
         $('input[required], select[required], textarea[required]').each(function () {
             $(this).parents('.form-group').find('label:not(.empty)').append(" <span style='color: red'>*</span>");
 
@@ -200,7 +200,7 @@ $(function () {
 
             //stateSave: true,
             //Is a LifeSAVER
-            drawCallback: function( settings ) {
+            drawCallback: function (settings) {
                 var api = this.api();
 
                 $('[data-toggle="tooltip"]', api.table().container()).tooltip();
@@ -253,20 +253,38 @@ $(function () {
                 container: 'body',
                 sanitize: false,
                 content: function () {
-                    var target=parseInt($(this).attr('data-target'));
+                    var target = parseInt($(this).attr('data-target'));
                     return clientData.certificates[target].minifiedPreview;
                 },
                 title: 'Aperçu rapide <span style="float:right;cursor:pointer;" class="fa fa-times my-close" data-toggle="popover">'
             }
-        ).click(function(e) {e.preventDefault();});
+        ).click(function (e) {
+            e.preventDefault();
+        });
 
+        /*certificateTable.$("a[data-toggle=popover]").on('shown.bs.popover', function () {
+
+            if($(this).find)
+            $('html').on('mouseup', function(e) {
+                if(typeof $(e.target).data('toggle') === "undefined"
+                    && $(e.target).attr('id') != 'toggle') {
+                    $('[data-toggle="popover"]').popover('hide');
+                }
+            });
+
+           $(document).click(function (event) {
+                if (!$(event.target).closest('.popover.fade.show').length) {
+                    $('.my-close').trigger('click');
+                }
+            });
+        });*/
         certificateTable.$('.my-global-preview-btn').click(function (e) {
             e.preventDefault();
             var targetID = $(this).attr('data-target');
             var previewHTML = clientData.certificates[targetID].globalPreview;
             $('.modalArea .content').html(previewHTML);
             $('.modalArea .content div.innerContent').each(function () {
-                if($.trim($(this).text())==''){
+                if ($.trim($(this).text()) == '') {
                     $(this).text("Néant");
                 }
             })
@@ -275,7 +293,7 @@ $(function () {
 
         $('.dataTables_length select').addClass('form-control');
         $('.dataTables_length select').css({
-            display : 'inline',
+            display: 'inline',
             width: 'unset'
         });
 
@@ -333,31 +351,37 @@ $(function () {
 
     if ($('.dateRanger').length) {
         //$.datepicker.setDefaults($.datepicker.regional["fr"]);
-        var dateFormat = 'dd/mm/yy',
-            from = $('#dateFrom')
-                .datepicker({
-                    //defaultDate: '+1w',
-                    //numberOfMonths: 2,
-                    changeMonth: true,
-                    changeYear: true,
-                })
-                .on('change', function() {
-                    console.log(getDate( this ));
-                    var date = new Date(getDate( this ));
-                    date.setDate(date.getDate() + 1);
-                    to.datepicker('option','minDate', date );
-                }),
-            to = $('#dateTo').datepicker({
+        var dateFormat = 'dd/mm/yy';
+        var minDate, maxDate;
+        var from = $('#dateFrom')
+            .datepicker({
                 //defaultDate: '+1w',
                 //numberOfMonths: 2,
                 changeMonth: true,
                 changeYear: true,
             })
-                .on('change', function() {
-                    var date = new Date(getDate( this ));
-                    date.setDate(date.getDate() -1);
-                    from.datepicker('option','maxDate', date );
-                });
+            .on('change', function () {
+                var date = new Date(getDate(this));
+                date.setDate(date.getDate() + 1);
+                to.datepicker('option', 'minDate', date);
+            });
+        var minDate = new Date(getDate(from[0]));
+        minDate.setDate(minDate.getDate() + 1);
+        var to = $('#dateTo').datepicker({
+            //defaultDate: '+1w',
+            //numberOfMonths: 2,
+            changeMonth: true,
+            changeYear: true,
+        })
+            .on('change', function () {
+                var date = new Date(getDate(this));
+                date.setDate(date.getDate() - 1);
+                from.datepicker('option', 'maxDate', date);
+            });
+        var maxDate = new Date(getDate(to[0]));
+        maxDate.setDate(maxDate.getDate() - 1);
+        to.datepicker('option', 'minDate', minDate);
+        from.datepicker('option', 'maxDate', maxDate);
     }
     if ($('.datepicker').length) {
         $.datepicker.setDefaults($.datepicker.regional["fr"]);
@@ -377,7 +401,7 @@ $(function () {
             });
         })
     }
-    if($('.is-currency').length){
+    if ($('.is-currency').length) {
         /*$('.is-currency').each(function () {
             $(this).text(numeral(parseInt($.trim($(this).text()))).format('0,0'))
         });*/
@@ -407,21 +431,21 @@ $(function () {
             height: 130
         });
     }
-    if($('.currency-dropdown').length){
+    if ($('.currency-dropdown').length) {
         $(document).on('click', '.currency-dropdown a.dropdown-item', function (e) {
             e.preventDefault();
             var button = $(this).parent().prev('button');
             var actualCurrency = $.trim(button.text());
             var choosedCurrency = $.trim($(this).text());
             button.text(choosedCurrency);
-            $(this).parent().prepend('<a class="dropdown-item" href="#">'+actualCurrency+'</a>')
+            $(this).parent().prepend('<a class="dropdown-item" href="#">' + actualCurrency + '</a>')
             $('[name="certificate[currency]"]').val(choosedCurrency);
             $(this).addClass('choosed-currency-remove');
             var inputDropdownHTML = $(this).parent().parent().html();
             $('.currency-dropdown').parents('.input-group-prepend').each(function () {
-               $(this).html(inputDropdownHTML);
-               $(this).removeClass('show');
-               $(this).find('.currency-dropdown').removeClass("show")
+                $(this).html(inputDropdownHTML);
+                $(this).removeClass('show');
+                $(this).find('.currency-dropdown').removeClass("show")
             });
             $('.choosed-currency-remove').remove();
         });
@@ -432,9 +456,33 @@ $(function () {
             var target = $(this).parents().find('.popover');
 
             var targetID = target.attr('id');
-            $('[aria-describedby="'+targetID+'"]').trigger('click');
-        })
+            $('[aria-describedby="' + targetID + '"]').trigger('click');
+        });
     }
+    $(document).on('click', function (e) {
+        var
+            $popover,
+            $target = $(e.target);
+        console.log($target);
 
+        //do nothing if there was a click on popover content
+        if ($target.hasClass('popover') || $target.hasClass('file-preview') || $target.closest('.popover').length) {
+            return;
+        }
+
+        $('[data-toggle="popover"]').each(function () {
+            $popover = $(this);
+
+            if (!$popover.is(e.target) &&
+                $popover.has(e.target).length === 0 &&
+                $popover.has(e.target).length === 0)
+            {
+                $popover.popover('hide');
+            } else {
+                //fixes issue described above
+                $popover.popover('toggle');
+            }
+        });
+    })
 
 });

@@ -53,7 +53,7 @@ class Certificate_model extends CI_Model
             $this->db->insert_batch('abe_country_groups', $data);
         }
         if ($returnInsertedData) {
-            return implode('| ', $countryNames);
+            return implode(' | ', $countryNames);
         }
         return false;
     }
@@ -68,7 +68,7 @@ abe_country_groups.country_code = countries.code where abe_country_groups.abe_id
                 foreach ($results as $result) {
                     $temp[] = $result['countries'];
                 }
-                return implode('| ', $temp);
+                return implode(' | ', $temp);
             }
             return false;
         } else {

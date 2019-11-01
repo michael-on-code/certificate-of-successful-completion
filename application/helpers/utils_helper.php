@@ -143,11 +143,18 @@ function redirect_if_id_is_not_valid($id, $table_name = '', $redirect)
     redirect($redirect);
 }
 
-function getSlugifyString($string)
+function getSlugifyString($string, $toLower=true, $removeBlankSpace=true)
 {
     $ci = &get_instance();
     $ci->load->helper('text');
-    return strtolower(preg_replace('/[^a-zA-Z0-9-_\.]/', '', convert_accented_characters($string)));
+    $nonAccentedString = convert_accented_characters($string);
+    if($removeBlankSpace){
+        $nonAccentedString = preg_replace('/[^a-zA-Z0-9-_\.]/', '', $nonAccentedString);
+    }
+    if($toLower){
+        $nonAccentedString = strtolower($nonAccentedString);
+    }
+    return $nonAccentedString;
 }
 
 function update_meta($id, $key, $value, $table_meta, $table_id_val)
