@@ -674,9 +674,6 @@ function notificationTemplateHTML($args, $options){
                     width: 100% !important;
                 }
             }
-            .message-content-body tr td:first-child{
-                font-weight: 600!important;
-            }
             .message-content-body tr td{
                 vertical-align: middle;
             }
@@ -719,7 +716,7 @@ function notificationTemplateHTML($args, $options){
                         <tr>
                             <td style="background-color:#F8F7F0;color:#58585A;padding:30px;">
 
-                                <h1><?= maybe_null_or_empty($args, 'title') ?></h1>
+                                <h1><strong><?= maybe_null_or_empty($args, 'title') ?></strong></h1>
                                 <p><!--Dear Akasi Group Members,<br><br>
                                     Une ABE vient d'être publiée sur la plateforme AKASI-ABE-->
                                     <?= maybe_null_or_empty($args, 'description') ?>
@@ -738,7 +735,7 @@ function notificationTemplateHTML($args, $options){
                                             <td></td>
                                         </tr>
                                         </thead>
-                                        <tbody class="message-content-body">
+                                        <tbody class=" message-content-body">
                                         <?php
                                         foreach ($args['elements'] as $key=> $element){
                                             ?>
