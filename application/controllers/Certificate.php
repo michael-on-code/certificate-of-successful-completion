@@ -28,7 +28,7 @@ class Certificate extends Pro_Controller{
         $this->data['countries']=getCountries();
         $this->data['tableHeaders']=[
             'N° Interne', 'Désignation', 'Secteur', 'Sous Secteur', 'Date de signature du contrat', 'Autorité contractante',
-            'Montant total', 'Montant payé', 'Part', "Début période d'execution", "Fin période d'execution", "Pays", "Ville",
+            'Montant total', 'Montant payé', 'Part', "Début période d'execution", "Fin période d'execution", "Pays d’exécution du Marché", "Ville d’exécution du Marché",
             'Source de financement', 'Filiale', "Date d'attribution", "Partenaire/associé", "Adresse de l'autorité contractante", "Role", "Description du marché","Details des taches exécutés" ,"Ajouté le"
         ];
         $numberColumns = count($this->data['tableHeaders']);

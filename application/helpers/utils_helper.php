@@ -675,7 +675,7 @@ function notificationTemplateHTML($args, $options){
                 }
             }
             .message-content-body tr td:first-child{
-                font-weight: bold;
+                font-weight: 600!important;
             }
             .message-content-body tr td{
                 vertical-align: middle;
