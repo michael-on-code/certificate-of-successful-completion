@@ -716,7 +716,7 @@ function notificationTemplateHTML($args, $options){
                         <tr>
                             <td style="background-color:#F8F7F0;color:#58585A;padding:30px;">
 
-                                <h1><strong><?= maybe_null_or_empty($args, 'title') ?></strong></h1>
+                                <h1><?= maybe_null_or_empty($args, 'title') ?></h1>
                                 <p><!--Dear Akasi Group Members,<br><br>
                                     Une ABE vient d'être publiée sur la plateforme AKASI-ABE-->
                                     <?= maybe_null_or_empty($args, 'description') ?>
@@ -740,7 +740,7 @@ function notificationTemplateHTML($args, $options){
                                         foreach ($args['elements'] as $key=> $element){
                                             ?>
                                             <tr>
-                                                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;"><?= $key ?></td>
+                                                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;"><strong><?= $key ?></strong></td>
                                                 <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">
                                                     <?= $element ?>
                                                 </td>
