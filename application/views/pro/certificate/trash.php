@@ -85,6 +85,7 @@
                 <td><?= convert_date_to_french($certificate->project_awarded_date) ?></td>
                 <td><?= $certificate->project_partner ?></td>
                 <td><?= $certificate->customer_adress ?></td>
+
                 <td ><?= $certificate->role ?></td>
                 <td data-html="true" data-toggle="tooltip" class="cutter"
                     data-placement="top" title="<?= $certificate->project_description ?>"><?= $certificate->project_description ?></td>

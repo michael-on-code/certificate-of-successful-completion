@@ -78,6 +78,7 @@
                 <td><?= convert_date_to_french($certificate->project_execution_start_date) ?></td>
                 <td><?= convert_date_to_french($certificate->project_execution_end_date) ?></td>
                 <td><?= $certificate->country ?></td>
+
                 <td><?= $certificate->city ?></td>
                 <td data-toggle="tooltip" class=""
                     data-placement="top" title="<?= $certificate->funding_source ?>"><?= word_limiter($certificate->funding_source, 6) ?></td>
