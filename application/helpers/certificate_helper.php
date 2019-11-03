@@ -1065,7 +1065,7 @@ function getMinifiedView($certificate, $index, $uploadPath, $countries)
         $preview .= "
         <tr>
                 <td class='headies'>Copie ABE</td>
-                <td> <a class='file-preview' target='_blank' href='$uploadPath".utf8_encode($certificateFile)."'>$certificateFile</a> </td>
+                <td> <span class='minified-file-preview' target='_blank' href='$uploadPath".utf8_encode($certificateFile)."'>$certificateFile</span> </td>
             </tr>
         ";
     }
@@ -1073,7 +1073,7 @@ function getMinifiedView($certificate, $index, $uploadPath, $countries)
         $preview .= "
         <tr>
                 <td class='headies'>PV de réception</td>
-                <td> <a class='file-preview' target='_blank' href='$uploadPath".utf8_encode($minuteFile)."'>$minuteFile</a> </td>
+                <td> <span class='minified-file-preview' target='_blank' href='$uploadPath".utf8_encode($minuteFile)."'>$minuteFile</span> </td>
             </tr>
         ";
     }
@@ -1081,7 +1081,7 @@ function getMinifiedView($certificate, $index, $uploadPath, $countries)
         $preview .= "
         <tr>
                 <td class='headies'>Contrat</td>
-                <td> <a class='file-preview' target='_blank' href='$uploadPath".utf8_encode($contractFile)."'>$contractFile</a> </td>
+                <td> <span class='minified-file-preview' target='_blank' href='$uploadPath".utf8_encode($contractFile)."'>$contractFile</span> </td>
             </tr>
         ";
     }

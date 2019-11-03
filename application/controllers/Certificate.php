@@ -23,6 +23,7 @@ class Certificate extends Pro_Controller{
     }
 
     public function index(){
+        $this->load->helper('text');
         $this->data['pageTitle']= 'Liste des ABE';
         $this->data['certificates'] = $this->certificate_model->getAll();
         $this->data['countries']=getCountries();
@@ -57,6 +58,7 @@ class Certificate extends Pro_Controller{
         $this->data['footerJs'][] = $this->data['assetsUrl'] . 'lib/sweetalert/sweetalert.min.js';
 
         $this->data['footerJs'][] = '//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js';
+        //$this->data['footerJs'][] = $this->data['assetsUrl'] . 'js/bootstrapx-clickover.js';
         $this->data['footerJs'][] = '//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js';
 
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/datatables.net/js/jquery.dataTables.min.js';
@@ -72,6 +74,7 @@ class Certificate extends Pro_Controller{
         $this->render('certificate/index');
     }
     public function trash(){
+        $this->load->helper('text');
         $this->data['pageTitle']= 'Liste des ABE supprimées';
         $this->data['certificates'] = $this->certificate_model->getAll(false, true);
         $this->data['countries']=getCountries();
@@ -104,10 +107,9 @@ class Certificate extends Pro_Controller{
 
         $this->data['headerCss'][] = $this->data['assetsUrl'] . 'lib/sweetalert/sweetalert.css';
         $this->data['footerJs'][] = $this->data['assetsUrl'] . 'lib/sweetalert/sweetalert.min.js';
-
         $this->data['footerJs'][] = '//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js';
+        //$this->data['footerJs'][] = $this->data['assetsUrl'] . 'js/bootstrapx-clickover.js';
         $this->data['footerJs'][] = '//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js';
-
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/datatables.net/js/jquery.dataTables.min.js';
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/datatables.net-dt/js/dataTables.dataTables.min.js';
         $this->data['footerJs'][] = $this->data['assetsUrl'].'lib/datatables.net-responsive/js/dataTables.responsive.min.js';

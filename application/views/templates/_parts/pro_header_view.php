@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="<?= $assetsUrl ?>css/dashforge.css">
     <link rel="stylesheet" href="<?= $assetsUrl ?>css/dashforge.dashboard.css">
     <link rel="stylesheet" href="<?= $assetsUrl ?>css/dashforge.demo.css">
-    <link rel="stylesheet" href="<?= $assetsUrl ?>css/stylesheet.css?v=1.19">
+    <link rel="stylesheet" href="<?= $assetsUrl ?>css/stylesheet.css?v=1.20">
 </head>
 <!-- end::Head -->
 

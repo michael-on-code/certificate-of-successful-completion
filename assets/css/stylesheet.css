@@ -88,3 +88,10 @@ td button.btn-icon, td a.btn-icon{
     top: -11px;
     left: 34%;
 }
+.minified-file-preview{
+    color: #0168fa;
+    text-decoration: none;
+    background-color: transparent;
+    font-size: 14px;
+    cursor: pointer;
+}

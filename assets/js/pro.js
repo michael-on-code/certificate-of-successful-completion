@@ -247,11 +247,13 @@ $(function () {
         });
         //Is a Life Saver
         certificateTable.columns(clientData.invisiblesColumns).visible(false);
+
         certificateTable.$("a[data-toggle=popover]").popover(
             {
                 html: true,
                 container: 'body',
                 sanitize: false,
+                //trigger: 'manual',
                 content: function () {
                     var target = parseInt($(this).attr('data-target'));
                     return clientData.certificates[target].minifiedPreview;
@@ -489,5 +491,69 @@ $(function () {
         });
     }
 
+    function closePopoversOnDocumentEvents() {
+        var visiblePopovers = [];
+
+        var $body = $("body");
+
+        function hideVisiblePopovers() {
+            $.each(visiblePopovers, function() {
+                $(this).popover("hide");
+            });
+        }
+
+        function onBodyClick(event) {
+            if (event.isDefaultPrevented())
+                return;
+
+            var $target = $(event.target);
+            if ($target.data("bs.popover"))
+                return;
+
+            if ($target.parents(".popover").length)
+                return;
+
+            hideVisiblePopovers();
+        }
+
+        function onBodyKeyup(event) {
+            if (event.isDefaultPrevented())
+                return;
+
+            if (event.keyCode != 27) // esc
+                return;
+
+            hideVisiblePopovers();
+            event.preventDefault();
+        }
+
+        function onPopoverShow(event) {
+            if (!visiblePopovers.length) {
+                $body.on("click", onBodyClick);
+                $body.on("keyup", onBodyKeyup);
+            }
+            visiblePopovers.push(event.target);
+        }
+
+        function onPopoverHide(event) {
+            var target = event.target;
+            var index = visiblePopovers.indexOf(target);
+            if (index > -1) {
+                visiblePopovers.splice(index, 1);
+            }
+            if (visiblePopovers.length == 0) {
+                $body.off("click", onBodyClick);
+                $body.off("keyup", onBodyKeyup);
+            }
+        }
+
+        $body.on("show.bs.popover", onPopoverShow);
+        $body.on("hide.bs.popover", onPopoverHide);
+    }
+    closePopoversOnDocumentEvents();
+
+    $(document).on('click', '.minified-file-preview', function () {
+        window.open( $(this).attr('href'), '_blank');
+    })
 
 });

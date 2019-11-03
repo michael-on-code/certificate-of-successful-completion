@@ -66,12 +66,12 @@
                         <?= $certificate->internal_file_number ?>
                     </a></td>
                 <td data-toggle="tooltip"
-                    data-placement="top" title="<?= $certificate->title ?>" class="cutter"><?= $certificate->title ?></td>
+                    data-placement="top" title="<?= $certificate->title ?>"><?= word_limiter($certificate->title, 6) ?></td>
                 <td><?= $certificate->activity_area_name ?></td>
                 <td><?= $certificate->sub_activity_area ?></td>
                 <td data-sort="<?= strtotime($certificate->signature_date) ?>"><?= convert_date_to_french($certificate->signature_date) ?></td>
-                <td data-toggle="tooltip" class="cutter"
-                    data-placement="top" title="<?= $certificate->customer_name ?>"><?= $certificate->customer_name ?></td>
+                <td data-toggle="tooltip" class=""
+                    data-placement="top" title="<?= $certificate->customer_name ?>"><?= word_limiter($certificate->customer_name, 6) ?></td>
                 <td data-sort="<?= $certificate->total_amount ?>"><span class="is-currency"><?= $certificate->total_amount ?></span> <?= $certificate->currency ?></td>
                 <td><span class="is-currency"><?= $certificate->amount_received ?></span> <?= $certificate->currency ?></td>
                 <td><?= $certificate->akasi_share ?>%</td>
@@ -79,18 +79,18 @@
                 <td><?= convert_date_to_french($certificate->project_execution_end_date) ?></td>
                 <td><?= $certificate->country ?></td>
                 <td><?= $certificate->city ?></td>
-                <td data-toggle="tooltip" class="cutter"
-                    data-placement="top" title="<?= $certificate->funding_source ?>"><?= $certificate->funding_source ?></td>
+                <td data-toggle="tooltip" class=""
+                    data-placement="top" title="<?= $certificate->funding_source ?>"><?= word_limiter($certificate->funding_source, 6) ?></td>
                 <td><?= $certificate->affiliate_company_name ?></td>
                 <td><?= convert_date_to_french($certificate->project_awarded_date) ?></td>
                 <td><?= $certificate->project_partner ?></td>
                 <td><?= $certificate->customer_adress ?></td>
-                <td data-toggle="tooltip" class="cutter"
-                    data-placement="top"  title="<?= $certificate->role ?>"><?= $certificate->role ?></td>
-                <td data-html="true" data-toggle="tooltip" class="cutter"
-                    data-placement="top" title="<?= $certificate->project_description ?>"><?= $certificate->project_description ?></td>
-                <td data-html="true" data-toggle="tooltip" class="cutter"
-                    data-placement="top" title="<?= $certificate->detailed_tasks ?>"><?= $certificate->detailed_tasks ?></td>
+                <td data-toggle="tooltip" class=""
+                    data-placement="top"  title="<?= $certificate->role ?>"><?= word_limiter($certificate->role, 6) ?></td>
+                <td data-html="true" data-toggle="tooltip" class=""
+                    data-placement="top" title="<?= $certificate->project_description ?>"><?= word_limiter($certificate->project_description, 6) ?></td>
+                <td data-html="true" data-toggle="tooltip" class=""
+                    data-placement="top" title="<?= $certificate->detailed_tasks ?>"><?= word_limiter($certificate->detailed_tasks, 6) ?></td>
                 <td><?= convert_date_to_french($certificate->created_at) ?></td>
                 <td class="text-center">
                     <a href="#" data-target="<?= $key ?>" data-toggle="tooltip" data-placement="top" title="Aperçu globale" class="btn btn-light btn-icon my-global-preview-btn">
