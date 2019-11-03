@@ -85,12 +85,11 @@
                 <td><?= convert_date_to_french($certificate->project_awarded_date) ?></td>
                 <td><?= $certificate->project_partner ?></td>
                 <td><?= $certificate->customer_adress ?></td>
-                <td data-toggle="tooltip" class=""
-                    data-placement="top"  title="<?= $certificate->role ?>"><?= word_limiter($certificate->role, 6) ?></td>
-                <td data-html="true" data-toggle="tooltip" class=""
-                    data-placement="top" title="<?= $certificate->project_description ?>"><?= word_limiter($certificate->project_description, 6) ?></td>
-                <td data-html="true" data-toggle="tooltip" class=""
-                    data-placement="top" title="<?= $certificate->detailed_tasks ?>"><?= word_limiter($certificate->detailed_tasks, 6) ?></td>
+                <td ><?= $certificate->role ?></td>
+                <td data-html="true" data-toggle="tooltip" class="cutter"
+                    data-placement="top" title="<?= $certificate->project_description ?>"><?= $certificate->project_description ?></td>
+                <td data-html="true" data-toggle="tooltip" class="cutter"
+                    data-placement="top" title="<?= $certificate->detailed_tasks ?>"><?= $certificate->detailed_tasks ?></td>
                 <td><?= convert_date_to_french($certificate->created_at) ?></td>
                 <td class="text-center">
                     <a href="#" data-target="<?= $key ?>" data-toggle="tooltip" data-placement="top" title="Aperçu globale" class="btn btn-light btn-icon my-global-preview-btn">
